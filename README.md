@@ -1,5 +1,6 @@
-# Getting Started with Create React App
+# SeungHyo-frontend
 
+이 앱은 승효 프로젝트의 프론트엔드를 담당하는 것입니다. 자세한 것은 위키 참조를 부탁합니다.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
