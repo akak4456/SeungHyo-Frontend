@@ -9,7 +9,7 @@ export default class Header extends React.Component {
         return (
             <div>
                 <Mobile><p>Header Mobile</p></Mobile>
-                <PC><p>Header PC2</p></PC> 
+                <PC><p>Header PC23</p></PC> 
             </div>
         );
     }
