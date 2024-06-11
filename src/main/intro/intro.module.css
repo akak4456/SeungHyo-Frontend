@@ -1,10 +1,10 @@
-.intro-ad {
+.IntroAd {
     margin-left: 12.5%;
     margin-right: 12.5%;
     width: 75%;
 }
 
-.intro-title {
+.IntroTitle {
     margin-top: 80px;
     margin-bottom: 80px;
     color: var(--color-normal-text-color);
@@ -13,7 +13,7 @@
     font-weight: bold;
 }
 
-.intro-statistics {
+.IntroStatistics {
     background-color: black;
     padding-top: 16px;
     padding-bottom: 16px;
@@ -22,7 +22,7 @@
     display: flex;
 }
 
-.intro-statistics-block {
+.IntroStatisticsBlock {
     border: 1px solid var(--color-silver);
     flex: 1 1 0;
     padding-top: 24px;
@@ -30,15 +30,15 @@
     margin-right: 16px;
     text-align: center;
 }
-.intro-statistics-block:last-child {
+.IntroStatisticsBlock:last-child {
     margin-right: 0px;
 }
-.intro-statistics-block-main-text {
+.IntroStatisticsBlockMainText {
     color: white;
     font-weight: bold;
     font-size: 35px;
 }
-.intro-statistics-block-sub-text {
+.IntroStatisticsBlockSubText {
     color: var(--color-silver);
     font-size: 16px;
     margin-top: 16px;

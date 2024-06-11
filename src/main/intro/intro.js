@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './intro.css';
+import styles from './intro.module.css';
 import AdSample from '../../img/adsample.png'
 
 class StatisticsBlock extends React.Component {
@@ -32,9 +32,9 @@ class StatisticsBlock extends React.Component {
 
     render() {
         return(
-            <div className="intro-statistics-block">
-                <p className="intro-statistics-block-main-text">{Math.floor(this.state.count)}</p>
-                <p className='intro-statistics-block-sub-text'>{this.props.subTitle}</p>
+            <div className={styles.IntroStatisticsBlock}>
+                <p className={styles.IntroStatisticsBlockMainText}>{Math.floor(this.state.count)}</p>
+                <p className={styles.IntroStatisticsBlockSubText}>{this.props.subTitle}</p>
             </div>
         )
     }
@@ -43,7 +43,7 @@ class StatisticsBlock extends React.Component {
 class Statistics extends React.Component {
     render() {
         return (
-            <div className="intro-statistics">
+            <div className={styles.IntroStatistics}>
                 <StatisticsBlock mainNumber={30000} subTitle={"전체 문제"}/>
                 <StatisticsBlock mainNumber={20000} subTitle={"채점 가능한 문제"}/>
                 <StatisticsBlock mainNumber={1000} subTitle={"풀린 문제"}/>
@@ -56,7 +56,7 @@ class Statistics extends React.Component {
 class Ad extends React.Component {
     render() {
         return (
-            <img className="intro-ad" src={AdSample}></img>
+            <img className={styles.IntroAd} src={AdSample}></img>
         )
     }
 }
@@ -66,7 +66,7 @@ export default class Intro extends React.Component {
         return (
             <main>
                 <Ad />
-                <p className="intro-title">쉽다! 재미있다! 빠르다!</p>
+                <p className={styles.IntroTitle}>쉽다! 재미있다! 빠르다!</p>
                 <Statistics />
             </main>
         )

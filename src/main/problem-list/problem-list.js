@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './problem-list.css';
+import styles from './problem-list.module.css';
 
 export default class ProblemList extends React.Component {
     render() {

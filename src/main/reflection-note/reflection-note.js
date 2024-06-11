@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './reflection-note.css';
+import styles from './reflection-note.module.css';
 
 export default class ReflectionNote extends React.Component {
     render() {

@@ -1,0 +1,16 @@
+.FooterRoot {
+    padding-left: 12.5%;
+    padding-right: 12.5%;
+    display: flex;
+    align-items: flex-end;
+    height: 200px;
+}
+
+.FooterLogo {
+    margin-left: auto;
+}
+
+.FooterCopyRight {
+    margin-bottom: 16px;
+    color: var(--color-normal-text-color);
+}
