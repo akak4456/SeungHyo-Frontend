@@ -3,8 +3,19 @@ import ReactDOM from 'react-dom';
 import './header.css';
 import {Mobile, PC} from '../responsive.js';
 import imgLogo from '../img/logo.png';
-import TapButton from '../button/tapbutton.js';
 import iconSearch from '../img/icon-search.png';
+import {Link} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+class TapButton extends React.Component {
+    render() {
+        return (
+            <div className='tap-button-root'>
+                <NavLink to={this.props.linkTo ? this.props.linkTo : "#"}>{this.props.buttonElement}</NavLink>
+            </div>
+        );
+    }
+}
 
 class Logo extends React.Component {
     render() {
@@ -30,16 +41,18 @@ class PCHeader extends React.Component {
     render() {
         return(
             <header className='header-root'>
-                <Logo />
+                <Link to ="/">
+                    <Logo />
+                </Link>
                 <div className='header-right-side'>
                     <div className='header-user-anchor-group'>
                         <UserAnchor />
                     </div>
                     <div className='header-button-group'>
                         <TapButton buttonElement={"문제"} linkTo={"/problem-list"} />
-                        <TapButton buttonElement={"오답노트"} />
-                        <TapButton buttonElement={"게시판"} />
-                        <TapButton buttonElement={<img src={iconSearch}></img>} />
+                        <TapButton buttonElement={"오답노트"} linkTo={"/reflection-note"} />
+                        <TapButton buttonElement={"게시판"} linkTo={"/board"}/>
+                        <TapButton buttonElement={<img src={iconSearch}></img>} linkTo={"/search"} />
                     </div>
                 </div>
             </header>

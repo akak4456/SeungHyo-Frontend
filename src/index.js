@@ -7,6 +7,9 @@ import './index.css';
 import Header from './header/header.js';
 import Intro from './main/intro/intro.js';
 import ProblemList from './main/problem-list/problem-list.js';
+import ReflectionNote from './main/reflection-note/reflection-note.js';
+import Board from './main/board/board.js';
+import Search from './main/search/search.js';
 
 class Root extends React.Component {
     constructor(props) {
@@ -19,6 +22,9 @@ class Root extends React.Component {
                 <Routes>
                     <Route path="/" element={<Intro/>}></Route>
                     <Route path="/problem-list/*" element={<ProblemList/>}></Route>
+                    <Route path="/reflection-note/*" element={<ReflectionNote/>}></Route>
+                    <Route path="/board/*" element={<Board/>}></Route>
+                    <Route path="/search/*" element={<Search/>}></Route>
                 </Routes>
             </BrowserRouter>
         )

@@ -35,3 +35,33 @@
 .user-anchor>li:last-child::after {
     content: "";
 }
+
+.tap-button-root {
+    display: inline-block;
+    position: relative;
+}
+.tap-button-root a {
+    display: inline-block;
+    padding:16px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid transparent;
+    font-size: 14px;
+    
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    text-decoration: none;
+    color: var(--color-normal-text-color);
+}
+.tap-button-root a.active {
+    border-bottom: 2px solid var(--color-primary);
+    color: var(--color-normal-text-color);
+}
+.tap-button-root a:hover {
+    border-bottom: 2px solid var(--color-primary);
+    color: var(--color-normal-text-color);
+}
+.tap-button-root img{
+    width: 16px;
+    height: 16px;
+}
