@@ -52,13 +52,13 @@ function MobileHeader() {
                 </div>
             </div>
             <div className={styles.MobileHeaderDropDown} style={{opacity: isDropdownShown ?  '1' : '0'}}>
-                <Link to="/problem-list"><p>문제</p></Link>
+                <Link to="/problem-list"><p onClick={onHide}>문제</p></Link>
                 <div className={styles.MobileHeaderDropDownBorder}></div>
-                <Link to="/reflection-note"><p>오답노트</p></Link>
+                <Link to="/reflection-note"><p onClick={onHide}>오답노트</p></Link>
                 <div className={styles.MobileHeaderDropDownBorder}></div>
-                <Link to="/board"><p>게시판</p></Link>
+                <Link to="/board"><p onClick={onHide}>게시판</p></Link>
                 <div className={styles.MobileHeaderDropDownBorder}></div>
-                <Link to="/search"><p><img src={iconSearch}></img></p></Link>
+                <Link to="/search"><p onClick={onHide}><img src={iconSearch}></img></p></Link>
             </div>
         </header>
     )
