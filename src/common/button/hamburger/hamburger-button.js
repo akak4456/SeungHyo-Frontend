@@ -6,7 +6,7 @@ import {List} from 'react-bootstrap-icons';
 export default class HamburgerButton extends React.Component {
     render() {
         return (
-            <button className={styles.HamburgerButton}>
+            <button className={styles.HamburgerButton} onClick={this.props.onClick}>
                 <List 
                 color='white'
                 size='24'

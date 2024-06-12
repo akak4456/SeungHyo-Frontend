@@ -74,6 +74,8 @@
     width: 75%;
     background-color: white;
     margin-top: 1px;
+    transition: all;
+    transition-duration: 0.5s;
 }
 
 .MobileHeaderDropDown a {

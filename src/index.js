@@ -11,6 +11,8 @@ import ReflectionNote from './main/reflection-note/reflection-note.js';
 import Board from './main/board/board.js';
 import Search from './main/search/search.js';
 import Footer from './footer/footer.js';
+import { Provider } from 'react-redux';
+import store from './store/store.js';
 
 class Root extends React.Component {
     constructor(props) {
@@ -18,17 +20,19 @@ class Root extends React.Component {
     }
     render() {
         return (
-            <BrowserRouter>
-                <Header />
-                <Routes>
-                    <Route path="/" element={<Intro/>}></Route>
-                    <Route path="/problem-list/*" element={<ProblemList/>}></Route>
-                    <Route path="/reflection-note/*" element={<ReflectionNote/>}></Route>
-                    <Route path="/board/*" element={<Board/>}></Route>
-                    <Route path="/search/*" element={<Search/>}></Route>
-                </Routes>
-                <Footer />
-            </BrowserRouter>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Header />
+                    <Routes>
+                        <Route path="/" element={<Intro/>}></Route>
+                        <Route path="/problem-list/*" element={<ProblemList/>}></Route>
+                        <Route path="/reflection-note/*" element={<ReflectionNote/>}></Route>
+                        <Route path="/board/*" element={<Board/>}></Route>
+                        <Route path="/search/*" element={<Search/>}></Route>
+                    </Routes>
+                    <Footer />
+                </BrowserRouter>
+            </Provider>
         )
     }
 }

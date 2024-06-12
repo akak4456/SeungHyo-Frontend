@@ -7,6 +7,8 @@ import {Link} from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import Logo from '../common/logo/logo.js';
 import HamburgerButton from '../common/button/hamburger/hamburger-button.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { show, hide } from '../store/features/header/headerSlice.js';
 
 class TapButton extends React.Component {
     render() {
@@ -30,33 +32,33 @@ class UserAnchor extends React.Component {
     }
 }
 
-class MobileHeader extends React.Component {
-    render() {
-        return (
-            <header className={styles.HeaderRoot}>
-                <Link to ="/">
-                    <Logo />
-                </Link>
-                <div className={styles.HeaderRightSide}>
-                    <div className={styles.HeaderUserAnchorGroup}>
-                        <UserAnchor />
-                    </div>
-                    <div className={styles.HeaderHamburgerButtonGroup}>
-                        <HamburgerButton />
-                    </div>
+function MobileHeader() {
+    const isDropdownShown = useSelector((state) => state.header.isDropdownShown);
+    const dispatch = useDispatch();
+    return (
+        <header className={styles.HeaderRoot}>
+            <Link to ="/">
+                <Logo />
+            </Link>
+            <div className={styles.HeaderRightSide}>
+                <div className={styles.HeaderUserAnchorGroup}>
+                    <UserAnchor />
                 </div>
-                <div className={styles.MobileHeaderDropDown}>
-                    <Link to="/problem-list"><p>문제</p></Link>
-                    <div className={styles.MobileHeaderDropDownBorder}></div>
-                    <Link to="/reflection-note"><p>오답노트</p></Link>
-                    <div className={styles.MobileHeaderDropDownBorder}></div>
-                    <Link to="/board"><p>게시판</p></Link>
-                    <div className={styles.MobileHeaderDropDownBorder}></div>
-                    <Link to="/search"><p><img src={iconSearch}></img></p></Link>
+                <div className={styles.HeaderHamburgerButtonGroup}>
+                    <HamburgerButton onClick={() => dispatch(isDropdownShown ? hide() : show())}/>
                 </div>
-            </header>
-        )
-    }
+            </div>
+            <div className={styles.MobileHeaderDropDown} style={{opacity: isDropdownShown ?  '1' : '0'}}>
+                <Link to="/problem-list"><p onClick={() => dispatch(hide())}>문제</p></Link>
+                <div className={styles.MobileHeaderDropDownBorder}></div>
+                <Link to="/reflection-note"><p onClick={() => dispatch(hide())}>오답노트</p></Link>
+                <div className={styles.MobileHeaderDropDownBorder}></div>
+                <Link to="/board"><p onClick={() => dispatch(hide())}>게시판</p></Link>
+                <div className={styles.MobileHeaderDropDownBorder}></div>
+                <Link to="/search"><p onClick={() => dispatch(hide())}><img src={iconSearch}></img></p></Link>
+            </div>
+        </header>
+    )
 }
 
 class PCHeader extends React.Component {
