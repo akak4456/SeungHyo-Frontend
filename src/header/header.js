@@ -6,6 +6,7 @@ import iconSearch from '../img/icon-search.png';
 import {Link} from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import Logo from '../common/logo/logo.js';
+import HamburgerButton from '../common/button/hamburger/hamburger-button.js';
 
 class TapButton extends React.Component {
     render() {
@@ -25,6 +26,35 @@ class UserAnchor extends React.Component {
                 <li>설정</li>
                 <li>로그아웃</li>
             </ul>
+        )
+    }
+}
+
+class MobileHeader extends React.Component {
+    render() {
+        return (
+            <header className={styles.HeaderRoot}>
+                <Link to ="/">
+                    <Logo />
+                </Link>
+                <div className={styles.HeaderRightSide}>
+                    <div className={styles.HeaderUserAnchorGroup}>
+                        <UserAnchor />
+                    </div>
+                    <div className={styles.HeaderHamburgerButtonGroup}>
+                        <HamburgerButton />
+                    </div>
+                </div>
+                <div className={styles.MobileHeaderDropDown}>
+                    <Link to="/problem-list"><p>문제</p></Link>
+                    <div className={styles.MobileHeaderDropDownBorder}></div>
+                    <Link to="/reflection-note"><p>오답노트</p></Link>
+                    <div className={styles.MobileHeaderDropDownBorder}></div>
+                    <Link to="/board"><p>게시판</p></Link>
+                    <div className={styles.MobileHeaderDropDownBorder}></div>
+                    <Link to="/search"><p><img src={iconSearch}></img></p></Link>
+                </div>
+            </header>
         )
     }
 }
@@ -57,7 +87,7 @@ export default class Header extends React.Component {
         // TODO 나중에 모바일 및 반응형 컴포넌트 제작하기
         return (
             <>
-                <Mobile><p>Header Mobile</p></Mobile>
+                <Mobile><MobileHeader></MobileHeader></Mobile>
                 <PC><PCHeader/></PC> 
             </>
         );

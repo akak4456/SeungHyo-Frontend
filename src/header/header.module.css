@@ -3,6 +3,7 @@
     padding-right: 12.5%;
     border-bottom: 1px solid var(--color-white-gray);
     display: flex;
+    position: relative;
     flex-direction: row;
 }
 .HeaderRightSide {
@@ -11,6 +12,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
 }
 
 .HeaderUserAnchorGroup {
@@ -59,4 +61,37 @@
 .TapButtonRoot img{
     width: 16px;
     height: 16px;
+}
+
+.HeaderHamburgerButtonGroup {
+    margin-left: auto;
+    margin-bottom: 16px;
+}
+
+.MobileHeaderDropDown {
+    position: absolute;
+    top: 100%;
+    width: 75%;
+    background-color: white;
+    margin-top: 1px;
+}
+
+.MobileHeaderDropDown a {
+    text-decoration: none;
+    color: var(--color-normal-text-color);
+}
+
+.MobileHeaderDropDown p {
+    padding: 16px;
+    color: var(--color-normal-text-color);
+}
+
+.MobileHeaderDropDown img {
+    width: 16px;
+    height: 16px;
+}
+
+.MobileHeaderDropDownBorder {
+    height: 1px;
+    background-color: var(--color-white-gray);
 }
