@@ -9,7 +9,7 @@ export default class HamburgerButton extends React.Component {
             <button className={styles.HamburgerButton} onClick={this.props.onClick}>
                 <List 
                 color='white'
-                size='24'
+                size='12'
                 />
             </button>
         );

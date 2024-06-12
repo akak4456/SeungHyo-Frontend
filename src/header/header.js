@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import styles from './header.module.css';
 import {Mobile, PC} from '../responsive.js';
@@ -7,8 +7,6 @@ import {Link} from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import Logo from '../common/logo/logo.js';
 import HamburgerButton from '../common/button/hamburger/hamburger-button.js';
-import { useSelector, useDispatch } from 'react-redux';
-import { show, hide } from '../store/features/header/headerSlice.js';
 
 class TapButton extends React.Component {
     render() {
@@ -33,8 +31,13 @@ class UserAnchor extends React.Component {
 }
 
 function MobileHeader() {
-    const isDropdownShown = useSelector((state) => state.header.isDropdownShown);
-    const dispatch = useDispatch();
+    const [isDropdownShown, setDropdownShown] = useState(false);
+    const onShow = () => {
+        setDropdownShown(true);
+    }
+    const onHide = () => {
+        setDropdownShown(false);
+    }
     return (
         <header className={styles.HeaderRoot}>
             <Link to ="/">
@@ -45,17 +48,17 @@ function MobileHeader() {
                     <UserAnchor />
                 </div>
                 <div className={styles.HeaderHamburgerButtonGroup}>
-                    <HamburgerButton onClick={() => dispatch(isDropdownShown ? hide() : show())}/>
+                    <HamburgerButton onClick={isDropdownShown? onHide : onShow}/>
                 </div>
             </div>
             <div className={styles.MobileHeaderDropDown} style={{opacity: isDropdownShown ?  '1' : '0'}}>
-                <Link to="/problem-list"><p onClick={() => dispatch(hide())}>문제</p></Link>
+                <Link to="/problem-list"><p>문제</p></Link>
                 <div className={styles.MobileHeaderDropDownBorder}></div>
-                <Link to="/reflection-note"><p onClick={() => dispatch(hide())}>오답노트</p></Link>
+                <Link to="/reflection-note"><p>오답노트</p></Link>
                 <div className={styles.MobileHeaderDropDownBorder}></div>
-                <Link to="/board"><p onClick={() => dispatch(hide())}>게시판</p></Link>
+                <Link to="/board"><p>게시판</p></Link>
                 <div className={styles.MobileHeaderDropDownBorder}></div>
-                <Link to="/search"><p onClick={() => dispatch(hide())}><img src={iconSearch}></img></p></Link>
+                <Link to="/search"><p><img src={iconSearch}></img></p></Link>
             </div>
         </header>
     )
