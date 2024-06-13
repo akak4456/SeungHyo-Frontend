@@ -19,6 +19,11 @@
     margin-left: auto;
 }
 
+.UserAnchor a {
+    text-decoration: none;
+    color: var(--color-normal-text-color);
+}
+
 .UserAnchor>li {
     display: inline;
     color: var(--color-regent-gray);

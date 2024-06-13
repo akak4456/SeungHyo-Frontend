@@ -77,17 +77,15 @@ class Ad extends React.Component {
     }
 }
 
-export default class Intro extends React.Component {
-    render() {
-        return (
-            <>
-                <Header />
-                <main>
-                    <Ad />
-                    <p className={styles.IntroTitle}>쉽다! 재미있다! 빠르다!</p>
-                    <Statistics />
-                </main>
-            </>
-        )
-    }
+export default function Intro() {
+    return (
+        <>
+            <Header />
+            <main>
+                <Ad />
+                <p className={styles.IntroTitle}>쉽다! 재미있다! 빠르다!</p>
+                <Statistics />
+            </main>
+        </>
+    )
 }

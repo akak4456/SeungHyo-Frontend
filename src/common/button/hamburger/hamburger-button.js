@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom';
 import styles from './hamburger-button.module.css';
 import {List} from 'react-bootstrap-icons';
 
-export default class HamburgerButton extends React.Component {
-    render() {
-        return (
-            <button className={styles.HamburgerButton} onClick={this.props.onClick}>
-                <List 
-                color='white'
-                size='12'
-                />
-            </button>
-        );
-    }
+const HamburgerButton = props => {
+    return (
+        <button className={styles.HamburgerButton} onClick={props.onClick}>
+            <List 
+            color='white'
+            size='12'
+            />
+        </button>
+    );
 }
+
+export default HamburgerButton;

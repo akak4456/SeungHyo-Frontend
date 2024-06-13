@@ -12,6 +12,7 @@ import Search from './main/search/search.js';
 import Footer from './footer/footer.js';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
+import Join from './main/join/join.js';
 
 class Root extends React.Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class Root extends React.Component {
                         <Route path="/reflection-note/*" element={<ReflectionNote/>}></Route>
                         <Route path="/board/*" element={<Board/>}></Route>
                         <Route path="/search/*" element={<Search/>}></Route>
+                        <Route path="/join/*" element= {<Join/>}></Route>
                     </Routes>
                     <Footer />
                 </BrowserRouter>

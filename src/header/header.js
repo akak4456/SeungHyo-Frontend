@@ -18,16 +18,16 @@ class TapButton extends React.Component {
     }
 }
 
-class UserAnchor extends React.Component {
-    render() {
-        return (
-            <ul className={styles.UserAnchor}>
-                <li>akak4456</li>
-                <li>설정</li>
-                <li>로그아웃</li>
-            </ul>
-        )
-    }
+function UserAnchor() {
+    return (
+        <ul className={styles.UserAnchor}>
+            <li><NavLink to={'/join'}>회원가입</NavLink></li>
+            <li>로그인</li>
+            <li>akak4456</li>
+            <li>설정</li>
+            <li>로그아웃</li>
+        </ul>
+    )
 }
 
 function MobileHeader() {
@@ -64,27 +64,25 @@ function MobileHeader() {
     )
 }
 
-class PCHeader extends React.Component {
-    render() {
-        return(
-            <header className={styles.HeaderRoot}>
-                <Link to ="/">
-                    <Logo />
-                </Link>
-                <div className={styles.HeaderRightSide}>
-                    <div className={styles.HeaderUserAnchorGroup}>
-                        <UserAnchor />
-                    </div>
-                    <div>
-                        <TapButton buttonElement={"문제"} linkTo={"/problem-list"} />
-                        <TapButton buttonElement={"오답노트"} linkTo={"/reflection-note"} />
-                        <TapButton buttonElement={"게시판"} linkTo={"/board"}/>
-                        <TapButton buttonElement={<img src={iconSearch}></img>} linkTo={"/search"} />
-                    </div>
+function PCHeader () {
+    return(
+        <header className={styles.HeaderRoot}>
+            <Link to ="/">
+                <Logo />
+            </Link>
+            <div className={styles.HeaderRightSide}>
+                <div className={styles.HeaderUserAnchorGroup}>
+                    <UserAnchor />
                 </div>
-            </header>
-        )
-    }
+                <div>
+                    <TapButton buttonElement={"문제"} linkTo={"/problem-list"} />
+                    <TapButton buttonElement={"오답노트"} linkTo={"/reflection-note"} />
+                    <TapButton buttonElement={"게시판"} linkTo={"/board"}/>
+                    <TapButton buttonElement={<img src={iconSearch}></img>} linkTo={"/search"} />
+                </div>
+            </div>
+        </header>
+    )
 }
 
 export default class Header extends React.Component {
