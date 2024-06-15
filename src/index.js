@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 import store from './store/store.js';
 import Join from './main/join/join.js';
 import Login from './main/login/login.js';
-
+import PwFind from './main/pw-find/pw-find.js';
 function Root() {
     return (
         <Provider store={store}>
@@ -28,7 +28,7 @@ function Root() {
                     <Route path="/join/*" element= {<Join/>}></Route>
                     <Route path="/login/*" element= {<Login/>}></Route>
                     <Route path="/agree/*" ></Route> // TODO
-                    <Route path="/pw-find/*" ></Route> // TODO
+                    <Route path="/pw-find/*" element = {<PwFind />}></Route>
                 </Routes>
                 <Footer />
             </BrowserRouter>

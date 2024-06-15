@@ -50,7 +50,7 @@ export default function Login() {
                     </div>
                 </PC>
                 <Mobile>
-                <div className={styles.LoginFormRootMobile}>
+                    <div className={styles.LoginFormRootMobile}>
                         <LoginFormInner></LoginFormInner>
                     </div>
                 </Mobile>
