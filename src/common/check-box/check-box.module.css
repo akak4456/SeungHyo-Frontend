@@ -1,0 +1,11 @@
+.CheckBox {
+    width: 16px;
+    height: 16px;
+}
+.CheckBoxContainer {
+    display: flex;
+    align-items: center;
+}
+.CheckBoxContainer label {
+    margin-left: 8px;
+}

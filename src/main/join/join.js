@@ -11,8 +11,8 @@ function JoinFormInner() {
         <>
             <div className={styles.JoinFormInner}>
                 <p className={styles.JoinMainTitle}>회원가입</p>
-                <p className={styles.JoinSubTitle}>계정이 이미 있는 경우 <NavLink to={'login'}>로그인</NavLink>을 해주세요.</p>
-                <p className={styles.JoinSubTitle}>가입을 하면 승효 온라인 저지의 <NavLink to={'agree'}>이용약관, 개인정보취급방침 및 개인정보 3자제공</NavLink>에 동의하게 됩니다.</p>
+                <p className={styles.JoinSubTitle}>계정이 이미 있는 경우 <NavLink to={'/login'}>로그인</NavLink>을 해주세요.</p>
+                <p className={styles.JoinSubTitle}>가입을 하면 승효 온라인 저지의 <NavLink to={'/agree'}>이용약관, 개인정보취급방침 및 개인정보 3자제공</NavLink>에 동의하게 됩니다.</p>
                 <p className={styles.JoinSubTitle}>가입 후 아이디는 변경할 수 없습니다.</p>
                 <div className={styles.JoinDiv}></div>
                 <p className={styles.JoinInputTitle}>아이디</p>
