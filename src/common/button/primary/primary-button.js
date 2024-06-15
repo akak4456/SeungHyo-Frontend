@@ -4,7 +4,7 @@ import styles from './primary-button.module.css';
 
 const PrimaryButton = props => {
     return (
-        <button className={styles.PrimaryButton}>
+        <button className={styles.PrimaryButton} onClick={props.onClick}>
             {props.buttonText}
         </button>
     )

@@ -2,21 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './pw-find.module.css';
 import Header from '../../header/header';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import InputBox from '../../common/input-box/input-box';
 import PrimamryButton from '../../common/button/primary/primary-button';
 import {Mobile, PC} from '../../responsive';
 import {PersonFill, LockFill} from 'react-bootstrap-icons';
 import CheckBox from '../../common/check-box/check-box';
 import PrimaryButton from '../../common/button/primary/primary-button';
-
 function PwFindInner() {
+    const navigate = useNavigate();
+    const onPwFindClick = () => {
+        navigate('/pw-reset');
+    };
     return (
         <>
             <p className={styles.PwFindInputTitle}>아이디</p>
             <InputBox type="text"></InputBox>
             <div className={styles.PwFindButton}>
-                <PrimaryButton buttonText={"비밀번호 찾기"}></PrimaryButton>
+                <PrimaryButton buttonText={"비밀번호 찾기"} onClick={onPwFindClick}></PrimaryButton>
             </div>
         </>
     )
