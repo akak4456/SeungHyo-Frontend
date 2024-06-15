@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './reset.css';
 import './theme.css';
-import style from './index.module.css';
+import './index.css';
 import Intro from './main/intro/intro.js';
 import ProblemList from './main/problem-list/problem-list.js';
 import ReflectionNote from './main/reflection-note/reflection-note.js';
@@ -15,30 +15,25 @@ import store from './store/store.js';
 import Join from './main/join/join.js';
 import Login from './main/login/login.js';
 
-class Root extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Intro/>}></Route>
-                        <Route path="/problem-list/*" element={<ProblemList/>}></Route>
-                        <Route path="/reflection-note/*" element={<ReflectionNote/>}></Route>
-                        <Route path="/board/*" element={<Board/>}></Route>
-                        <Route path="/search/*" element={<Search/>}></Route>
-                        <Route path="/join/*" element= {<Join/>}></Route>
-                        <Route path="/login/*" element= {<Login/>}></Route>
-                        <Route path="/agree/*" ></Route> // TODO
-                        <Route path="/pw-find/*" ></Route> // TODO
-                    </Routes>
-                    <Footer />
-                </BrowserRouter>
-            </Provider>
-        )
-    }
+function Root() {
+    return (
+        <Provider store={store}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Intro/>}></Route>
+                    <Route path="/problem-list/*" element={<ProblemList/>}></Route>
+                    <Route path="/reflection-note/*" element={<ReflectionNote/>}></Route>
+                    <Route path="/board/*" element={<Board/>}></Route>
+                    <Route path="/search/*" element={<Search/>}></Route>
+                    <Route path="/join/*" element= {<Join/>}></Route>
+                    <Route path="/login/*" element= {<Login/>}></Route>
+                    <Route path="/agree/*" ></Route> // TODO
+                    <Route path="/pw-find/*" ></Route> // TODO
+                </Routes>
+                <Footer />
+            </BrowserRouter>
+        </Provider>
+    )
 }
 
 // ========================================
