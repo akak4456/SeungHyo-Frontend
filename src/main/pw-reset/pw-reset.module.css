@@ -1,4 +1,4 @@
-.PwFindTitle {
+.PwResetTitle {
     padding-left: 12.5%;
     padding-top: 32px;
     padding-bottom: 32px;
@@ -8,30 +8,30 @@
     border-bottom: 1px solid var(--color-white-gray);
 }
 
-.PwFindRoot {
+.PwResetRoot {
     width: 600px;
     margin: auto;
     margin-top: 84px;
 }
 
-.PwFindRootMobile {
+.PwResetRootMobile {
     width: 75%;
     margin: auto;
     margin-top: 84px;
 }
 
-.PwFindInputTitle {
+.PwResetInputTitle {
     font-weight: bold;
     color: var(--color-gray);
     font-size: 13px;
     margin-top: 12px;
     margin-bottom: 6px;
 }
-.PwFindButton  {
+.PwResetButton  {
     width: 100%;
     display: flex;
     margin-top: 24px;
 }
-.PwFindButton button {
+.PwResetButton button {
     margin:auto;
 }

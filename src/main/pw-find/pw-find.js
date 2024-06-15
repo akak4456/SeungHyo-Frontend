@@ -10,9 +10,8 @@ import {PersonFill, LockFill} from 'react-bootstrap-icons';
 import CheckBox from '../../common/check-box/check-box';
 import PrimaryButton from '../../common/button/primary/primary-button';
 function PwFindInner() {
-    const navigate = useNavigate();
     const onPwFindClick = () => {
-        navigate('/pw-reset');
+        // TODO 이메일을 보내도록 해라
     };
     return (
         <>

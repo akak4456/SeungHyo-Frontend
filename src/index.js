@@ -15,6 +15,7 @@ import store from './store/store.js';
 import Join from './main/join/join.js';
 import Login from './main/login/login.js';
 import PwFind from './main/pw-find/pw-find.js';
+import PwReset from './main/pw-reset/pw-reset.js';
 function Root() {
     return (
         <Provider store={store}>
@@ -29,6 +30,7 @@ function Root() {
                     <Route path="/login/*" element= {<Login/>}></Route>
                     <Route path="/agree/*" ></Route> // TODO
                     <Route path="/pw-find/*" element = {<PwFind />}></Route>
+                    <Route path="/pw-reset/*" element = {<PwReset />}></Route>
                 </Routes>
                 <Footer />
             </BrowserRouter>
