@@ -1,80 +1,99 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './intro.module.css';
 import AdSample from '../../img/adsample.png'
 import {Mobile, PC} from '../../responsive';
 import Header from '../../header/header';
 
-class StatisticsBlock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            count: 0
-        };
-        this.endValue = props.mainNumber;
-        this.duration = 1000; // 애니메이션 시간 (밀리초)
-        this.incrementTime = 10; // 숫자 증가 주기 (밀리초)
-        this.incrementValue = this.endValue / (this.duration / this.incrementTime);
-    }
-    componentDidMount() {
-        this.interval = setInterval(() => {
-            this.setState(prevState => {
-                if (prevState.count + this.incrementValue >= this.endValue) {
-                    clearInterval(this.interval);
-                    return { count: this.endValue };
+const StatisticsBlock = ({ mainNumber, subTitle }) => {
+    const [count, setCount] = useState(0);
+    const endValue = mainNumber;
+    const duration = 1000; // 애니메이션 시간 (밀리초)
+    const incrementTime = 10; // 숫자 증가 주기 (밀리초)
+    const incrementValue = endValue / (duration / incrementTime);
+    const intervalRef = useRef(null);
+    const elementRef = useRef(null);
+    const observerRef = useRef(null);
+
+    useEffect(() => {
+        const observerCallback = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!intervalRef.current) {
+                        intervalRef.current = setInterval(() => {
+                            setCount(prevCount => {
+                                if (prevCount + incrementValue >= endValue) {
+                                    clearInterval(intervalRef.current);
+                                    intervalRef.current = null;
+                                    return endValue;
+                                }
+                                return prevCount + incrementValue;
+                            });
+                        }, incrementTime);
+                    }
+                } else {
+                    if (intervalRef.current) {
+                        clearInterval(intervalRef.current);
+                        intervalRef.current = null;
+                    }
                 }
-                return { count: prevState.count + this.incrementValue };
             });
-        }, this.incrementTime);
-    }
+        };
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
+        observerRef.current = new IntersectionObserver(observerCallback, {
+            threshold: 0.1, // 요소의 10%가 뷰포트에 보일 때 콜백 실행
+        });
 
-    render() {
-        return(
-            <div className={styles.IntroStatisticsBlock}>
-                <p className={styles.IntroStatisticsBlockMainText}>{Math.floor(this.state.count)}</p>
-                <p className={styles.IntroStatisticsBlockSubText}>{this.props.subTitle}</p>
-            </div>
-        )
-    }
-}
+        if (elementRef.current) {
+            observerRef.current.observe(elementRef.current);
+        }
 
-class Statistics extends React.Component {
-    render() {
-        return (
-            <>
-                <Mobile>
-                    <div className={styles.IntroStatistics} style={{paddingBottom: '0px'}}>
-                        <StatisticsBlock mainNumber={30000} subTitle={"전체 문제"}/>
-                        <StatisticsBlock mainNumber={20000} subTitle={"채점 가능한 문제"}/>
-                    </div> 
-                    <div className={styles.IntroStatistics}>
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+            if (observerRef.current && elementRef.current) {
+                observerRef.current.unobserve(elementRef.current);
+            }
+        };
+    }, [incrementValue, incrementTime, endValue]);
+
+    return (
+        <div ref={elementRef} className={styles.IntroStatisticsBlock}>
+            <p className={styles.IntroStatisticsBlockMainText}>{Math.floor(count)}</p>
+            <p className={styles.IntroStatisticsBlockSubText}>{subTitle}</p>
+        </div>
+    );
+};
+function Statistics() {
+    return (
+        <>
+            <Mobile>
+                <div className={styles.IntroStatistics} style={{paddingBottom: '0px'}}>
+                    <StatisticsBlock mainNumber={30000} subTitle={"전체 문제"}/>
+                    <StatisticsBlock mainNumber={20000} subTitle={"채점 가능한 문제"}/>
+                </div> 
+                <div className={styles.IntroStatistics}>
+                <StatisticsBlock mainNumber={1000} subTitle={"풀린 문제"}/>
+                <StatisticsBlock mainNumber={2000} subTitle={"채점 가능 언어"}/>
+                </div> 
+            </Mobile>
+            <PC>
+                <div className={styles.IntroStatistics}>
+                    <StatisticsBlock mainNumber={30000} subTitle={"전체 문제"}/>
+                    <StatisticsBlock mainNumber={20000} subTitle={"채점 가능한 문제"}/>
                     <StatisticsBlock mainNumber={1000} subTitle={"풀린 문제"}/>
                     <StatisticsBlock mainNumber={2000} subTitle={"채점 가능 언어"}/>
-                    </div> 
-                </Mobile>
-                <PC>
-                    <div className={styles.IntroStatistics}>
-                        <StatisticsBlock mainNumber={30000} subTitle={"전체 문제"}/>
-                        <StatisticsBlock mainNumber={20000} subTitle={"채점 가능한 문제"}/>
-                        <StatisticsBlock mainNumber={1000} subTitle={"풀린 문제"}/>
-                        <StatisticsBlock mainNumber={2000} subTitle={"채점 가능 언어"}/>
-                    </div>
-                </PC>
-            </>
-        )
-    }
+                </div>
+            </PC>
+        </>
+    )
 }
 
-class Ad extends React.Component {
-    render() {
-        return (
-            <img className={styles.IntroAd} src={AdSample}></img>
-        )
-    }
+function Ad() {
+    return (
+        <img className={styles.IntroAd} src={AdSample}></img>
+    )
 }
 
 export default function Intro() {
