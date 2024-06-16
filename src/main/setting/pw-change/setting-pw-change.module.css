@@ -1,0 +1,51 @@
+.SettingPwChangeRoot {
+    width: 75%;
+    margin: auto;
+    display: flex;
+    margin-top: 48px;
+    flex-direction: row;
+}
+
+.SettingPwChangeRootMobile {
+    flex-direction: column;
+}
+
+.SettingPwChangeContent {
+    flex-grow: 1;
+    margin-left: 24px;
+}
+
+.SettingPwChangeContentMobile {
+    margin-left: 0px;
+    margin-top: 24px;
+}
+
+.SettingPwChangeMainTitle {
+    font-size: 21px;
+    color: var(--color-normal-text-color);
+}
+
+.SettingPwChangeDiv {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-white-gray);
+    margin-top: 8px;
+}
+
+.SettingPwChangeInputTitle {
+    font-weight: bold;
+    color: var(--color-gray);
+    font-size: 13px;
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+.SettingPwChangeButtonGroup {
+    width: 100%;
+    display: flex;
+    margin-top: 16px;
+}
+
+.SettingPwChangeButtonGroup button {
+    margin: auto;
+}

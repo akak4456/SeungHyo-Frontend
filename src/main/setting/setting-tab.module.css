@@ -15,10 +15,16 @@
     padding-left: 8px;
     border-bottom: 0;
 }
+.SettingTabBlock:hover {
+    color: var(--color-primary);
+}
 .SettingTabBlock:last-child {
     border-bottom: 1px solid var(--color-white-gray);
 }
 .SettingTabBlockActive {
     color: white;
     background-color: var(--color-setting-tab-background);
+}
+.SettingTabBlockActive:hover {
+    color: white;
 }
