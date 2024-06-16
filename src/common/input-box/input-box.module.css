@@ -6,3 +6,7 @@
     box-sizing: border-box;
     width: 100%;
 }
+
+.InputBox:disabled {
+    background-color: var(--color-white-gray);
+}
