@@ -18,6 +18,7 @@ import PwFind from './main/pw-find/pw-find.js';
 import PwReset from './main/pw-reset/pw-reset.js';
 import SettingInfoEdit from './main/setting/info-edit/setting-info-edit.js';
 import SettingPwChange from './main/setting/pw-change/setting-pw-change.js';
+import SettingWithdraw from './main/setting/withdraw/setting-withdraw.js';
 function Root() {
     return (
         <Provider store={store}>
@@ -35,6 +36,7 @@ function Root() {
                     <Route path="/pw-reset/*" element = {<PwReset />}></Route>
                     <Route path="/setting/info-edit" element = {<SettingInfoEdit />}></Route>
                     <Route path="/setting/pw-change" element = {<SettingPwChange />}></Route>
+                    <Route path="/setting/withdraw" element = {<SettingWithdraw />}></Route>
                 </Routes>
                 <Footer />
             </BrowserRouter>

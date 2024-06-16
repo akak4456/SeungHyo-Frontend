@@ -1,0 +1,7 @@
+.DangerButton {
+    padding: 8px;
+    background-color: var(--color-danger);
+    color: white;
+    font-size: 14px;
+    text-align: center;
+}
