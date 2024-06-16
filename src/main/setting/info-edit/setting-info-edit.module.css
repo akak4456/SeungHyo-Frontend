@@ -1,0 +1,51 @@
+.SettingInfoEditRoot {
+    width: 75%;
+    margin: auto;
+    display: flex;
+    margin-top: 48px;
+    flex-direction: row;
+}
+
+.SettingInfoEditRootMobile {
+    flex-direction: column;
+}
+
+.SettingInfoEditContent {
+    flex-grow: 1;
+    margin-left: 24px;
+}
+
+.SettingInfoEditContentMobile {
+    margin-left: 0px;
+    margin-top: 24px;
+}
+
+.SettingInfoEditMainTitle {
+    font-size: 21px;
+    color: var(--color-normal-text-color);
+}
+
+.SettingInfoEditDiv {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-white-gray);
+    margin-top: 8px;
+}
+
+.SettingInfoInputTitle {
+    font-weight: bold;
+    color: var(--color-gray);
+    font-size: 13px;
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+.SettingInfoEditButtonGroup {
+    width: 100%;
+    display: flex;
+    margin-top: 16px;
+}
+
+.SettingInfoEditButtonGroup button {
+    margin: auto;
+}

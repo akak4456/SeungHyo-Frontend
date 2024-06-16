@@ -24,7 +24,7 @@ function UserAnchor() {
             <li><NavLink to={'/join'}>회원가입</NavLink></li>
             <li><NavLink to={'/login'}>로그인</NavLink></li>
             <li>akak4456</li>
-            <li>설정</li>
+            <li><NavLink to ={'/setting/info-edit'}>설정</NavLink></li>
             <li>로그아웃</li>
         </ul>
     )
