@@ -1,0 +1,38 @@
+.UserRoot {
+    width: 75%;
+    margin: auto;
+    margin-top: 48px;
+}
+.UserStatisticsRoot {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.UserStatisticsRootMobile {
+    flex-direction: column;
+}
+
+.UserName {
+    color: var(--color-normal-text-color);
+    font-size: 28px;
+}
+
+.UserMessage {
+    padding: 16px;
+    border-left: 2px solid var(--color-white-gray);
+    font-size: 17.5px;
+    margin-top: 16px;
+    transition: 0.5s;
+}
+
+.UserMessage:hover {
+    border-left-color: var(--color-primary);
+}
+
+.UserDiv {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-white-gray);
+    margin-top: 96px;
+}
