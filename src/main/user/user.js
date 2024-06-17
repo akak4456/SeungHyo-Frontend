@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import styles from './user.module.css';
 import Header from '../../header/header';
@@ -6,6 +6,7 @@ import {useMediaQuery} from 'react-responsive';
 import { isMobileQuery } from '../../responsive';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
+import LineGraph from '../../common/graph/line-graph';
 const UserStatisticsRightSideContainer = props => {
     return (
         <div className={styles.UserStatisticsRightSideContainerRoot}>
@@ -15,9 +16,25 @@ const UserStatisticsRightSideContainer = props => {
     );
 }
 const User = () => {
+    const transformLineGraphValue = (value) => {
+        return (value * 100).toFixed(1) + "%";
+    };
+    const lineGraphContainerRef = useRef(null);
     const isMobile = useMediaQuery({
         query : isMobileQuery
     });
+    useEffect(() => {
+        // LineGraph 같은 경우 canvas 를 resize 하는 로직이 들어가 있습니다.
+        // 그래서 lineGraphContainerRef.current.scrollLeft = lineGraphContainerRef.current.scrollWidth;
+        // 만 하면 웹페이지를 새로 고침할 때 제대로 동작하지 않을 수도 있습니다.
+        // 그래서 ResizeObserver 를 두어서 처리하였습니다.
+        const observer = new ResizeObserver(entries => {
+            lineGraphContainerRef.current.scrollLeft = lineGraphContainerRef.current.scrollWidth;
+        });
+        observer.observe(lineGraphContainerRef.current);
+
+        return () => observer.disconnect();
+    }, [/* 여기에 Canvas 업데이트를 트리거할 조건들 */]);
     return (
         <>
             <Header></Header>
@@ -33,7 +50,9 @@ const User = () => {
                             <p className={styles.UserStatisticsLeftContent}>4579</p>
                         </div>
                         <div className={styles.UserDiv}></div>
-                        <div className={styles.UserStatisticsLeftRankGraph}></div>
+                        <div ref={lineGraphContainerRef} className={styles.UserStatisticsLeftRankGraph}>
+                            <LineGraph getPointValueText={transformLineGraphValue} />
+                        </div>
                         <div className={classNames(styles.UserDiv, styles.UserDivMarginTop24)}></div>
                         <div className={styles.UserStatisticsLeftRow}>
                             <p className={classNames(styles.UserStatisticsLeftTitle, styles.UserStatisticsLeftTitleCorrect)}>맞았습니다</p>
