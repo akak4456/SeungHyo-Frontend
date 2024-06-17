@@ -5,7 +5,15 @@ import Header from '../../header/header';
 import {useMediaQuery} from 'react-responsive';
 import { isMobileQuery } from '../../responsive';
 import classNames from 'classnames';
-
+import { NavLink } from 'react-router-dom';
+const UserStatisticsRightSideContainer = props => {
+    return (
+        <div className={styles.UserStatisticsRightSideContainerRoot}>
+            <p className={styles.UserStatisticsRightSideTitle}>{props.title}</p>
+            {props.children}
+        </div>
+    );
+}
 const User = () => {
     const isMobile = useMediaQuery({
         query : isMobileQuery
@@ -39,8 +47,50 @@ const User = () => {
                         <div className={styles.UserDiv}></div>
                         <div className={styles.UserStatisticsLeftRatioGraph}></div>
                     </div>
-                    <div>
+                    <div className={classNames(styles.UserStatisticsRightSide, {[styles.UserStatisticsRightSideMobile]: isMobile})}>
+                        <UserStatisticsRightSideContainer title={'2023 ~ 2024년'}>
+                            <div className={styles.UserStatisticsRightSideDaily}>
 
+                            </div>
+                        </UserStatisticsRightSideContainer>
+                        <div className={styles.marginTop24}></div>
+                        <UserStatisticsRightSideContainer title={'맞은 문제'}>
+                            <div className={styles.UserStatisticsRightSideProblem}>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleCorrect}>1000</span></NavLink>
+                            </div>
+                        </UserStatisticsRightSideContainer>
+                        <div className={styles.marginTop24}></div>
+                        <UserStatisticsRightSideContainer title={'틀린 문제'}>
+                            <div className={styles.UserStatisticsRightSideProblem}>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                                <NavLink to={'#'}><span className={styles.UserStatisticsLeftTitleWrong}>1000</span></NavLink>
+                            </div>
+                        </UserStatisticsRightSideContainer>
                     </div>
                 </div>
             </main>
