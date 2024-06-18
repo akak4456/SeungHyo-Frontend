@@ -7,6 +7,7 @@ import { isMobileQuery } from '../../responsive';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import LineGraph from '../../common/graph/line-graph';
+import PieGraph from '../../common/graph/pie-graph';
 const UserStatisticsRightSideContainer = props => {
     return (
         <div className={styles.UserStatisticsRightSideContainerRoot}>
@@ -64,7 +65,9 @@ const User = () => {
                             <p className={styles.UserStatisticsLeftContent}>4579</p>
                         </div>
                         <div className={styles.UserDiv}></div>
-                        <div className={styles.UserStatisticsLeftRatioGraph}></div>
+                        <div className={styles.UserStatisticsLeftRatioGraph}>
+                            <PieGraph></PieGraph>
+                        </div>
                     </div>
                     <div className={classNames(styles.UserStatisticsRightSide, {[styles.UserStatisticsRightSideMobile]: isMobile})}>
                         <UserStatisticsRightSideContainer title={'2023 ~ 2024년'}>
