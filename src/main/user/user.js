@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import LineGraph from '../../common/graph/line-graph';
 import PieGraph from '../../common/graph/pie-graph';
+import GrassGraph from '../../common/graph/grass-graph';
 const UserStatisticsRightSideContainer = props => {
     return (
         <div className={styles.UserStatisticsRightSideContainerRoot}>
@@ -17,6 +18,46 @@ const UserStatisticsRightSideContainer = props => {
     );
 }
 const User = () => {
+    const getTempData = (year) => {
+        const startDate = new Date(year, 0, 1); // 해당 연도의 1월 1일
+        const endDate = new Date(year, 11, 31); // 해당 연도의 12월 31일
+        const notValidData = {colorLevel: -1, date: startDate};
+        
+        const weeks = [];
+        let currentWeek = [];
+        
+        
+        let currentDate = new Date(startDate);
+    
+        // 시작 주
+        for (let i = 0; i < currentDate.getDay(); i++){
+            currentWeek.push(notValidData);
+        }
+        for (let i = currentDate.getDay(); i < 7; i++) {
+            currentWeek.push({colorLevel: Math.floor(Math.random() * 15),date: new Date(currentDate)});
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        weeks.push(currentWeek);
+        
+        // 중간 주들
+        while (currentDate <= endDate) {
+            currentWeek = [];
+            for (let i = 0; i < 7; i++) {
+            currentWeek.push(currentDate <= endDate ? {colorLevel: Math.floor(Math.random() * 15),date: new Date(currentDate)} : notValidData);
+            currentDate.setDate(currentDate.getDate() + 1);
+            }
+            weeks.push(currentWeek);
+        }
+
+        // 마지막 주
+        if (currentWeek.length < 7) {
+            while (currentWeek.length < 7) {
+                currentWeek.push(notValidData);
+            }
+        }
+        
+        return weeks;
+    }
     const transformLineGraphValue = (value) => {
         return (value * 100).toFixed(1) + "%";
     };
@@ -72,7 +113,8 @@ const User = () => {
                     <div className={classNames(styles.UserStatisticsRightSide, {[styles.UserStatisticsRightSideMobile]: isMobile})}>
                         <UserStatisticsRightSideContainer title={'2023 ~ 2024년'}>
                             <div className={styles.UserStatisticsRightSideDaily}>
-
+                                <GrassGraph year={2023} data={getTempData(2023)}/>
+                                <GrassGraph year={2024} data={getTempData(2024)}/>
                             </div>
                         </UserStatisticsRightSideContainer>
                         <div className={styles.marginTop24}></div>
