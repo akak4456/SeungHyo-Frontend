@@ -166,6 +166,7 @@ function drawGrass(ctx, daysTextEnd, colorData) {
     ctx.lineTo(bottomStartX, grassStartY + 7 * (RECT_SIZE - RECT_BORDER_SIZE));
     ctx.strokeStyle = divideBorderColor;
     ctx.stroke();
+    let grassEnd = 0;
     monthDivideData.forEach((divideData, columnIndex) => {
         divideBorderColor = GRASS_MONTH_DIVIDER_BORDER_UNSELECTED_COLOR;
         if(divideData.isSelected) {
@@ -173,6 +174,7 @@ function drawGrass(ctx, daysTextEnd, colorData) {
         }
         ctx.beginPath();
         ctx.moveTo(topStartX, grassStartY);
+        grassEnd = Math.max(grassEnd, topStartX + (divideData.topWidth) * (RECT_SIZE - RECT_BORDER_SIZE));
         ctx.lineTo(topStartX + (divideData.topWidth) * (RECT_SIZE - RECT_BORDER_SIZE), grassStartY);
         ctx.strokeStyle = divideBorderColor;
         topStartX += (divideData.topWidth) * (RECT_SIZE - RECT_BORDER_SIZE);
@@ -209,20 +211,28 @@ function drawGrass(ctx, daysTextEnd, colorData) {
         ctx.lineTo(bottomStartX, grassStartY + 7 * (RECT_SIZE - RECT_BORDER_SIZE));
         ctx.strokeStyle = divideBorderColor;
         ctx.stroke();
-    })
+    });
+
+    ctx.save();
+    const monthsText = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let startX = daysTextEnd;
+    monthsText.forEach((monthText, index) => {
+        ctx.fillStyle = GRASS_TEXT_COLOR;
+        ctx.textAlign = 'center';
+        ctx.font = GRASS_DAYS_TEXT_FONT;
+        let metrics = ctx.measureText(monthText);
+        const actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+        const actualWidth = metrics.width;
+        const wholeWidth = (RECT_SIZE - RECT_BORDER_SIZE) * monthDivideData[index].topWidth;
+        ctx.fillText(monthText,startX + actualWidth + (wholeWidth - actualWidth) / 2, actualHeight + (grassStartY - actualHeight) / 2);
+        startX += wholeWidth;
+    });
+    ctx.restore();
+    return grassEnd;
 }
 const GrassGraph = props => {
     const canvasRef = useRef(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-    useEffect(() => {
-        const handleResize = () => {
-            const width = 80 * RECT_SIZE;
-            setDimensions({ width, height: RECT_SIZE * 8 + RECT_BORDER_SIZE });
-        };
-
-        handleResize(); // Initial call to set dimensions
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
     useEffect(() => {
         const canvas = canvasRef.current;
         if (canvas) {
@@ -236,12 +246,15 @@ const GrassGraph = props => {
 
             const yearTextEnd = drawYearTitle(ctx, props.year);
             const daysTextEnd = drawDayesText(ctx, yearTextEnd);
-            drawGrass(ctx, daysTextEnd, props.data);
+            const grassEnd = drawGrass(ctx, daysTextEnd, props.data);
+            if(width == 0) {
+                setDimensions({ width: grassEnd + paddingHorizontal, height: RECT_SIZE * 8 + RECT_BORDER_SIZE });
+            }
         }   
     }, [dimensions, props]);
 
     return (
-        <canvas ref={canvasRef} style={{ width: dimensions.width, height: dimensions.height }} />
+        <canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />
     );
 };
 

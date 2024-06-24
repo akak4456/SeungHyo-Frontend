@@ -1,6 +1,6 @@
 import React from 'react';
 import {useMediaQuery} from 'react-responsive';
-
+export const isTabletQuery = "(max-width:961px)";
 export const isMobileQuery = "(max-width:768px)";
 
 export const Mobile = ({children}) => {

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styles from './user.module.css';
 import Header from '../../header/header';
 import {useMediaQuery} from 'react-responsive';
-import { isMobileQuery } from '../../responsive';
+import { isTabletQuery } from '../../responsive';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import LineGraph from '../../common/graph/line-graph';
@@ -16,6 +16,19 @@ const UserStatisticsRightSideContainer = props => {
             {props.children}
         </div>
     );
+}
+const UserStatisticsGrassLinear = props => {
+    return (
+        <div className={styles.UserStatisticsGrassLinearRoot}>
+            <div className={styles.UserStatisticsGrassLinearInner}>
+                <div className={styles.UserStatisticsGrassLinearText}>
+                    <span>0</span>
+                    <span>14</span>
+                </div>
+                <div className={styles.UserStatisticsGrassLinearBox}></div>
+            </div>
+        </div>
+    )
 }
 const User = () => {
     const getTempData = (year) => {
@@ -63,7 +76,7 @@ const User = () => {
     };
     const lineGraphContainerRef = useRef(null);
     const isMobile = useMediaQuery({
-        query : isMobileQuery
+        query : isTabletQuery
     });
     useEffect(() => {
         // LineGraph 같은 경우 canvas 를 resize 하는 로직이 들어가 있습니다.
@@ -113,8 +126,11 @@ const User = () => {
                     <div className={classNames(styles.UserStatisticsRightSide, {[styles.UserStatisticsRightSideMobile]: isMobile})}>
                         <UserStatisticsRightSideContainer title={'2023 ~ 2024년'}>
                             <div className={styles.UserStatisticsRightSideDaily}>
+                                <UserStatisticsGrassLinear maxLevel={14}/>
                                 <GrassGraph year={2023} data={getTempData(2023)}/>
+                                <div className={styles.UserGrassGraphMargin} />
                                 <GrassGraph year={2024} data={getTempData(2024)}/>
+                                <div className={styles.UserGrassGraphMargin} />
                             </div>
                         </UserStatisticsRightSideContainer>
                         <div className={styles.marginTop24}></div>

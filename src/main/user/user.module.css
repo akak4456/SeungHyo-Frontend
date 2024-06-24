@@ -105,7 +105,7 @@
 .UserStatisticsRightSide {
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 50%;
+    flex-basis: auto;
     margin-left: 24px;
 }
 
@@ -153,4 +153,42 @@
     font-size: 12px;
     font-weight: bold;
     padding: 8px;
+}
+.UserGrassGraphMargin {
+    height: 16px;
+    width: 100%;
+}
+
+.UserStatisticsGrassLinearRoot {
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.UserStatisticsGrassLinearInner {
+    margin-left: auto;
+    width: 100px;
+}
+
+.UserStatisticsGrassLinearText {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.UserStatisticsGrassLinearText span{
+    font-size: 10px;
+    color: #DFDFDF;
+}
+
+.UserStatisticsGrassLinearBox {
+    width: 100%;
+    height: 12px;
+    box-sizing: border-box;
+    border: 1px solid #DFDFDF;
+    background: linear-gradient(to right, rgb(162, 238, 151), rgb(0, 152, 116));
 }
