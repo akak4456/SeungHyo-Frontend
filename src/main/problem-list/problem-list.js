@@ -20,7 +20,7 @@ const ProblemListTable = props => {
             </tr>
             <tr>
                 <td>1000</td>
-                <td><NavLink to={'#'}>A + B</NavLink></td>
+                <td><NavLink to={'/problem/1000'}>A + B</NavLink></td>
                 <td>다국어 태그</td>
                 <td>269294</td>
                 <td>1091136</td>
@@ -28,7 +28,7 @@ const ProblemListTable = props => {
             </tr>
             <tr>
                 <td>1000</td>
-                <td><NavLink to={'#'}>A + B</NavLink></td>
+                <td><NavLink to={'/problem/1000'}>A + B</NavLink></td>
                 <td>다국어 태그</td>
                 <td>269294</td>
                 <td>1091136</td>
@@ -36,7 +36,7 @@ const ProblemListTable = props => {
             </tr>
             <tr>
                 <td>1000</td>
-                <td><NavLink to={'#'}>A + B</NavLink></td>
+                <td><NavLink to={'/problem/1000'}>A + B</NavLink></td>
                 <td>다국어 태그</td>
                 <td>269294</td>
                 <td>1091136</td>

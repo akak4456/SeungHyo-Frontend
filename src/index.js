@@ -20,6 +20,7 @@ import SettingInfoEdit from './main/setting/info-edit/setting-info-edit.js';
 import SettingPwChange from './main/setting/pw-change/setting-pw-change.js';
 import SettingWithdraw from './main/setting/withdraw/setting-withdraw.js';
 import User from './main/user/user.js';
+import Problem from './main/problem/problem.js';
 function Root() {
     return (
         <Provider store={store}>
@@ -39,6 +40,7 @@ function Root() {
                     <Route path="/setting/pw-change" element = {<SettingPwChange />}></Route>
                     <Route path="/setting/withdraw" element = {<SettingWithdraw />}></Route>
                     <Route path="/user/*" element = { <User />}></Route>
+                    <Route path='/problem/*' element = { <Problem />}></Route>
                 </Routes>
                 <Footer />
             </BrowserRouter>

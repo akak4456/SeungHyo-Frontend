@@ -30,36 +30,36 @@
 }
 
 
-table, th, td {
+.ProblemListTableRoot,.ProblemListTableRoot th, .ProblemListTableRoot td {
     border-collapse: collapse;
     border: 1px solid var(--color-white-gray);
 }
-th, td {
+.ProblemListTableRoot th, .ProblemListTableRoot td {
     text-align: left;
     padding-top: 8px;
     padding-bottom: 8px;
     padding-left: 16px;
 }
-th:nth-child(1), td:nth-child(1) {
+.ProblemListTableRoot th:nth-child(1), .ProblemListTableRoot td:nth-child(1) {
     width: 10%;
 }
-th:nth-child(2), td:nth-child(2) {
+.ProblemListTableRoot th:nth-child(2), .ProblemListTableRoot td:nth-child(2) {
     width: 50%;
 }
-th:nth-child(3), td:nth-child(3) {
+.ProblemListTableRoot th:nth-child(3), .ProblemListTableRoot td:nth-child(3) {
     width: 20%;
 }
-th:nth-child(4), td:nth-child(4) {
+.ProblemListTableRoot th:nth-child(4), .ProblemListTableRoot td:nth-child(4) {
     width: 7%;
 }
-th:nth-child(5), td:nth-child(5) {
+.ProblemListTableRoot th:nth-child(5), .ProblemListTableRoot td:nth-child(5) {
     width: 6%;
 }
-th:nth-child(6), td:nth-child(6) {
+.ProblemListTableRoot th:nth-child(6), .ProblemListTableRoot td:nth-child(6) {
     width: 7%;
 }
 
-td a {
+.ProblemListTableRoot td a {
     text-decoration: none;
     color: var(--color-primary);
 }
