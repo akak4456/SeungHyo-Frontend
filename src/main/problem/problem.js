@@ -75,6 +75,13 @@ const ProblemLeftSide = (props) => {
             <pre className={styles.ProblemExample}>
 {example2Text}             
             </pre>
+            <ProblemTab text={"알고리즘 분류"} />
+            <div className={styles.ProblemLeftSideDivider}></div>
+            <ul className={styles.ProblemKindList}>
+                <li>구현</li>
+                <li>수학</li>
+                <li>사칙연산</li>
+            </ul>
         </div>
     )
 }

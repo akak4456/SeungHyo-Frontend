@@ -104,6 +104,19 @@
     font: inherit;
 }
 
+.ProblemKindList {
+    list-style-type: disc;
+    box-sizing: border-box;
+    padding-left: 24px;
+    padding-top: 8px;
+}
+
+.ProblemKindList li {
+    height: auto;
+    font-size: 16px;
+    line-height: 23px;
+}
+
 .ProblemRightSideRoot {
     width: 50%;
     margin-right: 24px;
