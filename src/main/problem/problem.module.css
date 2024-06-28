@@ -132,13 +132,15 @@
 
 .ProblemRightSideTable {
     width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
+    border-collapse: separate;
+    border-spacing: 0 16px;
 }
 
 .ProblemRightSideLeft {
     white-space: nowrap;
     text-align: right;
+    vertical-align: top;
+    padding-top: 8px;
     color: var(--color-normal-text-color);
     font-size: 13px;
     font-weight: bold;
@@ -147,4 +149,16 @@
 .ProblemRightSideRight {
     width: 100%;
     padding-left: 24px;
+}
+
+.ProblemRightSideRight label {
+    width: 100%;
+    display: inline-block;
+    margin-top: 16px;
+}
+.ProblemRightSideRight label:first-child {
+    margin-top: 0px;
+}
+.ProblemRightSideRight:last-child {
+    padding-top: 8px;
 }

@@ -7,6 +7,17 @@ import classNames from 'classnames';
 import {useMediaQuery} from 'react-responsive';
 import Tag from '../../common/tag/tag';
 import Dropdown from '../../common/dropdown/dropdown';
+import RadioButton from '../../common/radio-button/radio-button';
+import AceEditor from "react-ace";
+import PrimaryButton from "../../common/button/primary/primary-button";
+
+import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/ext-language_tools";
+
+function onChange(newValue) {
+    console.log("change", newValue);
+}
 const ProblemTab = (props) => {
     const copyFn = async (event) => {
         event.preventDefault();
@@ -96,11 +107,29 @@ const ProblemRightSide = (props) => {
                 </tr>
                 <tr>
                     <td className={styles.ProblemRightSideLeft}>소스 코드 공개</td>
-                    <td className={styles.ProblemRightSideRight}></td>
+                    <td className={styles.ProblemRightSideRight}>
+                        <fieldset>
+                            <RadioButton text="공개" />
+                            <RadioButton text="비공개" />
+                            <RadioButton text="맞았을 때만 공개" />
+                        </fieldset>
+                    </td>
                 </tr>
                 <tr>
                     <td className={styles.ProblemRightSideLeft}>소스 코드</td>
-                    <td className={styles.ProblemRightSideRight}></td>
+                    <td className={styles.ProblemRightSideRight}>
+                        <AceEditor
+                            mode="java"
+                            theme="github"
+                            onChange={onChange}
+                            name="UNIQUE_ID_OF_DIV"
+                            editorProps={{ $blockScrolling: true }}
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td className={styles.ProblemRightSideLeft}></td>
+                    <td className={styles.ProblemRightSideRight}><PrimaryButton buttonText={"제출하기"}></PrimaryButton></td>
                 </tr>
             </table>
         </div>

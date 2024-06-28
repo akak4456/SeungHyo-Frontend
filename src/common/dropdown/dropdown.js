@@ -18,7 +18,7 @@ const Dropdown = props => {
                 <p className={styles.DropdownCurText}>{curText}</p>
                 <CaretDownFill className={classNames(styles.DropdownDownFill, {[styles.DropdownDownFillRotate] : isOpen})}></CaretDownFill>
             </div>
-            <div className={styles.DropDownContent} style ={{opacity: isOpen ? 1 : 0}}>
+            <div className={styles.DropDownContent} style ={{opacity: isOpen ? 1 : 0, visibility: isOpen ? 'visible' : 'collapse'}}>
                 <div className={styles.DropDownSearchForm}>
                     <InputBox type="text" placeholder="검색"></InputBox>
                     <div>
