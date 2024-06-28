@@ -6,6 +6,7 @@ import { isTabletQuery } from '../../responsive';
 import classNames from 'classnames';
 import {useMediaQuery} from 'react-responsive';
 import Tag from '../../common/tag/tag';
+import Dropdown from '../../common/dropdown/dropdown';
 const ProblemTab = (props) => {
     const copyFn = async (event) => {
         event.preventDefault();
@@ -88,7 +89,20 @@ const ProblemLeftSide = (props) => {
 const ProblemRightSide = (props) => {
     return (
         <div className={classNames(styles.ProblemRightSideRoot, {[styles.ProblemRightSideRootTablet]: props.isTablet})}>
-            
+            <table className={styles.ProblemRightSideTable}>
+                <tr>
+                    <td className={styles.ProblemRightSideLeft}>언어</td>
+                    <td className={styles.ProblemRightSideRight}><Dropdown></Dropdown></td>
+                </tr>
+                <tr>
+                    <td className={styles.ProblemRightSideLeft}>소스 코드 공개</td>
+                    <td className={styles.ProblemRightSideRight}></td>
+                </tr>
+                <tr>
+                    <td className={styles.ProblemRightSideLeft}>소스 코드</td>
+                    <td className={styles.ProblemRightSideRight}></td>
+                </tr>
+            </table>
         </div>
     )
 }
