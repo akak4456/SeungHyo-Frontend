@@ -28,9 +28,9 @@ const Dropdown = props => {
                     </div>
                 </div>
                 <ul className={styles.DropDownList}>
-                    <li className={classNames({[styles.DropDownSelected]: curText == 'JAVA'})} onClick={() => changeText('JAVA')}>JAVA</li>
-                    <li className={classNames({[styles.DropDownSelected]: curText == 'C'})} onClick={() => changeText('C')}>C</li>
-                    <li className={classNames({[styles.DropDownSelected]: curText == 'C++'})} onClick={() => changeText('C++')}>C++</li>
+                    <li className={classNames({[styles.DropDownSelected]: curText == 'JAVA'}, {[styles.DropDownUnselected]: curText != 'JAVA'})} onClick={() => changeText('JAVA')}>JAVA</li>
+                    <li className={classNames({[styles.DropDownSelected]: curText == 'C'}, {[styles.DropDownUnselected]: curText != 'C'})} onClick={() => changeText('C')}>C</li>
+                    <li className={classNames({[styles.DropDownSelected]: curText == 'C++'}, {[styles.DropDownUnselected]: curText != 'C++'})} onClick={() => changeText('C++')}>C++</li>
                 </ul>
             </div>
         </div>
