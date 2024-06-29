@@ -102,6 +102,11 @@ const ReflectionNote = (props) => {
 					caseTitle={'맞았습니다'}
 					isCorrect={true}
 				/>
+				<ReflectionNoteCaseBlock
+					caseNum={3}
+					caseTitle={'틀렸습니다(이유:런타임 에러)'}
+					isCorrect={false}
+				/>
 			</main>
 		</>
 	);
