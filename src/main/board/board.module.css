@@ -68,3 +68,18 @@
 .BoardPaginationRoot div{
     margin: 0 auto;
 }
+
+.BoardSearchForm {
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.BoardSearchForm div{
+    margin-left: auto;
+}
+.BoardSearchForm button {
+    height: 32px;
+    margin-right: auto;
+}

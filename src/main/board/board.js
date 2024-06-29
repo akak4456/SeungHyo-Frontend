@@ -5,6 +5,8 @@ import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
 import Pagination from '../../common/pagination/pagination';
 import { HandThumbsUp } from 'react-bootstrap-icons';
+import InputBox from '../../common/input-box/input-box';
+import PrimaryButton from '../../common/button/primary/primary-button';
 const BoardTapButton = (props) => {
 	return (
 		<div
@@ -134,6 +136,12 @@ const Board = (props) => {
 					<BoardTapButton text={'글쓰기'} />
 				</div>
 				<BoardTable />
+				<div className={styles.BoardSearchForm}>
+					<div style={{ width: '240px' }}>
+						<InputBox placeholder={'검색'} />
+					</div>
+					<PrimaryButton buttonText={'검색'} />
+				</div>
 				<div className={styles.BoardPaginationRoot}>
 					<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
 				</div>
