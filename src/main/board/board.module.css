@@ -1,0 +1,70 @@
+.BoardRoot {
+    width: 75%;
+    margin-left: 12.5%;
+    margin-top: 48px;
+}
+
+.BoardTapButtons {
+    display: flex;
+    flex-direction: row;
+}
+
+.BoardTableRoot {
+    margin-top: 24px;
+    width: 100%;
+}
+
+.BoardTableNoticeRow {
+    background-color: var(--color-notice);
+}
+
+.BoardTableRoot tr:not(.BoardTableNoticeRow):nth-of-type(2n + 1) {
+    background-color: var(--color-light-gray);
+}
+
+.BoardTableRoot,.BoardTableRoot th, .BoardTableRoot td {
+    border-collapse: collapse;
+    border: 1px solid var(--color-white-gray);
+}
+.BoardTableRoot th, .BoardTableRoot td {
+    text-align: left;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+}
+.BoardTableRoot th:nth-child(1), .BoardTableRoot td:nth-child(1) {
+    width: 45%;
+}
+.BoardTableRoot th:nth-child(2), .BoardTableRoot td:nth-child(2) {
+    width: 15%;
+}
+.BoardTableRoot th:nth-child(3), .BoardTableRoot td:nth-child(3) {
+    width: 10%;
+}
+.BoardTableRoot th:nth-child(4), .BoardTableRoot td:nth-child(4) {
+    width: 13%;
+}
+.BoardTableRoot th:nth-child(5), .BoardTableRoot td:nth-child(5) {
+    width: 5%;
+}
+.BoardTableRoot th:nth-child(6), .BoardTableRoot td:nth-child(6) {
+    width: 5%;
+}
+.BoardTableRoot th:nth-child(7), .BoardTableRoot td:nth-child(7) {
+    width: 7%;
+}
+
+.BoardTableRoot td a {
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+.BoardPaginationRoot {
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+}
+
+.BoardPaginationRoot div{
+    margin: 0 auto;
+}
