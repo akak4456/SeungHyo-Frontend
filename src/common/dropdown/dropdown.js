@@ -11,7 +11,17 @@ const Dropdown = props => {
     const changeText = (text) => {
         setCurText(text);
         setIsOpen(false);
+        if(props.onDropDownTextChange != null) {
+            props.onDropDownTextChange(text);
+        }
     }
+    const listItem = props.dropDownText.map((text) => {
+        return <li 
+        className={classNames(
+            {[styles.DropDownSelected]: curText == text}, 
+            {[styles.DropDownUnselected]: curText != text}
+        )} onClick={() => changeText(text)}>{text}</li>
+    });
     return (
         <div className={styles.DropdownContainer}>
             <div className={styles.DropDownHeader} onClick={() => {setIsOpen(!isOpen);}}>
@@ -19,18 +29,16 @@ const Dropdown = props => {
                 <CaretDownFill className={classNames(styles.DropdownDownFill, {[styles.DropdownDownFillRotate] : isOpen})}></CaretDownFill>
             </div>
             <div className={styles.DropDownContent} style ={{opacity: isOpen ? 1 : 0, visibility: isOpen ? 'visible' : 'collapse'}}>
-                <div className={styles.DropDownSearchForm}>
+                {props.isSearchIncluded && <div className={styles.DropDownSearchForm}>
                     <InputBox type="text" placeholder="검색"></InputBox>
                     <div>
                         <Search
                             size={16}
                             color='white'/>
                     </div>
-                </div>
+                </div>}
                 <ul className={styles.DropDownList}>
-                    <li className={classNames({[styles.DropDownSelected]: curText == 'JAVA'}, {[styles.DropDownUnselected]: curText != 'JAVA'})} onClick={() => changeText('JAVA')}>JAVA</li>
-                    <li className={classNames({[styles.DropDownSelected]: curText == 'C'}, {[styles.DropDownUnselected]: curText != 'C'})} onClick={() => changeText('C')}>C</li>
-                    <li className={classNames({[styles.DropDownSelected]: curText == 'C++'}, {[styles.DropDownUnselected]: curText != 'C++'})} onClick={() => changeText('C++')}>C++</li>
+                    {listItem}
                 </ul>
             </div>
         </div>

@@ -98,12 +98,18 @@ const ProblemLeftSide = (props) => {
     )
 }
 const ProblemRightSide = (props) => {
+    const dropDownText = ["JAVA", "C", "C++", "아희"];
+    const onDropDownTextChange = (text) => {
+        console.log(text);
+    }
     return (
         <div className={classNames(styles.ProblemRightSideRoot, {[styles.ProblemRightSideRootTablet]: props.isTablet})}>
             <table className={styles.ProblemRightSideTable}>
                 <tr>
                     <td className={styles.ProblemRightSideLeft}>언어</td>
-                    <td className={styles.ProblemRightSideRight}><Dropdown></Dropdown></td>
+                    <td className={styles.ProblemRightSideRight}>
+                        <Dropdown isSearchIncluded={true} dropDownText={dropDownText} onDropDownTextChange={onDropDownTextChange}></Dropdown>
+                    </td>
                 </tr>
                 <tr>
                     <td className={styles.ProblemRightSideLeft}>소스 코드 공개</td>
