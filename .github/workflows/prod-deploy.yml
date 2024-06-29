@@ -9,13 +9,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+
       # 도커 메타
       - name: Docker meta
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: sanbonai06/bankids-client
+          images: adele559/seunghyo-react
           tag-semver: |
             {{version}}
             {{major}}.{{minor}}
