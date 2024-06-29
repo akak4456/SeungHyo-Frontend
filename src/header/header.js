@@ -101,7 +101,7 @@ function PCHeader() {
 					<UserAnchor />
 				</div>
 				<div>
-					<TapButton buttonElement={'문제'} linkTo={'/problem-list'} />
+					<TapButton buttonElement={'문제아님'} linkTo={'/problem-list'} />
 					<TapButton
 						buttonElement={'오답노트'}
 						linkTo={'/reflection-note-list'}
