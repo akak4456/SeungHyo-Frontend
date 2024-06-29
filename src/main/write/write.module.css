@@ -1,0 +1,41 @@
+.WriteRoot {
+    width: 75%;
+    margin-left: 12.5%;
+    margin-top: 40px;
+}
+
+.WriteTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 16px;
+}
+
+.WriteTableLeft {
+    white-space: nowrap;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 8px;
+    color: var(--color-normal-text-color);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.WriteTableRight {
+    width: 100%;
+    padding-left: 24px;
+}
+
+.WriteTableEditorRoot {
+    width: 100%;
+}
+.WriteTableEditorWrapper{
+}
+.WriteTableEditorMain {
+    height: 500px !important;
+    border: 1px solid #f1f1f1 !important;
+    padding: 5px !important;
+    border-radius: 2px !important;
+}
+.WriteTableEditorToolbar {
+
+}

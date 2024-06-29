@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './board.module.css';
 import Header from '../../header/header';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Pagination from '../../common/pagination/pagination';
 import { HandThumbsUp } from 'react-bootstrap-icons';
 import InputBox from '../../common/input-box/input-box';
@@ -19,6 +19,7 @@ const BoardTapButton = (props) => {
 				fontSize: '14px',
 				cursor: 'pointer',
 			}}
+			onClick={props.onClick}
 		>
 			{props.text}
 		</div>
@@ -120,6 +121,7 @@ const BoardTable = (props) => {
 	);
 };
 const Board = (props) => {
+	const navigate = useNavigate();
 	const goToLink = (num) => {
 		return num + '';
 	};
@@ -133,7 +135,7 @@ const Board = (props) => {
 					<BoardTapButton text={'자유'} />
 					<BoardTapButton text={'질문'} />
 					<BoardTapButton text={'홍보'} />
-					<BoardTapButton text={'글쓰기'} />
+					<BoardTapButton text={'글쓰기'} onClick={() => navigate('/write')} />
 				</div>
 				<BoardTable />
 				<div className={styles.BoardSearchForm}>
