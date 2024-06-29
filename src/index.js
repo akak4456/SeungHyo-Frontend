@@ -6,7 +6,7 @@ import './theme.css';
 import './index.css';
 import Intro from './main/intro/intro.js';
 import ProblemList from './main/problem-list/problem-list.js';
-import ReflectionNote from './main/reflection-note/reflection-note.js';
+import ReflectionNoteList from './main/reflection-note-list/reflection-note-list.js';
 import Board from './main/board/board.js';
 import Search from './main/search/search.js';
 import Footer from './footer/footer.js';
@@ -28,7 +28,7 @@ function Root() {
                 <Routes>
                     <Route path="/" element={<Intro/>}></Route>
                     <Route path="/problem-list/*" element={<ProblemList/>}></Route>
-                    <Route path="/reflection-note/*" element={<ReflectionNote/>}></Route>
+                    <Route path="/reflection-note-list/*" element={<ReflectionNoteList/>}></Route>
                     <Route path="/board/*" element={<Board/>}></Route>
                     <Route path="/search/*" element={<Search/>}></Route>
                     <Route path="/join/*" element= {<Join/>}></Route>
