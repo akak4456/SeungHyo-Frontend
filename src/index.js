@@ -8,7 +8,7 @@ import Intro from './main/intro/intro.js';
 import ProblemList from './main/problem-list/problem-list.js';
 import ReflectionNoteList from './main/reflection-note-list/reflection-note-list.js';
 import Board from './main/board/board.js';
-import Search from './main/search/search.js';
+import SearchPage from './main/search/search.js';
 import Footer from './footer/footer.js';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
@@ -36,7 +36,7 @@ function Root() {
 						element={<ReflectionNoteList />}
 					></Route>
 					<Route path="/board/*" element={<Board />}></Route>
-					<Route path="/search/*" element={<Search />}></Route>
+					<Route path="/search/*" element={<SearchPage />}></Route>
 					<Route path="/join/*" element={<Join />}></Route>
 					<Route path="/login/*" element={<Login />}></Route>
 					<Route path="/agree/*"></Route> // TODO
