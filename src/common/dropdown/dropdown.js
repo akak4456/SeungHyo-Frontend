@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import InputBox from '../input-box/input-box';
 
 const Dropdown = props => {
-    const [curText, setCurText] = useState("JAVA");
+    const [curText, setCurText] = useState(props.dropDownText[0]);
     const [isOpen, setIsOpen] = useState(false);
     const changeText = (text) => {
         setCurText(text);

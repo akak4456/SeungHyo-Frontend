@@ -36,7 +36,7 @@
     margin-top: -1px;
     transition: 0.5s;
     z-index: 999;
-    max-height: 163px; /* 32 * 5 + 3px*/
+    max-height: 165px; /* 32 * 5 + 5px*/
     overflow-y: auto;
 }
 
