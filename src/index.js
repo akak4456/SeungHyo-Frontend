@@ -23,6 +23,7 @@ import User from './main/user/user.js';
 import Problem from './main/problem/problem.js';
 import ReflectionNote from './main/reflection-note/reflection-note.js';
 import Write from './main/write/write.js';
+import Article from './main/article/article.js';
 function Root() {
 	return (
 		<Provider store={store}>
@@ -54,6 +55,7 @@ function Root() {
 					<Route path="/problem/*" element={<Problem />}></Route>
 					<Route path="/reflection-note/*" element={<ReflectionNote />}></Route>
 					<Route path="/write/*" element={<Write />}></Route>
+					<Route path="/article/*" element={<Article />}></Route>
 				</Routes>
 				<Footer />
 			</BrowserRouter>
