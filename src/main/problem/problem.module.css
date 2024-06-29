@@ -102,6 +102,7 @@
     border: 1px solid var(--color-white-gray);
     margin-top: 16px;
     font: inherit;
+    background-color: var(--color-example); 
 }
 
 .ProblemKindList {
