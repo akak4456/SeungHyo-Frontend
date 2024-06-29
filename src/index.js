@@ -21,6 +21,7 @@ import SettingPwChange from './main/setting/pw-change/setting-pw-change.js';
 import SettingWithdraw from './main/setting/withdraw/setting-withdraw.js';
 import User from './main/user/user.js';
 import Problem from './main/problem/problem.js';
+import ReflectionNote from './main/reflection-note/reflection-note.js';
 function Root() {
     return (
         <Provider store={store}>
@@ -41,6 +42,7 @@ function Root() {
                     <Route path="/setting/withdraw" element = {<SettingWithdraw />}></Route>
                     <Route path="/user/*" element = { <User />}></Route>
                     <Route path='/problem/*' element = { <Problem />}></Route>
+                    <Route path='/reflection-note/*' element = { <ReflectionNote />}></Route>
                 </Routes>
                 <Footer />
             </BrowserRouter>
