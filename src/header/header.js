@@ -30,7 +30,7 @@ function UserAnchor() {
 				<NavLink to={'/login'}>로그인</NavLink>
 			</li>
 			<li>
-				<NavLink to={'/user'}>akak44567</NavLink>
+				<NavLink to={'/user'}>abcabca7</NavLink>
 			</li>
 			<li>
 				<NavLink to={'/setting/info-edit'}>설정</NavLink>
