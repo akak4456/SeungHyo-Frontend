@@ -6,7 +6,7 @@ import iconSearch from '../img/icon-search.png';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import Logo from '../components/logo.js';
-import HamburgerButton from '../common/button/hamburger/hamburger-button.js';
+import HamburgerButton from '../components/hamburger-button.js';
 
 class TapButton extends React.Component {
 	render() {
