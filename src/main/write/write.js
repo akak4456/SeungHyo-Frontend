@@ -4,8 +4,8 @@ import styles from './write.module.css';
 import Header from '../../header/header';
 import InputBox from '../../common/input-box/input-box';
 import Dropdown from '../../common/dropdown/dropdown';
-import NormalEditor from '../../common/editor/normal/normal-editor';
-import SourceEditor from '../../common/editor/source/source-editor';
+import NormalEditor from '../../components/editor-normal/normal-editor';
+import SourceEditor from '../../components/editor-source/source-editor';
 import NormalButton from '../../components/button-normal';
 const Write = () => {
 	const categories = ['질문', '자유', '기타'];
