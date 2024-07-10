@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import InputBox from '../../common/input-box/input-box';
 import { Mobile, PC } from '../../responsive';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
-import CheckBox from '../../components/check-box';
+import CheckBox from '../../components/checkbox';
 import NormalButton from '../../components/button-normal';
 function LoginFormInner() {
 	return (
