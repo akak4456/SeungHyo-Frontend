@@ -9,7 +9,7 @@ export default class Footer extends React.Component {
         return (
             <footer className={styles.FooterRoot}>
                 <span className={styles.FooterCopyRight}>Copyright © 2024 주식회사 승효. All rights reserved.</span>
-                <Logo marginLeftAuto={true} />
+                <Logo marginLeft={'auto'} />
             </footer>
         );
     }

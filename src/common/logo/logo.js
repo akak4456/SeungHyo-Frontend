@@ -1,17 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
-import styles from './logo.module.css';
 import imgLogo from '../../img/logo.png';
-import {Mobile, PC} from '../../responsive';
+import { useIsMobile } from '../../hook/media-query';
+import styled from 'styled-components';
 
-export default class Logo extends React.Component {
-    render() {
-        return (
-            <>
-                <Mobile><img src={imgLogo} className={classNames(styles.LogoMobile, {[styles.LogoMarginLeftAuto]: this.props.marginLeftAuto})}></img></Mobile>
-                <PC><img src={imgLogo} className={classNames(styles.Logo, {[styles.LogoMarginLeftAuto]: this.props.marginLeftAuto})}></img></PC>
-            </>
-        )
-    }
+const Logo = (props) => {
+    const isMobile = useIsMobile();
+    const LogoImg = styled.img`
+        width: ${isMobile ? '100px' : '200px'};
+        margin-top: 16px;
+        margin-bottom: 16px;
+        margin-left: ${props.marginLeft}
+    `;
+    return <LogoImg src={imgLogo}></LogoImg>
 }
+
+export default Logo;
