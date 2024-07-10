@@ -5,7 +5,7 @@ import Header from '../../header/header';
 import { isTabletQuery } from '../../responsive';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
-import Tag from '../../common/tag/tag';
+import Tag from '../../components/tag';
 import Dropdown from '../../common/dropdown/dropdown';
 import RadioButton from '../../common/radio-button/radio-button';
 import SourceEditor from '../../common/editor/source/source-editor';
@@ -128,7 +128,7 @@ const ProblemRightSide = (props) => {
 				<tr>
 					<td className={styles.ProblemRightSideLeft}></td>
 					<td className={styles.ProblemRightSideRight}>
-						<NormalButton type='primary' text='제출하기'></NormalButton>
+						<NormalButton type="primary" text="제출하기"></NormalButton>
 					</td>
 				</tr>
 			</table>
