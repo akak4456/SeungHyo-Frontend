@@ -1,14 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styles from './login.module.css';
 import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
 import InputBox from '../../common/input-box/input-box';
-import PrimamryButton from '../../common/button/primary/primary-button';
 import {Mobile, PC} from '../../responsive';
 import {PersonFill, LockFill} from 'react-bootstrap-icons';
 import CheckBox from '../../common/check-box/check-box';
-import PrimaryButton from '../../common/button/primary/primary-button';
+import NormalButton from '../../components/normal-button';
 function LoginFormInner() {
     return (
         <>
@@ -29,7 +27,7 @@ function LoginFormInner() {
                 </div>
                 <div className={styles.LoginAction}>
                     <CheckBox id="checkbox" text="로그인 상태 유지"/>
-                    <PrimaryButton buttonText="로그인"></PrimaryButton>
+                    <NormalButton type='primary' text='로그인'></NormalButton>
                 </div>
                 <div className={styles.LoginDiv}></div>
                 <p className={styles.LoginSubTitle}>비밀번호를 잊었을 경우 <NavLink to={'/pw-find'}>여기</NavLink>를 눌러주세요.</p>

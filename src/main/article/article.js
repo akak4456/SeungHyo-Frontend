@@ -4,10 +4,10 @@ import styles from './article.module.css';
 import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
 import { HandThumbsUp } from 'react-bootstrap-icons';
-import PrimaryButton from '../../common/button/primary/primary-button';
 import NormalEditor from '../../common/editor/normal/normal-editor';
 import SourceEditor from '../../common/editor/source/source-editor';
 import Dropdown from '../../common/dropdown/dropdown';
+import NormalButton from '../../components/normal-button';
 
 const ReplyAdd = (props) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -16,22 +16,16 @@ const ReplyAdd = (props) => {
 	return (
 		<div className={styles.ReplyAddRoot}>
 			{!isOpen && (
-				<PrimaryButton
-					buttonText={'댓글 쓰기'}
-					onClick={() => setIsOpen(true)}
-				/>
+				<NormalButton type='primary' text='댓글 쓰기' onClick={() => setIsOpen(true)} />
 			)}
 			<div className={styles.ReplyAddEditor}>
 				{isOpen && <NormalEditor />}
 				{isOpen && !isSourceEditorOpen && (
-					<PrimaryButton
-						buttonText={'소스 추가'}
-						onClick={() => setIsSourceEditorOpen(true)}
-					/>
+					<NormalButton type='primary' text='소스 추가' onClick={() => setIsSourceEditorOpen(true)} />
 				)}
 				{isOpen && isSourceEditorOpen && <Dropdown dropDownText={languages} />}
 				{isOpen && isSourceEditorOpen && <SourceEditor></SourceEditor>}
-				{isOpen && <PrimaryButton buttonText={'댓글 저장'} />}
+				{isOpen && <NormalButton type='primary' text='댓글 저장' />}
 			</div>
 		</div>
 	);

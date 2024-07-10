@@ -4,11 +4,11 @@ import styles from './reflection-note-list.module.css';
 import Header from '../../header/header';
 import InputBox from '../../common/input-box/input-box';
 import Dropdown from '../../common/dropdown/dropdown';
-import PrimaryButton from '../../common/button/primary/primary-button';
 import { NavLink } from 'react-router-dom';
 import Pagination from '../../common/pagination/pagination';
 import classNames from 'classnames';
 import {useMediaQuery} from 'react-responsive';
+import NormalButton from '../../components/normal-button';
 const ReflectionNoteListTable = props => {
     return (
         <table className={styles.ReflectionNoteListTableRoot}>
@@ -74,7 +74,7 @@ const ReflectionNoteList = props => {
                     </div>
                     <Dropdown dropDownText={langDropDown} />
                     <Dropdown dropDownText={resultDropDown} />
-                    <PrimaryButton buttonText={"검색"}/>
+                    <NormalButton type='primary' text='검색'/>
                 </div>
                 <ReflectionNoteListTable />
                 <div className={styles.ReflectionNoteListPaginationRoot}>

@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styles from './board.module.css';
 import Header from '../../header/header';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Pagination from '../../common/pagination/pagination';
 import { HandThumbsUp } from 'react-bootstrap-icons';
 import InputBox from '../../common/input-box/input-box';
-import PrimaryButton from '../../common/button/primary/primary-button';
+import NormalButton from '../../components/normal-button';
 const BoardTapButton = (props) => {
 	return (
 		<div
@@ -142,7 +141,7 @@ const Board = (props) => {
 					<div style={{ width: '240px' }}>
 						<InputBox placeholder={'검색'} />
 					</div>
-					<PrimaryButton buttonText={'검색'} />
+					<NormalButton type='primary' text='검색' />
 				</div>
 				<div className={styles.BoardPaginationRoot}>
 					<Pagination minVal={1} maxVal={10} goToLink={goToLink} />

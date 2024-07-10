@@ -1,14 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styles from './pw-reset.module.css';
 import Header from '../../header/header';
-import { useNavigate } from 'react-router-dom';
 import InputBox from '../../common/input-box/input-box';
-import PrimamryButton from '../../common/button/primary/primary-button';
 import {Mobile, PC} from '../../responsive';
-import {PersonFill, LockFill} from 'react-bootstrap-icons';
-import CheckBox from '../../common/check-box/check-box';
-import PrimaryButton from '../../common/button/primary/primary-button';
+import NormalButton from '../../components/normal-button';
 function PwResetInner() {
     const onPwChangeClick = () => {
     };
@@ -19,7 +14,7 @@ function PwResetInner() {
             <p className={styles.PwResetInputTitle}>새로운 비밀번호 확인</p>
             <InputBox type="password"></InputBox>
             <div className={styles.PwResetButton}>
-                <PrimaryButton buttonText={"비밀번호 변경"} onClick={onPwChangeClick}></PrimaryButton>
+                <NormalButton type='primary' text='비밀번호 변경' onClick={onPwChangeClick}></NormalButton>
             </div>
         </>
     )

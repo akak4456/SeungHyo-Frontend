@@ -8,8 +8,8 @@ import { useMediaQuery } from 'react-responsive';
 import Tag from '../../common/tag/tag';
 import Dropdown from '../../common/dropdown/dropdown';
 import RadioButton from '../../common/radio-button/radio-button';
-import PrimaryButton from '../../common/button/primary/primary-button';
 import SourceEditor from '../../common/editor/source/source-editor';
+import NormalButton from '../../components/normal-button';
 const ProblemTab = (props) => {
 	const copyFn = async (event) => {
 		event.preventDefault();
@@ -128,7 +128,7 @@ const ProblemRightSide = (props) => {
 				<tr>
 					<td className={styles.ProblemRightSideLeft}></td>
 					<td className={styles.ProblemRightSideRight}>
-						<PrimaryButton buttonText={'제출하기'}></PrimaryButton>
+						<NormalButton type='primary' text='제출하기'></NormalButton>
 					</td>
 				</tr>
 			</table>
