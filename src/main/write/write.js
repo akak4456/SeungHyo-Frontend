@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styles from './write.module.css';
 import Header from '../../header/header';
 import InputBox from '../../common/input-box/input-box';
-import Dropdown from '../../common/dropdown/dropdown';
+import Dropdown from '../../components/dropdown';
 import NormalEditor from '../../components/editor-normal/normal-editor';
 import SourceEditor from '../../components/editor-source/source-editor';
 import NormalButton from '../../components/button-normal';

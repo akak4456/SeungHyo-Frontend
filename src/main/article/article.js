@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { HandThumbsUp } from 'react-bootstrap-icons';
 import NormalEditor from '../../components/editor-normal/normal-editor';
 import SourceEditor from '../../components/editor-source/source-editor';
-import Dropdown from '../../common/dropdown/dropdown';
+import Dropdown from '../../components/dropdown';
 import NormalButton from '../../components/button-normal';
 
 const ReplyAdd = (props) => {

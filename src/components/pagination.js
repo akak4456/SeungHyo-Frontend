@@ -14,6 +14,17 @@ if (process.env.NODE_ENV !== 'production') {
 	};
 }
 
+const StyledDiv = styled.div`
+	& a {
+		text-decoration: none;
+		color: var(--color-primary);
+		padding-left: 8px;
+	}
+	& a:first-child {
+		padding-left: 0;
+	}
+`;
+
 /**
  * 페이징 네비게이터를 나타냄
  * @param {number} minVal - 페이징의 처음 숫자를 나타냄, 필수값
@@ -38,16 +49,6 @@ const Pagination = ({
 		{ length: maxVal - minVal + 1 },
 		(_, i) => minVal + i
 	);
-	const StyledDiv = styled.div`
-		& a {
-			text-decoration: none;
-			color: var(--color-primary);
-			padding-left: 8px;
-		}
-		& a:first-child {
-			padding-left: 0;
-		}
-	`;
 	return (
 		<StyledDiv>
 			{isPrevInclude && <NavLink to={prevLink}>이전 페이지</NavLink>}

@@ -6,7 +6,7 @@ import { isTabletQuery } from '../../responsive';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
 import Tag from '../../components/tag';
-import Dropdown from '../../common/dropdown/dropdown';
+import Dropdown from '../../components/dropdown';
 import RadioButton from '../../components/button-radio';
 import SourceEditor from '../../components/editor-source/source-editor';
 import NormalButton from '../../components/button-normal';

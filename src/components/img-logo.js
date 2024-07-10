@@ -9,15 +9,21 @@ import styled from 'styled-components';
  * @param {String} marginLeft - margin-left 에 부여할 스타일 지정
  * @returns {JSX.Element} 사용자 이름을 출력하는 JSX 요소
  */
+const LogoImg = styled.img`
+	width: ${(props) => (props.isMobile ? '100px' : '200px')};
+	margin-top: 16px;
+	margin-bottom: 16px;
+	margin-left: ${(props) => props.marginLeft};
+`;
 const Logo = ({ marginLeft }) => {
 	const isMobile = useIsMobile();
-	const LogoImg = styled.img`
-		width: ${isMobile ? '100px' : '200px'};
-		margin-top: 16px;
-		margin-bottom: 16px;
-		margin-left: ${marginLeft};
-	`;
-	return <LogoImg src={imgLogo}></LogoImg>;
+	return (
+		<LogoImg
+			isMobile={isMobile}
+			marginLeft={marginLeft}
+			src={imgLogo}
+		></LogoImg>
+	);
 };
 
 export default Logo;

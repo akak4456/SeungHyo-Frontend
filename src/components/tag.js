@@ -1,6 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const StyledDiv = styled.div`
+	box-sizing: border-box;
+	display: inline-block;
+	padding: 8px;
+	color: white;
+	background-color: ${(props) => props.backgroundColor};
+	margin-left: ${(props) => props.marginLeft};
+`;
+
 /**
  * 태그를 나타냄
  * @param {string} backgroundColor - 태그의 background 지정
@@ -10,15 +19,15 @@ import styled from 'styled-components';
  * @returns {JSX.Element} 사용자 이름을 출력하는 JSX 요소
  */
 const Tag = ({ backgroundColor, marginLeft, text, onClick }) => {
-	const StyledDiv = styled.div`
-		box-sizing: border-box;
-		display: inline-block;
-		padding: 8px;
-		color: white;
-		background-color: ${backgroundColor};
-		margin-left: ${marginLeft};
-	`;
-	return <StyledDiv onClick={onClick}>{text}</StyledDiv>;
+	return (
+		<StyledDiv
+			backgroundColor={backgroundColor}
+			marginLeft={marginLeft}
+			onClick={onClick}
+		>
+			{text}
+		</StyledDiv>
+	);
 };
 
 export default Tag;

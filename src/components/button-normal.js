@@ -20,6 +20,13 @@ if (process.env.NODE_ENV !== 'production') {
  * @param {string} text - 버튼에 들어갈 text 지정
  * @returns {JSX.Element} 사용자 이름을 출력하는 JSX 요소
  */
+const StyledButton = styled.button`
+	padding: 8px;
+	background-color: ${({ bgColor }) => bgColor};
+	color: white;
+	font-size: 14px;
+	text-align: center;
+`;
 const NormalButton = ({ type, onClick, text }) => {
 	const bgColor =
 		type === 'danger'
@@ -27,14 +34,11 @@ const NormalButton = ({ type, onClick, text }) => {
 			: type === 'primary'
 				? 'var(--color-primary)'
 				: 'transparent';
-	const StyledButton = styled.button`
-		padding: 8px;
-		background-color: ${bgColor};
-		color: white;
-		font-size: 14px;
-		text-align: center;
-	`;
-	return <StyledButton onClick={onClick}>{text}</StyledButton>;
+	return (
+		<StyledButton bgColor={bgColor} onClick={onClick}>
+			{text}
+		</StyledButton>
+	);
 };
 
 NormalButton.propTypes = {

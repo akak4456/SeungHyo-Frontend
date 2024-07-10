@@ -8,18 +8,18 @@ import styled from 'styled-components';
  * @param {String} props.text - 체크박스를 표시할 때 들어가는 text
  * @returns {JSX.Element} 사용자 이름을 출력하는 JSX 요소
  */
+const StyledDiv = styled.div`
+	display: flex;
+	align-items: center;
+	& label {
+		margin-left: 8px;
+	}
+	& input {
+		width: 16px;
+		height: 16px;
+	}
+`;
 const CheckBox = (props) => {
-	const StyledDiv = styled.div`
-		display: flex;
-		align-items: center;
-		& label {
-			margin-left: 8px;
-		}
-		& input {
-			width: 16px;
-			height: 16px;
-		}
-	`;
 	return (
 		<StyledDiv>
 			<input type="checkbox" {...props} />
