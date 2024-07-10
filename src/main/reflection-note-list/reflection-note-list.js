@@ -5,7 +5,7 @@ import Header from '../../header/header';
 import InputBox from '../../common/input-box/input-box';
 import Dropdown from '../../common/dropdown/dropdown';
 import { NavLink } from 'react-router-dom';
-import Pagination from '../../common/pagination/pagination';
+import Pagination from '../../components/pagination';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
 import NormalButton from '../../components/button-normal';

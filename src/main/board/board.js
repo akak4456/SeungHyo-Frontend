@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './board.module.css';
 import Header from '../../header/header';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Pagination from '../../common/pagination/pagination';
+import Pagination from '../../components/pagination';
 import { HandThumbsUp } from 'react-bootstrap-icons';
 import InputBox from '../../common/input-box/input-box';
 import NormalButton from '../../components/button-normal';

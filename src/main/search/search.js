@@ -4,7 +4,7 @@ import styles from './search.module.css';
 import Header from '../../header/header';
 import { Search } from 'react-bootstrap-icons';
 import InputBox from '../../common/input-box/input-box';
-import Pagination from '../../common/pagination/pagination';
+import Pagination from '../../components/pagination';
 const SearchItem = (props) => {
 	return (
 		<div className={styles.SearchItemRoot}>
