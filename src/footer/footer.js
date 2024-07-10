@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './footer.module.css';
-import Logo from '../common/logo/logo';
+import Logo from '../components/logo';
 
 export default class Footer extends React.Component {
     render() {
