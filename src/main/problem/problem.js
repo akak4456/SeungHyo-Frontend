@@ -7,9 +7,9 @@ import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
 import Tag from '../../components/tag';
 import Dropdown from '../../common/dropdown/dropdown';
-import RadioButton from '../../components/radio-button';
+import RadioButton from '../../components/button-radio';
 import SourceEditor from '../../common/editor/source/source-editor';
-import NormalButton from '../../components/normal-button';
+import NormalButton from '../../components/button-normal';
 const ProblemTab = (props) => {
 	const copyFn = async (event) => {
 		event.preventDefault();

@@ -7,7 +7,7 @@ import { useMediaQuery } from 'react-responsive';
 import { isMobileQuery } from '../../../responsive';
 import classNames from 'classnames';
 import InputBox from '../../../common/input-box/input-box';
-import NormalButton from '../../../components/normal-button';
+import NormalButton from '../../../components/button-normal';
 
 const SettingInfoEdit = () => {
 	const isMobile = useMediaQuery({

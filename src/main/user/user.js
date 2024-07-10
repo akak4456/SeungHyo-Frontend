@@ -6,9 +6,9 @@ import { useMediaQuery } from 'react-responsive';
 import { isTabletQuery } from '../../responsive';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
-import LineGraph from '../../components/line-graph';
-import PieGraph from '../../components/pie-graph';
-import GrassGraph from '../../components/grass-graph';
+import LineGraph from '../../components/graph-line';
+import PieGraph from '../../components/graph-pie';
+import GrassGraph from '../../components/graph-grass';
 const UserStatisticsRightSideContainer = (props) => {
 	return (
 		<div className={styles.UserStatisticsRightSideContainerRoot}>

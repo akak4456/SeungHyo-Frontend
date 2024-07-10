@@ -5,8 +5,8 @@ import { Mobile, PC } from '../responsive.js';
 import iconSearch from '../img/icon-search.png';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import Logo from '../components/logo.js';
-import HamburgerButton from '../components/hamburger-button.js';
+import Logo from '../components/img-logo.js';
+import HamburgerButton from '../components/button-hamburger.js';
 
 class TapButton extends React.Component {
 	render() {

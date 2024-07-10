@@ -5,7 +5,7 @@ import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
 import InputBox from '../../common/input-box/input-box';
 import { Mobile, PC } from '../../responsive';
-import NormalButton from '../../components/normal-button';
+import NormalButton from '../../components/button-normal';
 function JoinFormInner() {
 	return (
 		<>
