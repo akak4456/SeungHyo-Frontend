@@ -6,18 +6,18 @@ import styled from 'styled-components';
 /**
  * 홈페이지에 쓰이는 로고 컴포넌트를 나타냅니다.
  * 주로 헤더와 푸터에 사용됨
- * @param {String} props.marginLeft - margin-left 에 부여할 스타일 지정
+ * @param {String} marginLeft - margin-left 에 부여할 스타일 지정
  * @returns {JSX.Element} 사용자 이름을 출력하는 JSX 요소
  */
-const Logo = (props) => {
-    const isMobile = useIsMobile();
-    const LogoImg = styled.img`
-        width: ${isMobile ? '100px' : '200px'};
-        margin-top: 16px;
-        margin-bottom: 16px;
-        margin-left: ${props.marginLeft}
-    `;
-    return <LogoImg src={imgLogo}></LogoImg>
-}
+const Logo = ({ marginLeft }) => {
+	const isMobile = useIsMobile();
+	const LogoImg = styled.img`
+		width: ${isMobile ? '100px' : '200px'};
+		margin-top: 16px;
+		margin-bottom: 16px;
+		margin-left: ${marginLeft};
+	`;
+	return <LogoImg src={imgLogo}></LogoImg>;
+};
 
 export default Logo;

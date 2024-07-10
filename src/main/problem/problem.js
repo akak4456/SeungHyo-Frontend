@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
 import Tag from '../../components/tag';
 import Dropdown from '../../common/dropdown/dropdown';
-import RadioButton from '../../common/radio-button/radio-button';
+import RadioButton from '../../components/radio-button';
 import SourceEditor from '../../common/editor/source/source-editor';
 import NormalButton from '../../components/normal-button';
 const ProblemTab = (props) => {
