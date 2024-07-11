@@ -25,56 +25,27 @@ const StyledCurTextP = styled.p`
 	margin-left: 16px;
 `;
 
-const contentFadeIn = keyframes`
-    0% {
-        max-height: 0px;
-        overflow-y: hidden;
-    }
-    99% {
-        max-height: 165px; /* 32 * 5 + 5px*/
-        overflow-y: hidden;
-    }
-    100% {
-        max-height: 165px; /* 32 * 5 + 5px*/
-        overflow-y: auto;
-    }
-`;
-
-const contentFadeOut = keyframes`
-    0% {
-        max-height: 165px;
-        overflow-y: hidden;
-    }
-    99% {
-        max-height: 0px; /* 32 * 5 + 5px*/
-        overflow-y: hidden;
-    }
-    100% {
-        max-height: 0px; /* 32 * 5 + 5px*/
-        overflow-y: hidden;
-    }
-`;
-
-const StyledContentDiv = styled.div`
+const StyledContentPositionDiv = styled.div`
 	position: absolute;
 	top: 100%;
 	width: 100%;
 	box-sizing: border-box;
 	margin-top: -1px;
 	z-index: 999;
-	max-height: ${(props) =>
-		props.isOpen ? '165px' : '0px'}; /* isOpen 상태에 따라 max-height 조정 */
-	overflow-y: hidden; /* 내용이 초과할 경우 숨김 처리 */
-	animation-fill-mode: forwards;
-	${(props) =>
-		props.isOpen
-			? css`
-					animation: ${contentFadeIn} 0.5s linear;
-				`
-			: css`
-					animation: ${contentFadeOut} 0.5s linear;
-				`}
-	border-top: 1px solid var(--color-input-border);
+	overflow-y: auto;
+	max-height: 165px;
+`;
+
+const StyledContentDiv = styled.div`
+	@keyframes dropdown {
+		0% {
+			transform: translateY(-100%);
+		}
+		100% {
+			transform: translateY(0);
+		}
+	}
+	animation: dropdown 0.5s ease;
 `;
 
 const StyledSearchFormDiv = styled.div`
@@ -175,17 +146,21 @@ const Dropdown = ({ dropDownText, onDropDownTextChange, isSearchIncluded }) => {
 				<StyledCurTextP>{curText}</StyledCurTextP>
 				<StyledCaretDownFill isOpen={isOpen} />
 			</StyledHeaderDiv>
-			<StyledContentDiv isOpen={isOpen}>
-				{isSearchIncluded && (
-					<StyledSearchFormDiv>
-						<InputBox type="text" placeholder="검색" />
-						<div>
-							<Search size={16} color="white" />
-						</div>
-					</StyledSearchFormDiv>
-				)}
-				<StyledListUl>{listItem}</StyledListUl>
-			</StyledContentDiv>
+			{isOpen && (
+				<StyledContentPositionDiv isOpen={isOpen}>
+					<StyledContentDiv>
+						{isSearchIncluded && (
+							<StyledSearchFormDiv>
+								<InputBox type="text" placeholder="검색" />
+								<div>
+									<Search size={16} color="white" />
+								</div>
+							</StyledSearchFormDiv>
+						)}
+						<StyledListUl>{listItem}</StyledListUl>
+					</StyledContentDiv>
+				</StyledContentPositionDiv>
+			)}
 		</StyledContainerDiv>
 	);
 };
