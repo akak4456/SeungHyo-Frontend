@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './source-editor.module.css';
 import AceEditor from 'react-ace';
 
 import 'ace-builds/src-noconflict/mode-java';
