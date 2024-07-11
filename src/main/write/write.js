@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './write.module.css';
 import Header from '../../header/header';
-import InputBox from '../../common/input-box/input-box';
+import InputBox from '../../components/inputbox';
 import Dropdown from '../../components/dropdown';
 import NormalEditor from '../../components/editor-normal';
 import SourceEditor from '../../components/editor-source';

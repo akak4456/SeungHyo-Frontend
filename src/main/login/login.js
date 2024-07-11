@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './login.module.css';
 import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
-import InputBox from '../../common/input-box/input-box';
+import InputBox from '../../components/inputbox';
 import { Mobile, PC } from '../../responsive';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
 import CheckBox from '../../components/checkbox';

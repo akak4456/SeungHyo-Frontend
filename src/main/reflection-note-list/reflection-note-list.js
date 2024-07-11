@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './reflection-note-list.module.css';
 import Header from '../../header/header';
-import InputBox from '../../common/input-box/input-box';
+import InputBox from '../../components/inputbox';
 import Dropdown from '../../components/dropdown';
 import { NavLink } from 'react-router-dom';
 import Pagination from '../../components/pagination';

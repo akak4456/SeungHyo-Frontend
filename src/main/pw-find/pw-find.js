@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './pw-find.module.css';
 import Header from '../../header/header';
-import InputBox from '../../common/input-box/input-box';
+import InputBox from '../../components/inputbox';
 import { Mobile, PC } from '../../responsive';
 import NormalButton from '../../components/button-normal';
 function PwFindInner() {

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styles from './search.module.css';
 import Header from '../../header/header';
 import { Search } from 'react-bootstrap-icons';
-import InputBox from '../../common/input-box/input-box';
+import InputBox from '../../components/inputbox';
 import Pagination from '../../components/pagination';
 const SearchItem = (props) => {
 	return (

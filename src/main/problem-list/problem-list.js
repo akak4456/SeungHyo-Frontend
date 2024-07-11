@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './problem-list.module.css';
 import Header from '../../header/header';
-import InputBox from '../../common/input-box/input-box';
+import InputBox from '../../components/inputbox';
 import { Search } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
 import Pagination from '../../components/pagination';

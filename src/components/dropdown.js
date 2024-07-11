@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CaretDownFill, Search } from 'react-bootstrap-icons';
-import InputBox from '../common/input-box/input-box';
+import InputBox from './inputbox';
 import styled, { css, keyframes } from 'styled-components';
 
 const StyledContainerDiv = styled.div`

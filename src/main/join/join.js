@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styles from './join.module.css';
 import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
-import InputBox from '../../common/input-box/input-box';
+import InputBox from '../../components/inputbox';
 import { Mobile, PC } from '../../responsive';
 import NormalButton from '../../components/button-normal';
 function JoinFormInner() {

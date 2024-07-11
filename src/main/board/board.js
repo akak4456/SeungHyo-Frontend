@@ -4,7 +4,7 @@ import Header from '../../header/header';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Pagination from '../../components/pagination';
 import { HandThumbsUp } from 'react-bootstrap-icons';
-import InputBox from '../../common/input-box/input-box';
+import InputBox from '../../components/inputbox';
 import NormalButton from '../../components/button-normal';
 const BoardTapButton = (props) => {
 	return (

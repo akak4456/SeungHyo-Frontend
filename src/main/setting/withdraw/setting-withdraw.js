@@ -6,7 +6,6 @@ import SettingTab from '../setting-tab';
 import { useMediaQuery } from 'react-responsive';
 import { isMobileQuery } from '../../../responsive';
 import classNames from 'classnames';
-import InputBox from '../../../common/input-box/input-box';
 import NormalButton from '../../../components/button-normal';
 
 const SettingWithdraw = () => {
