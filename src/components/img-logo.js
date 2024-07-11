@@ -1,6 +1,6 @@
 import React from 'react';
-import imgLogo from '../img/logo.png';
-import { useIsMobile } from '../hook/media-query';
+import imgLogo from '../assets/logo.png';
+import { useIsMobile } from '../hooks/media-query';
 import styled from 'styled-components';
 
 /**
