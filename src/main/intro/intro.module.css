@@ -1,45 +1,45 @@
 .IntroAd {
-    margin-left: 12.5%;
-    margin-right: 12.5%;
-    width: 75%;
+	margin-left: 12.5%;
+	margin-right: 12.5%;
+	width: 75%;
 }
 
 .IntroTitle {
-    margin-top: 80px;
-    margin-bottom: 80px;
-    color: var(--color-normal-text-color);
-    font-size: 35px;
-    text-align: center;
-    font-weight: bold;
+	margin-top: 80px;
+	margin-bottom: 80px;
+	color: var(--color-normal-text-color);
+	font-size: 35px;
+	text-align: center;
+	font-weight: bold;
 }
 
 .IntroStatistics {
-    background-color: black;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 12.5%;
-    padding-right: 12.5%;
-    display: flex;
+	background-color: black;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 12.5%;
+	padding-right: 12.5%;
+	display: flex;
 }
 
 .IntroStatisticsBlock {
-    border: 1px solid var(--color-silver);
-    flex: 1 1 0;
-    padding-top: 24px;
-    padding-bottom: 24px;
-    margin-right: 16px;
-    text-align: center;
+	border: 1px solid var(--color-silver);
+	flex: 1 1 0;
+	padding-top: 24px;
+	padding-bottom: 24px;
+	margin-right: 16px;
+	text-align: center;
 }
 .IntroStatisticsBlock:last-child {
-    margin-right: 0px;
+	margin-right: 0px;
 }
 .IntroStatisticsBlockMainText {
-    color: white;
-    font-weight: bold;
-    font-size: 35px;
+	color: white;
+	font-weight: bold;
+	font-size: 35px;
 }
 .IntroStatisticsBlockSubText {
-    color: var(--color-silver);
-    font-size: 16px;
-    margin-top: 16px;
+	color: var(--color-silver);
+	font-size: 16px;
+	margin-top: 16px;
 }

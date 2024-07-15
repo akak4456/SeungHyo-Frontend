@@ -1,88 +1,88 @@
 .JoinTitle {
-    padding-left: 12.5%;
-    padding-top: 32px;
-    padding-bottom: 32px;
-    background-color: var(--color-top-title);
-    font-size: 30px;
-    color: var(--color-normal-text-color);
-    border-bottom: 1px solid var(--color-white-gray);
+	padding-left: 12.5%;
+	padding-top: 32px;
+	padding-bottom: 32px;
+	background-color: var(--color-top-title);
+	font-size: 30px;
+	color: var(--color-normal-text-color);
+	border-bottom: 1px solid var(--color-white-gray);
 }
 
 .JoinFormRoot {
-    border: 1px solid var(--color-white-gray);
-    margin: auto;
-    margin-top: 72px;
-    width: 648px;
+	border: 1px solid var(--color-white-gray);
+	margin: auto;
+	margin-top: 72px;
+	width: 648px;
 }
 
 .JoinFormRootMobile {
-    border: 1px solid var(--color-white-gray);
-    width: 75%;
-    margin: auto;
-    margin-top: 72px;
+	border: 1px solid var(--color-white-gray);
+	width: 75%;
+	margin: auto;
+	margin-top: 72px;
 }
 
 .JoinMainTitle {
-    color: var(--color-normal-text-color);
-    font-size: 30px;
-    text-align: center;
-    margin-top: 24px;
+	color: var(--color-normal-text-color);
+	font-size: 30px;
+	text-align: center;
+	margin-top: 24px;
 }
 
 .JoinSubTitle {
-    font-size: 13px;
-    text-align: center;
-    margin-top: 12px;
+	font-size: 13px;
+	text-align: center;
+	margin-top: 12px;
 }
 .JoinSubTitle:first-child {
-    margin-top: 24px;
+	margin-top: 24px;
 }
 .JoinSubTitle a {
-    text-decoration: none;
-    color: var(--color-primary);
+	text-decoration: none;
+	color: var(--color-primary);
 }
 
 .JoinDiv {
-    height: 1px;
-    width: 100%;
-    background-color: var(--color-white-gray);
-    margin-top: 24px;
+	height: 1px;
+	width: 100%;
+	background-color: var(--color-white-gray);
+	margin-top: 24px;
 }
 
 .JoinFormInner {
-    margin-left: 24px;
-    margin-right: 24px;
+	margin-left: 24px;
+	margin-right: 24px;
 }
 
 .JoinInputTitle {
-    font-weight: bold;
-    color: var(--color-gray);
-    font-size: 13px;
-    margin-top: 12px;
-    margin-bottom: 6px;
+	font-weight: bold;
+	color: var(--color-gray);
+	font-size: 13px;
+	margin-top: 12px;
+	margin-bottom: 6px;
 }
 .JoinInputTitle:first-child {
-    margin-top: 24px;
+	margin-top: 24px;
 }
 
 .JoinEmail {
-    display: flex;
+	display: flex;
 }
 
 .JoinEmail input {
-    flex: 1;
+	flex: 1;
 }
 
 .JoinEmail button {
-    flex: 0 0 auto;
+	flex: 0 0 auto;
 }
 
 .JoinBtn {
-    margin-top: 24px;
-    margin-bottom: 24px;
-    display: flex;
+	margin-top: 24px;
+	margin-bottom: 24px;
+	display: flex;
 }
 
 .JoinBtn button {
-    margin-left: auto;
+	margin-left: auto;
 }

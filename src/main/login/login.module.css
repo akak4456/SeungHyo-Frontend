@@ -1,77 +1,77 @@
 .LoginTitle {
-    padding-left: 12.5%;
-    padding-top: 32px;
-    padding-bottom: 32px;
-    background-color: var(--color-top-title);
-    font-size: 30px;
-    color: var(--color-normal-text-color);
-    border-bottom: 1px solid var(--color-white-gray);
+	padding-left: 12.5%;
+	padding-top: 32px;
+	padding-bottom: 32px;
+	background-color: var(--color-top-title);
+	font-size: 30px;
+	color: var(--color-normal-text-color);
+	border-bottom: 1px solid var(--color-white-gray);
 }
 
 .LoginFormRoot {
-    border: 1px solid var(--color-white-gray);
-    width: 488px;
-    margin: auto;
-    margin-top: 72px;
-    padding-bottom: 24px;
+	border: 1px solid var(--color-white-gray);
+	width: 488px;
+	margin: auto;
+	margin-top: 72px;
+	padding-bottom: 24px;
 }
 
 .LoginFormRootMobile {
-    border: 1px solid var(--color-white-gray);
-    width: 75%;
-    margin: auto;
-    margin-top: 72px;
+	border: 1px solid var(--color-white-gray);
+	width: 75%;
+	margin: auto;
+	margin-top: 72px;
 }
 
 .LoginFormInner {
-    margin-left: 24px;
-    margin-right: 24px;
+	margin-left: 24px;
+	margin-right: 24px;
 }
 .LoginMainTitle {
-    color: var(--color-normal-text-color);
-    font-size: 30px;
-    text-align: center;
-    margin-top: 24px;
+	color: var(--color-normal-text-color);
+	font-size: 30px;
+	text-align: center;
+	margin-top: 24px;
 }
 .LoginDiv {
-    height: 1px;
-    width: 100%;
-    background-color: var(--color-white-gray);
-    margin-top: 24px;
+	height: 1px;
+	width: 100%;
+	background-color: var(--color-white-gray);
+	margin-top: 24px;
 }
 
 .LoginForm {
-    display: flex;
-    margin-top: 24px;
+	display: flex;
+	margin-top: 24px;
 }
 
 .LoginForm div {
-    width: 32px;
-    height: 32px;
-    box-sizing: border-box;
-    flex-shrink: 0;
-    padding: 8px;
-    border: 1px solid var(--color-input-border);
-    border-right: 0;
+	width: 32px;
+	height: 32px;
+	box-sizing: border-box;
+	flex-shrink: 0;
+	padding: 8px;
+	border: 1px solid var(--color-input-border);
+	border-right: 0;
 }
 
 .LoginForm button {
-    flex-grow: 1;
+	flex-grow: 1;
 }
 
 .LoginAction {
-    margin-top: 24px;
-    display: flex;
-    justify-content: space-between;
+	margin-top: 24px;
+	display: flex;
+	justify-content: space-between;
 }
 
 .LoginSubTitle {
-    font-size: 13px;
-    text-align: center;
-    margin-top: 12px;
+	font-size: 13px;
+	text-align: center;
+	margin-top: 12px;
 }
 
 .LoginSubTitle a {
-    text-decoration: none;
-    color: var(--color-primary);
+	text-decoration: none;
+	color: var(--color-primary);
 }
