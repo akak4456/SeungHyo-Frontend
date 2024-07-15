@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './footer.module.css';
 import Logo from '../components/img-logo';
