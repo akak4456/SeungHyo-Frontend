@@ -8,7 +8,7 @@ import styled from 'styled-components';
  * @returns {JSX.Element} 사용자 이름을 출력하는 JSX 요소
  */
 const LogoDiv = styled.div`
-	margin-left: ${(props) => props.marginLeft};
+	margin-left: ${(props) => props.$marginLeft};
 	box-sizing: border-box;
 	line-height: 1;
 `;
@@ -33,7 +33,7 @@ const LogoContent = styled.span`
 `;
 const Logo = ({ marginLeft }) => {
 	return (
-		<LogoDiv marginLeft={marginLeft}>
+		<LogoDiv $marginLeft={marginLeft}>
 			<LogoTag>SH</LogoTag>
 			<LogoContent>SeungHyo</LogoContent>
 		</LogoDiv>

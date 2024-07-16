@@ -6,8 +6,8 @@ const StyledDiv = styled.div`
 	display: inline-block;
 	padding: 8px;
 	color: white;
-	background-color: ${(props) => props.backgroundColor};
-	margin-left: ${(props) => props.marginLeft};
+	background-color: ${(props) => props.$backgroundColor};
+	margin-left: ${(props) => props.$marginLeft};
 `;
 
 /**
@@ -21,8 +21,8 @@ const StyledDiv = styled.div`
 const Tag = ({ backgroundColor, marginLeft, text, onClick }) => {
 	return (
 		<StyledDiv
-			backgroundColor={backgroundColor}
-			marginLeft={marginLeft}
+			$backgroundColor={backgroundColor}
+			$marginLeft={marginLeft}
 			onClick={onClick}
 		>
 			{text}

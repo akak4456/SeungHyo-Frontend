@@ -82,7 +82,7 @@ const StyledLi = styled.li`
 		border-bottom: 0;
 	}
 	${(props) =>
-		props.active
+		props.$active
 			? css`
 					background-color: var(--color-primary);
 					color: white;
@@ -99,7 +99,7 @@ const StyledCaretDownFill = styled(CaretDownFill)`
 	margin-right: 16px;
 	transition: 0.5s;
 	${(props) =>
-		props.isOpen &&
+		props.$isOpen &&
 		css`
 			transform: rotate(180deg);
 		`}
@@ -128,7 +128,7 @@ const Dropdown = ({ dropDownText, onDropDownTextChange, isSearchIncluded }) => {
 		return (
 			<StyledLi
 				key={index}
-				active={curText == text}
+				$active={curText == text}
 				onClick={() => changeText(text)}
 			>
 				{text}
@@ -144,7 +144,7 @@ const Dropdown = ({ dropDownText, onDropDownTextChange, isSearchIncluded }) => {
 				}}
 			>
 				<StyledCurTextP>{curText}</StyledCurTextP>
-				<StyledCaretDownFill isOpen={isOpen} />
+				<StyledCaretDownFill $isOpen={isOpen} />
 			</StyledHeaderDiv>
 			{isOpen && (
 				<StyledContentPositionDiv isOpen={isOpen}>

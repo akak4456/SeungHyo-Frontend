@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
  */
 const StyledButton = styled.button`
 	padding: 8px;
-	background-color: ${({ bgColor }) => bgColor};
+	background-color: ${({ $bgColor }) => $bgColor};
 	color: white;
 	font-size: 14px;
 	text-align: center;
@@ -35,7 +35,7 @@ const NormalButton = ({ type, onClick, text }) => {
 				? 'var(--color-primary)'
 				: 'transparent';
 	return (
-		<StyledButton bgColor={bgColor} onClick={onClick}>
+		<StyledButton $bgColor={bgColor} onClick={onClick}>
 			{text}
 		</StyledButton>
 	);

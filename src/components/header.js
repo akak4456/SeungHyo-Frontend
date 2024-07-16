@@ -66,8 +66,8 @@ const StyledMobileDropDownDiv = styled.div`
 	margin-top: 1px;
 	transition: all;
 	transition-duration: 0.5s;
-	opacity: ${(props) => (props.isDropdownShown ? '1' : '0')};
-	visibility: ${(props) => (props.isDropdownShown ? 'visible' : 'collapse')};
+	opacity: ${(props) => (props.$isDropdownShown ? '1' : '0')};
+	visibility: ${(props) => (props.$isDropdownShown ? 'visible' : 'collapse')};
 	z-index: 999;
 	& a {
 		text-decoration: none;
@@ -89,8 +89,8 @@ const StyledRightSideDiv = styled.div`
 		display: inline-block;
 		height: 100%;
 		display: flex;
-		padding-top: ${({ isMobile }) => (isMobile ? '16px' : '0')};
-		padding-bottom: ${({ isMobile }) => (isMobile ? '16px' : '0')};
+		padding-top: ${(props) => (props.$isMobile ? '16px' : '0')};
+		padding-bottom: ${(props) => (props.$isMobile ? '16px' : '0')};
 		box-sizing: border-box;
 		padding-left: 16px;
 		padding-right: 16px;
@@ -110,8 +110,8 @@ const StyledMobileButtonsDiv = styled.div`
 const StyledMyDiv = styled.div`
 	position: absolute;
 	z-index: 999;
-	width: ${(props) => (props.isMyShown ? '200px' : '0')};
-	height: ${(props) => (props.isMyShown ? '200px' : '0')};
+	width: ${(props) => (props.$isMyShown ? '200px' : '0')};
+	height: ${(props) => (props.$isMyShown ? '200px' : '0')};
 	transition: 0.5s;
 	top: 100%;
 	right: 12.5%;
@@ -187,7 +187,7 @@ const Header = (props) => {
 	};
 	const [isLogined, setIsLogined] = useState(true); // 임시값 TODO 나중에 변경할 것
 	return (
-		<StyledHeader isMobile={isMobile}>
+		<StyledHeader>
 			<NavLink to="/">
 				<Logo />
 			</NavLink>
@@ -205,7 +205,7 @@ const Header = (props) => {
 				</StyledMobileButtonsDiv>
 			)}
 			{isMobile && (
-				<StyledMobileDropDownDiv isDropdownShown={isDropdownShown}>
+				<StyledMobileDropDownDiv $isDropdownShown={isDropdownShown}>
 					<NavLink to="/problem-list">
 						<p onClick={onHide}>문제</p>
 					</NavLink>
@@ -220,7 +220,7 @@ const Header = (props) => {
 					</NavLink>
 				</StyledMobileDropDownDiv>
 			)}
-			<StyledRightSideDiv isMobile={isMobile}>
+			<StyledRightSideDiv $isMobile={isMobile}>
 				{!isLogined && <NavLink to="/login">로그인</NavLink>}
 				{isLogined && (
 					<div ref={myRef} onClick={() => setMyShown(!isMyShown)}>
@@ -228,7 +228,10 @@ const Header = (props) => {
 					</div>
 				)}
 			</StyledRightSideDiv>
-			<StyledMyDiv isMyShown={isMyShown} onClick={() => setMyShown(!isMyShown)}>
+			<StyledMyDiv
+				$isMyShown={isMyShown}
+				onClick={() => setMyShown(!isMyShown)}
+			>
 				<StyledMyContentDiv>
 					<NavLink to="/user">
 						<StyledMyName>akak4456</StyledMyName>
