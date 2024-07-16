@@ -6,6 +6,9 @@
 	position: relative;
 	flex-direction: row;
 }
+.HeaderRoot a {
+	text-decoration: none;
+}
 .HeaderRightSide {
 	margin-left: auto;
 	margin-top: 16px;
