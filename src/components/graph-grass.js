@@ -287,8 +287,11 @@ function drawGrass(ctx, daysTextEnd, colorData) {
 		const actualHeight =
 			metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 		const actualWidth = metrics.width;
-		const wholeWidth =
+		let wholeWidth =
 			(RECT_SIZE - RECT_BORDER_SIZE) * monthDivideData[index].topWidth;
+		if (index == 0 && colorData[0][0].colorLevel == -1) {
+			wholeWidth += RECT_SIZE - RECT_BORDER_SIZE;
+		}
 		ctx.fillText(
 			monthText,
 			startX + actualWidth + (wholeWidth - actualWidth) / 2,
