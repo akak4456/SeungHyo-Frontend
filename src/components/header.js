@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../components/logo.js';
@@ -165,10 +165,20 @@ const Header = (props) => {
 	const [isDropdownShown, setDropdownShown] = useState(false);
 	const [isMyShown, setMyShown] = useState(false);
 	const location = useLocation();
-
+	const myRef = useRef();
 	useEffect(() => {
 		setMyShown(false);
 	}, [location]);
+
+	useEffect(() => {
+		const handleOutsideClose = (e) => {
+			// useRef current에 담긴 엘리먼트 바깥을 클릭 시 드롭메뉴 닫힘
+			if (isMyShown && !myRef.current.contains(e.target)) setMyShown(false);
+		};
+		document.addEventListener('click', handleOutsideClose);
+
+		return () => document.removeEventListener('click', handleOutsideClose);
+	}, [isMyShown]);
 	const onShow = () => {
 		setDropdownShown(true);
 	};
@@ -213,7 +223,7 @@ const Header = (props) => {
 			<StyledRightSideDiv isMobile={isMobile}>
 				{!isLogined && <NavLink to="/login">로그인</NavLink>}
 				{isLogined && (
-					<div onClick={() => setMyShown(!isMyShown)}>
+					<div ref={myRef} onClick={() => setMyShown(!isMyShown)}>
 						<img src="https://static.solved.ac/misc/64x64/default_profile.png"></img>
 					</div>
 				)}
