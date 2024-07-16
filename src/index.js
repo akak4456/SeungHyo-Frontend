@@ -24,40 +24,150 @@ import Problem from './main/problem/problem.js';
 import ReflectionNote from './main/reflection-note/reflection-note.js';
 import Write from './main/write/write.js';
 import Article from './main/article/article.js';
+import Layout from './components/layout.js';
 function Root() {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
 				<Routes>
-					<Route path="/" element={<Intro />}></Route>
-					<Route path="/problem-list/*" element={<ProblemList />}></Route>
+					<Route
+						path="/"
+						element={
+							<Layout>
+								<Intro />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/problem-list/*"
+						element={
+							<Layout>
+								<ProblemList />
+							</Layout>
+						}
+					></Route>
 					<Route
 						path="/reflection-note-list/*"
-						element={<ReflectionNoteList />}
+						element={
+							<Layout>
+								<ReflectionNoteList />
+							</Layout>
+						}
 					></Route>
-					<Route path="/board/*" element={<Board />}></Route>
-					<Route path="/search/*" element={<SearchPage />}></Route>
-					<Route path="/join/*" element={<Join />}></Route>
-					<Route path="/login/*" element={<Login />}></Route>
+					<Route
+						path="/board/*"
+						element={
+							<Layout>
+								<Board />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/search/*"
+						element={
+							<Layout>
+								<SearchPage />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/join/*"
+						element={
+							<Layout>
+								<Join />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/login/*"
+						element={
+							<Layout>
+								<Login />
+							</Layout>
+						}
+					></Route>
 					<Route path="/agree/*"></Route> // TODO
-					<Route path="/pw-find/*" element={<PwFind />}></Route>
-					<Route path="/pw-reset/*" element={<PwReset />}></Route>
+					<Route
+						path="/pw-find/*"
+						element={
+							<Layout>
+								<PwFind />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/pw-reset/*"
+						element={
+							<Layout>
+								<PwReset />
+							</Layout>
+						}
+					></Route>
 					<Route
 						path="/setting/info-edit"
-						element={<SettingInfoEdit />}
+						element={
+							<Layout>
+								<SettingInfoEdit />
+							</Layout>
+						}
 					></Route>
 					<Route
 						path="/setting/pw-change"
-						element={<SettingPwChange />}
+						element={
+							<Layout>
+								<SettingPwChange />
+							</Layout>
+						}
 					></Route>
-					<Route path="/setting/withdraw" element={<SettingWithdraw />}></Route>
-					<Route path="/user/*" element={<User />}></Route>
-					<Route path="/problem/*" element={<Problem />}></Route>
-					<Route path="/reflection-note/*" element={<ReflectionNote />}></Route>
-					<Route path="/write/*" element={<Write />}></Route>
-					<Route path="/article/*" element={<Article />}></Route>
+					<Route
+						path="/setting/withdraw"
+						element={
+							<Layout>
+								<SettingWithdraw />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/user/*"
+						element={
+							<Layout>
+								<User />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/problem/*"
+						element={
+							<Layout>
+								<Problem />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/reflection-note/*"
+						element={
+							<Layout>
+								<ReflectionNote />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/write/*"
+						element={
+							<Layout>
+								<Write />
+							</Layout>
+						}
+					></Route>
+					<Route
+						path="/article/*"
+						element={
+							<Layout>
+								<Article />
+							</Layout>
+						}
+					></Route>
 				</Routes>
-				<Footer />
 			</BrowserRouter>
 		</Provider>
 	);

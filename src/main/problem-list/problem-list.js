@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './problem-list.module.css';
-import Header from '../../header/header';
 import InputBox from '../../components/inputbox';
 import { Search } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
@@ -56,21 +55,18 @@ const ProblemList = (props) => {
 		return num + '';
 	};
 	return (
-		<>
-			<Header />
-			<main>
-				<div className={styles.ProblemListSearchForm}>
-					<InputBox type="text" placeholder="검색"></InputBox>
-					<div>
-						<Search size={16} color="white" />
-					</div>
+		<main>
+			<div className={styles.ProblemListSearchForm}>
+				<InputBox type="text" placeholder="검색"></InputBox>
+				<div>
+					<Search size={16} color="white" />
 				</div>
-				<ProblemListTable />
-				<div className={styles.ProblemListPaginationRoot}>
-					<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
-				</div>
-			</main>
-		</>
+			</div>
+			<ProblemListTable />
+			<div className={styles.ProblemListPaginationRoot}>
+				<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
+			</div>
+		</main>
 	);
 };
 export default ProblemList;

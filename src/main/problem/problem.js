@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './problem.module.css';
-import Header from '../../header/header';
 import { isTabletQuery } from '../../responsive';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
@@ -140,17 +139,14 @@ const Problem = (props) => {
 		query: isTabletQuery,
 	});
 	return (
-		<>
-			<Header />
-			<main
-				className={classNames(styles.ProblemRoot, {
-					[styles.ProblemRootTablet]: isTablet,
-				})}
-			>
-				<ProblemLeftSide isTablet={isTablet} />
-				<ProblemRightSide isTablet={isTablet} />
-			</main>
-		</>
+		<main
+			className={classNames(styles.ProblemRoot, {
+				[styles.ProblemRootTablet]: isTablet,
+			})}
+		>
+			<ProblemLeftSide isTablet={isTablet} />
+			<ProblemRightSide isTablet={isTablet} />
+		</main>
 	);
 };
 export default Problem;

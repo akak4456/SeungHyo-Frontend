@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './reflection-note-list.module.css';
-import Header from '../../header/header';
 import InputBox from '../../components/inputbox';
 import Dropdown from '../../components/dropdown';
 import { NavLink } from 'react-router-dom';
@@ -104,27 +103,24 @@ const ReflectionNoteList = (props) => {
 		query: '(max-width:1050px)',
 	});
 	return (
-		<>
-			<Header />
-			<main className={styles.ReflectionNoteListRoot}>
-				<div
-					className={classNames(styles.ReflectionNoteListSearchContainer, {
-						[styles.ReflectionNoteListSearchContainerTablet]: isTablet,
-					})}
-				>
-					<div className={styles.ReflectionNoteListSearchInputBox}>
-						<InputBox placeholder="문제" />
-					</div>
-					<Dropdown dropDownText={langDropDown} />
-					<Dropdown dropDownText={resultDropDown} />
-					<NormalButton type="primary" text="검색" />
+		<main className={styles.ReflectionNoteListRoot}>
+			<div
+				className={classNames(styles.ReflectionNoteListSearchContainer, {
+					[styles.ReflectionNoteListSearchContainerTablet]: isTablet,
+				})}
+			>
+				<div className={styles.ReflectionNoteListSearchInputBox}>
+					<InputBox placeholder="문제" />
 				</div>
-				<ReflectionNoteListTable />
-				<div className={styles.ReflectionNoteListPaginationRoot}>
-					<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
-				</div>
-			</main>
-		</>
+				<Dropdown dropDownText={langDropDown} />
+				<Dropdown dropDownText={resultDropDown} />
+				<NormalButton type="primary" text="검색" />
+			</div>
+			<ReflectionNoteListTable />
+			<div className={styles.ReflectionNoteListPaginationRoot}>
+				<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
+			</div>
+		</main>
 	);
 };
 export default ReflectionNoteList;

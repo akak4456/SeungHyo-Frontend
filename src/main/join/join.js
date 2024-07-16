@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styles from './join.module.css';
-import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
 import InputBox from '../../components/inputbox';
 import { Mobile, PC } from '../../responsive';
@@ -55,21 +53,18 @@ function JoinFormInner() {
 }
 export default function Join() {
 	return (
-		<>
-			<Header />
-			<main>
-				<p className={styles.JoinTitle}>회원가입</p>
-				<PC>
-					<div className={styles.JoinFormRoot}>
-						<JoinFormInner></JoinFormInner>
-					</div>
-				</PC>
-				<Mobile>
-					<div className={styles.JoinFormRootMobile}>
-						<JoinFormInner></JoinFormInner>
-					</div>
-				</Mobile>
-			</main>
-		</>
+		<main>
+			<p className={styles.JoinTitle}>회원가입</p>
+			<PC>
+				<div className={styles.JoinFormRoot}>
+					<JoinFormInner></JoinFormInner>
+				</div>
+			</PC>
+			<Mobile>
+				<div className={styles.JoinFormRootMobile}>
+					<JoinFormInner></JoinFormInner>
+				</div>
+			</Mobile>
+		</main>
 	);
 }

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import styles from './intro.module.css';
 import AdSample from '../../assets/adsample.png';
 import { Mobile, PC } from '../../responsive';
-import Header from '../../header/header';
 
 const StatisticsBlock = ({ mainNumber, subTitle }) => {
 	const [count, setCount] = useState(0);
@@ -99,13 +97,10 @@ function Ad() {
 
 export default function Intro() {
 	return (
-		<>
-			<Header />
-			<main>
-				<Ad />
-				<p className={styles.IntroTitle}>쉽다! 재미있다! 빠르다!</p>
-				<Statistics />
-			</main>
-		</>
+		<main>
+			<Ad />
+			<p className={styles.IntroTitle}>쉽다! 재미있다! 빠르다!</p>
+			<Statistics />
+		</main>
 	);
 }

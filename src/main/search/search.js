@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './search.module.css';
-import Header from '../../header/header';
 import { Search } from 'react-bootstrap-icons';
 import InputBox from '../../components/inputbox';
 import Pagination from '../../components/pagination';
@@ -19,34 +18,31 @@ const SearchPage = (props) => {
 		return num + '';
 	};
 	return (
-		<>
-			<Header />
-			<main>
-				<div className={styles.SearchFormRoot}>
-					<span>검색</span>
-					<div className={styles.SearchFormInput}>
-						<InputBox type="text" placeholder="검색"></InputBox>
-						<div>
-							<Search size={16} color="white" />
-						</div>
+		<main>
+			<div className={styles.SearchFormRoot}>
+				<span>검색</span>
+				<div className={styles.SearchFormInput}>
+					<InputBox type="text" placeholder="검색"></InputBox>
+					<div>
+						<Search size={16} color="white" />
 					</div>
 				</div>
-				<p className={styles.SearchFormResult}>검색 결과 29896개 (0.001초)</p>
-				<SearchItem
-					title={'1000번. A+B'}
-					constraint={'시간 제한: 2초 메모리 제한: 128MB'}
-					content={'두 정수 A와 B를 입력받은 다음 A+B를 출력하세요.'}
-				/>
-				<SearchItem
-					title={'1000번. A+B'}
-					constraint={'시간 제한: 2초 메모리 제한: 128MB'}
-					content={'두 정수 A와 B를 입력받은 다음 A+B를 출력하세요.'}
-				/>
-				<div className={styles.SearchPaginationRoot}>
-					<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
-				</div>
-			</main>
-		</>
+			</div>
+			<p className={styles.SearchFormResult}>검색 결과 29896개 (0.001초)</p>
+			<SearchItem
+				title={'1000번. A+B'}
+				constraint={'시간 제한: 2초 메모리 제한: 128MB'}
+				content={'두 정수 A와 B를 입력받은 다음 A+B를 출력하세요.'}
+			/>
+			<SearchItem
+				title={'1000번. A+B'}
+				constraint={'시간 제한: 2초 메모리 제한: 128MB'}
+				content={'두 정수 A와 B를 입력받은 다음 A+B를 출력하세요.'}
+			/>
+			<div className={styles.SearchPaginationRoot}>
+				<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
+			</div>
+		</main>
 	);
 };
 export default SearchPage;

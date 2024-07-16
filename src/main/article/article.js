@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import styles from './article.module.css';
-import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
 import { HandThumbsUp } from 'react-bootstrap-icons';
 import NormalEditor from '../../components/editor-normal';
@@ -61,32 +59,29 @@ const Reply = (props) => {
 
 const Article = (props) => {
 	return (
-		<>
-			<Header />
-			<main className={styles.ArtileRoot}>
-				<div className={styles.ArticleTitle}>
-					<p>런타임 에러가 왜 뜨는 걸까요?</p>
-				</div>
-				<div className={styles.ArticleLinkRoot}>
-					<NavLink to={'#'} className={styles.ArticleLink}>
-						2525번 - 오븐 시계
-					</NavLink>
-				</div>
-				<Reply
-					author={'akak4456'}
-					date={'10분전'}
-					recommendCount={'10'}
-					content={'왜 안될까요?'}
-				/>
-				<Reply
-					author={'akak4478'}
-					date={'10분전'}
-					recommendCount={'10'}
-					content={'한번 이렇게 해보세요!'}
-				/>
-				<ReplyAdd />
-			</main>
-		</>
+		<main className={styles.ArtileRoot}>
+			<div className={styles.ArticleTitle}>
+				<p>런타임 에러가 왜 뜨는 걸까요?</p>
+			</div>
+			<div className={styles.ArticleLinkRoot}>
+				<NavLink to={'#'} className={styles.ArticleLink}>
+					2525번 - 오븐 시계
+				</NavLink>
+			</div>
+			<Reply
+				author={'akak4456'}
+				date={'10분전'}
+				recommendCount={'10'}
+				content={'왜 안될까요?'}
+			/>
+			<Reply
+				author={'akak4478'}
+				date={'10분전'}
+				recommendCount={'10'}
+				content={'한번 이렇게 해보세요!'}
+			/>
+			<ReplyAdd />
+		</main>
 	);
 };
 export default Article;

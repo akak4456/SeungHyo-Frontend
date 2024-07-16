@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './pw-reset.module.css';
-import Header from '../../header/header';
 import InputBox from '../../components/inputbox';
 import { Mobile, PC } from '../../responsive';
 import NormalButton from '../../components/button-normal';
@@ -25,21 +24,18 @@ function PwResetInner() {
 
 export default function PwReset() {
 	return (
-		<>
-			<Header />
-			<main>
-				<p className={styles.PwResetTitle}>비밀번호 초기화</p>
-				<PC>
-					<div className={styles.PwResetRoot}>
-						<PwResetInner></PwResetInner>
-					</div>
-				</PC>
-				<Mobile>
-					<div className={styles.PwResetRootMobile}>
-						<PwResetInner></PwResetInner>
-					</div>
-				</Mobile>
-			</main>
-		</>
+		<main>
+			<p className={styles.PwResetTitle}>비밀번호 초기화</p>
+			<PC>
+				<div className={styles.PwResetRoot}>
+					<PwResetInner></PwResetInner>
+				</div>
+			</PC>
+			<Mobile>
+				<div className={styles.PwResetRootMobile}>
+					<PwResetInner></PwResetInner>
+				</div>
+			</Mobile>
+		</main>
 	);
 }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './reflection-note.module.css';
-import Header from '../../header/header';
 import classNames from 'classnames';
 import { CaretDownFill } from 'react-bootstrap-icons';
 import { CSSTransition } from 'react-transition-group';
@@ -86,29 +85,26 @@ const ReflectionNoteCaseBlock = (props) => {
 };
 const ReflectionNote = (props) => {
 	return (
-		<>
-			<Header />
-			<main className={styles.ReflectionNoteRoot}>
-				<p className={styles.ReflectionNoteTitle}>
-					1000번. A + B<sub>(제출번호:1000)</sub>
-				</p>
-				<ReflectionNoteCaseBlock
-					caseNum={1}
-					caseTitle={'맞았습니다'}
-					isCorrect={true}
-				/>
-				<ReflectionNoteCaseBlock
-					caseNum={2}
-					caseTitle={'맞았습니다'}
-					isCorrect={true}
-				/>
-				<ReflectionNoteCaseBlock
-					caseNum={3}
-					caseTitle={'틀렸습니다(이유:런타임 에러)'}
-					isCorrect={false}
-				/>
-			</main>
-		</>
+		<main className={styles.ReflectionNoteRoot}>
+			<p className={styles.ReflectionNoteTitle}>
+				1000번. A + B<sub>(제출번호:1000)</sub>
+			</p>
+			<ReflectionNoteCaseBlock
+				caseNum={1}
+				caseTitle={'맞았습니다'}
+				isCorrect={true}
+			/>
+			<ReflectionNoteCaseBlock
+				caseNum={2}
+				caseTitle={'맞았습니다'}
+				isCorrect={true}
+			/>
+			<ReflectionNoteCaseBlock
+				caseNum={3}
+				caseTitle={'틀렸습니다(이유:런타임 에러)'}
+				isCorrect={false}
+			/>
+		</main>
 	);
 };
 export default ReflectionNote;

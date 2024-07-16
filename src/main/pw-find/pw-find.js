@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './pw-find.module.css';
-import Header from '../../header/header';
 import InputBox from '../../components/inputbox';
 import { Mobile, PC } from '../../responsive';
 import NormalButton from '../../components/button-normal';
@@ -25,21 +24,18 @@ function PwFindInner() {
 
 export default function PwFind() {
 	return (
-		<>
-			<Header />
-			<main>
-				<p className={styles.PwFindTitle}>비밀번호 찾기</p>
-				<PC>
-					<div className={styles.PwFindRoot}>
-						<PwFindInner></PwFindInner>
-					</div>
-				</PC>
-				<Mobile>
-					<div className={styles.PwFindRootMobile}>
-						<PwFindInner></PwFindInner>
-					</div>
-				</Mobile>
-			</main>
-		</>
+		<main>
+			<p className={styles.PwFindTitle}>비밀번호 찾기</p>
+			<PC>
+				<div className={styles.PwFindRoot}>
+					<PwFindInner></PwFindInner>
+				</div>
+			</PC>
+			<Mobile>
+				<div className={styles.PwFindRootMobile}>
+					<PwFindInner></PwFindInner>
+				</div>
+			</Mobile>
+		</main>
 	);
 }

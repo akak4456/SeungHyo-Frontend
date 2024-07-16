@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './board.module.css';
-import Header from '../../header/header';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Pagination from '../../components/pagination';
 import { HandThumbsUp } from 'react-bootstrap-icons';
@@ -125,29 +124,26 @@ const Board = (props) => {
 		return num + '';
 	};
 	return (
-		<>
-			<Header />
-			<main className={styles.BoardRoot}>
-				<div className={styles.BoardTapButtons}>
-					<BoardTapButton text={'전체'} isActive={true} />
-					<BoardTapButton text={'공지'} />
-					<BoardTapButton text={'자유'} />
-					<BoardTapButton text={'질문'} />
-					<BoardTapButton text={'홍보'} />
-					<BoardTapButton text={'글쓰기'} onClick={() => navigate('/write')} />
+		<main className={styles.BoardRoot}>
+			<div className={styles.BoardTapButtons}>
+				<BoardTapButton text={'전체'} isActive={true} />
+				<BoardTapButton text={'공지'} />
+				<BoardTapButton text={'자유'} />
+				<BoardTapButton text={'질문'} />
+				<BoardTapButton text={'홍보'} />
+				<BoardTapButton text={'글쓰기'} onClick={() => navigate('/write')} />
+			</div>
+			<BoardTable />
+			<div className={styles.BoardSearchForm}>
+				<div style={{ width: '240px' }}>
+					<InputBox placeholder={'검색'} />
 				</div>
-				<BoardTable />
-				<div className={styles.BoardSearchForm}>
-					<div style={{ width: '240px' }}>
-						<InputBox placeholder={'검색'} />
-					</div>
-					<NormalButton type="primary" text="검색" />
-				</div>
-				<div className={styles.BoardPaginationRoot}>
-					<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
-				</div>
-			</main>
-		</>
+				<NormalButton type="primary" text="검색" />
+			</div>
+			<div className={styles.BoardPaginationRoot}>
+				<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
+			</div>
+		</main>
 	);
 };
 export default Board;

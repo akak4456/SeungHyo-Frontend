@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './login.module.css';
-import Header from '../../header/header';
 import { NavLink } from 'react-router-dom';
 import InputBox from '../../components/inputbox';
 import { Mobile, PC } from '../../responsive';
@@ -43,21 +42,18 @@ function LoginFormInner() {
 }
 export default function Login() {
 	return (
-		<>
-			<Header />
-			<main>
-				<p className={styles.LoginTitle}>로그인</p>
-				<PC>
-					<div className={styles.LoginFormRoot}>
-						<LoginFormInner></LoginFormInner>
-					</div>
-				</PC>
-				<Mobile>
-					<div className={styles.LoginFormRootMobile}>
-						<LoginFormInner></LoginFormInner>
-					</div>
-				</Mobile>
-			</main>
-		</>
+		<main>
+			<p className={styles.LoginTitle}>로그인</p>
+			<PC>
+				<div className={styles.LoginFormRoot}>
+					<LoginFormInner></LoginFormInner>
+				</div>
+			</PC>
+			<Mobile>
+				<div className={styles.LoginFormRootMobile}>
+					<LoginFormInner></LoginFormInner>
+				</div>
+			</Mobile>
+		</main>
 	);
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styles from './setting-tab.module.css';
 import { Mobile, PC } from '../../responsive';
 import classNames from 'classnames';
