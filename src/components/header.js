@@ -96,15 +96,12 @@ const StyledRightSideDiv = styled.div`
 		padding-right: 16px;
 		margin-right: -16px;
 	}
-	& a {
-		color: var(--color-normal-text-color);
-		font-size: 16px;
-		margin: auto;
-	}
 	& img {
 		border-radius: 16px;
 		width: 32px;
 		height: 32px;
+		margin: auto;
+		cursor: pointer;
 	}
 `;
 const StyledMobileButtonsDiv = styled.div`
@@ -113,8 +110,8 @@ const StyledMobileButtonsDiv = styled.div`
 const StyledMyDiv = styled.div`
 	position: absolute;
 	z-index: 999;
-	width: ${(props) => (props.isHovered ? '200px' : '0')};
-	height: ${(props) => (props.isHovered ? '200px' : '0')};
+	width: ${(props) => (props.isMyShown ? '200px' : '0')};
+	height: ${(props) => (props.isMyShown ? '200px' : '0')};
 	transition: 0.5s;
 	top: 100%;
 	right: 12.5%;
@@ -166,12 +163,11 @@ const TapButton = ({ linkTo, element }) => {
 const Header = (props) => {
 	const isMobile = useIsMobile();
 	const [isDropdownShown, setDropdownShown] = useState(false);
-	const [isHovered, setIsHovered] = useState(false);
+	const [isMyShown, setMyShown] = useState(false);
 	const location = useLocation();
 
 	useEffect(() => {
-		// 페이지 이동 시 isHovered를 false로 설정
-		setIsHovered(false);
+		setMyShown(false);
 	}, [location]);
 	const onShow = () => {
 		setDropdownShown(true);
@@ -217,23 +213,16 @@ const Header = (props) => {
 			<StyledRightSideDiv isMobile={isMobile}>
 				{!isLogined && <NavLink to="/login">로그인</NavLink>}
 				{isLogined && (
-					<div
-						onMouseEnter={() => setIsHovered(true)}
-						onMouseLeave={() => setIsHovered(false)}
-					>
-						<NavLink to="/user">
-							<img src="https://static.solved.ac/misc/64x64/default_profile.png"></img>
-						</NavLink>
+					<div onClick={() => setMyShown(!isMyShown)}>
+						<img src="https://static.solved.ac/misc/64x64/default_profile.png"></img>
 					</div>
 				)}
 			</StyledRightSideDiv>
-			<StyledMyDiv
-				isHovered={isHovered}
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
-			>
+			<StyledMyDiv isMyShown={isMyShown} onClick={() => setMyShown(!isMyShown)}>
 				<StyledMyContentDiv>
-					<StyledMyName>akak4456</StyledMyName>
+					<NavLink to="/user">
+						<StyledMyName>akak4456</StyledMyName>
+					</NavLink>
 					<StyledMyBottomDiv>
 						<NavLink to="/setting/info-edit">설정</NavLink>
 						<NavLink to="#">로그아웃</NavLink>
