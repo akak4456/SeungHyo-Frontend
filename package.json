@@ -58,7 +58,11 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-push": "npm run lint-staged && git add . && git commit -m \"[CNG] lint apply\" || true"
+			"pre-push": [
+				"npm run lint-staged",
+				"git add .",
+				"git commit -m \"[CNG] lint apply\" || true"
+			]
 		}
 	},
 	"lint-staged": {

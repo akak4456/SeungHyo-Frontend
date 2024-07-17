@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run lint-staged && git add . && git commit -m "[CNG] lint apply"
+npm run lint-staged 
+git add . 
+git commit -m "[CNG] lint apply"
