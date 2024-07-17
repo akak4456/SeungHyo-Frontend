@@ -11,7 +11,7 @@ const StyledButton = styled.button`
 	background-color: var(--color-primary);
 	padding: 4px;
 `;
-  const HamburgerButton = ({ onClick }) => {
+   const HamburgerButton = ({ onClick }) => {
 	   return (
 		<StyledButton onClick={onClick}>
 			<List color="white" size="12" />
