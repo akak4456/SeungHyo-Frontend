@@ -30,8 +30,9 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"prepare": "husky install",
-		"lint-staged": "lint-staged"
+		"prepare": "husky",
+		"lint-staged": "lint-staged",
+		"prepush": "npm run lint-staged && git add . && git commit -m '[CNG] lint apply'"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -58,7 +59,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "npm run lint-staged"
+			"pre-push": "npm run prepush"
 		}
 	},
 	"lint-staged": {
