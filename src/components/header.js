@@ -234,7 +234,7 @@ const Header = (props) => {
 			>
 				<StyledMyContentDiv>
 					<NavLink to="/user">
-						<StyledMyName>akak4456</StyledMyName>
+						<StyledMyName>akak44567</StyledMyName>
 					</NavLink>
 					<StyledMyBottomDiv>
 						<NavLink to="/setting/info-edit">설정</NavLink>
