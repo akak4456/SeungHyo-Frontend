@@ -58,17 +58,12 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-push": [
-				"npm run lint-staged",
-				"git add .",
-				"git commit -m \"[CNG] lint apply\" || true"
-			]
+			"pre-push": "sh .husky/pre-push"
 		}
 	},
 	"lint-staged": {
 		"*.{js,ts}": [
-			"npx prettier --write .",
-			"echo hello"
+			"npx prettier --write ."
 		]
 	}
 }
