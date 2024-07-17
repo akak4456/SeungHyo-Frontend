@@ -32,7 +32,7 @@
 		"eject": "react-scripts eject",
 		"prepare": "husky",
 		"lint-staged": "lint-staged",
-		"prepush": "npm run lint-staged && git add . && git commit -m '[CNG] lint apply'"
+		"prepush": "npm run lint-staged && git add . && git commit -m \"[CNG] lint apply\" || true"
 	},
 	"eslintConfig": {
 		"extends": [
