@@ -2,7 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # Run lint-staged
-npm run lint-staged
+npx prettier --write .
 
 # Check if there are any changes to be committed
 if [ -n "$(git status --porcelain)" ]; then
