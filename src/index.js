@@ -9,7 +9,6 @@ import ProblemList from './pages/problem-list/problem-list.js';
 import ReflectionNoteList from './pages/reflection-note-list/reflection-note-list.js';
 import Board from './pages/board/board.js';
 import SearchPage from './pages/search/search.js';
-import Footer from './components/footer.js';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
 import Join from './pages/join/join.js';
