@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './intro.module.css';
-import AdSample from '../../assets/adsample.png';
+import IntroTitleImg from '../../assets/introtitle.png';
 import { Mobile, PC } from '../../responsive';
 
 const StatisticsBlock = ({ mainNumber, subTitle }) => {
@@ -92,7 +92,7 @@ function Statistics() {
 }
 
 function Ad() {
-	return <img className={styles.IntroAd} src={AdSample}></img>;
+	return <img className={styles.IntroAd} src={IntroTitleImg}></img>;
 }
 
 export default function Intro() {
