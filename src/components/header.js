@@ -238,7 +238,9 @@ const Header = (props) => {
 					</NavLink>
 					<StyledMyBottomDiv>
 						<NavLink to="/setting/info-edit">설정</NavLink>
-						<NavLink to="#">로그아웃</NavLink>
+						<NavLink to="#" onClick={() => setIsLogined(false)}>
+							로그아웃
+						</NavLink>
 					</StyledMyBottomDiv>
 				</StyledMyContentDiv>
 			</StyledMyDiv>

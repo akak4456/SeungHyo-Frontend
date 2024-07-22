@@ -12,7 +12,7 @@ import SearchPage from './pages/search/search.js';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
 import Join from './pages/join/join.js';
-import Login from './pages/login/login.js';
+import Login from './pages/login.js';
 import PwFind from './pages/pw-find/pw-find.js';
 import PwReset from './pages/pw-reset/pw-reset.js';
 import SettingInfoEdit from './pages/setting/info-edit/setting-info-edit.js';
