@@ -103,6 +103,11 @@ const StyledRightSideDiv = styled.div`
 		margin: auto;
 		cursor: pointer;
 	}
+	& a {
+		margin: auto;
+		color: var(--color-normal-text-color);
+		font-size: 16px;
+	}
 `;
 const StyledMobileButtonsDiv = styled.div`
 	margin-left: 32px;
@@ -221,7 +226,11 @@ const Header = (props) => {
 				</StyledMobileDropDownDiv>
 			)}
 			<StyledRightSideDiv $isMobile={isMobile}>
-				{!isLogined && <NavLink to="/login">로그인</NavLink>}
+				{!isLogined && (
+					<div>
+						<NavLink to="/login">로그인</NavLink>
+					</div>
+				)}
 				{isLogined && (
 					<div ref={myRef} onClick={() => setMyShown(!isMyShown)}>
 						<img src="https://static.solved.ac/misc/64x64/default_profile.png"></img>
