@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './setting-pw-change.module.css';
-import SettingTab from '../setting-tab';
+import SettingTab from '../../../components/button-setting-tab';
 import { useMediaQuery } from 'react-responsive';
 import { isMobileQuery } from '../../../responsive';
 import classNames from 'classnames';
