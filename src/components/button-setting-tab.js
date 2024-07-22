@@ -18,8 +18,8 @@ const SettingTabBlockPara = styled.p`
 	&:last-child {
 		border-bottom: 1px solid var(--color-white-gray);
 	}
-	${(props) =>
-		props.isActive &&
+	${({ $isActive }) =>
+		$isActive &&
 		css`
 			color: white;
 			background-color: var(--color-setting-tab-background);
@@ -34,7 +34,7 @@ const SettingTabBlock = (props) => {
 		navigate(props.link);
 	};
 	return (
-		<SettingTabBlockPara isActive={props.isActive} onClick={onClick}>
+		<SettingTabBlockPara $isActive={props.isActive} onClick={onClick}>
 			{props.text}
 		</SettingTabBlockPara>
 	);
@@ -61,13 +61,13 @@ const SettingInner = (props) => {
 	);
 };
 const SettingTabRootDiv = styled.div`
-	width: ${(props) => (props.isMobile ? '100%' : '300px')};
+	width: ${({ $isMobile }) => ($isMobile ? '100%' : '300px')};
 	cursor: pointer;
 `;
 const SettingTab = (props) => {
 	const isMobile = useIsMobile();
 	return (
-		<SettingTabRootDiv isMobile={isMobile}>
+		<SettingTabRootDiv $isMobile={isMobile}>
 			<SettingInner {...props}></SettingInner>
 		</SettingTabRootDiv>
 	);

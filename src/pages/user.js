@@ -97,19 +97,19 @@ const UserTopDiv = styled.div`
 const UserStatisticsRootDiv = styled.div`
 	width: 100%;
 	display: flex;
-	flex-direction: ${(props) => (props.isTablet ? 'column' : 'row')};
+	flex-direction: ${({ $isTablet }) => ($isTablet ? 'column' : 'row')};
 	margin-top: 24px;
 `;
 const UserStatisticsLeftDiv = styled.div`
-	width: ${(props) => (props.isTablet ? '100%' : '300px')};
+	width: ${({ $isTablet }) => ($isTablet ? '100%' : '300px')};
 	flex-shrink: 0;
 `;
 const UserDiv = styled.div`
 	width: 100%;
 	height: 1px;
 	background-color: var(--color-white-gray);
-	${(props) =>
-		props.isMarginTop &&
+	${({ $isMarginTop }) =>
+		$isMarginTop &&
 		css`
 			margin-top: 24px;
 		`}
@@ -126,13 +126,13 @@ const UserStatisticsLeftTitle = styled.p`
 	color: var(--color-normal-text-color);
 	font-weight: bold;
 	font-size: 14px;
-	${(props) =>
-		props.isCorrect &&
+	${({ $isCorrect }) =>
+		$isCorrect &&
 		css`
 			color: var(--color-correct);
 		`}
-	${(props) =>
-		props.isWrong &&
+	${({ $isWrong }) =>
+		$isWrong &&
 		css`
 			color: var(--color-wrong);
 		`}
@@ -160,7 +160,7 @@ const UserStatisticsRightSideDiv = styled.div`
 	flex-grow: 1;
 	flex-shrink: 1;
 	flex-basis: auto;
-	margin-left: ${(props) => (props.isTablet ? '0' : '24px')};
+	margin-left: ${({ $isTablet }) => ($isTablet ? '0' : '24px')};
 	${(props) =>
 		props.isTablet &&
 		css`
@@ -180,13 +180,13 @@ const UserMarginTop24Div = styled.div`
 	margin-top: 24px;
 `;
 const UserStatisticsRightProblemLink = styled.span`
-	${(props) =>
-		props.isCorrect &&
+	${({ $isCorrect }) =>
+		$isCorrect &&
 		css`
 			color: var(--color-correct);
 		`}
-	${(props) =>
-		props.isWrong &&
+	${({ $isWrong }) =>
+		$isWrong &&
 		css`
 			color: var(--color-wrong);
 		`}
@@ -282,8 +282,8 @@ const User = () => {
 			<UserName>akak4456</UserName>
 			<UserMessage>컴공 17 조승효</UserMessage>
 			<UserTopDiv></UserTopDiv>
-			<UserStatisticsRootDiv isTablet={isTablet}>
-				<UserStatisticsLeftDiv isTablet={isTablet}>
+			<UserStatisticsRootDiv $isTablet={isTablet}>
+				<UserStatisticsLeftDiv $isTablet={isTablet}>
 					<UserDiv></UserDiv>
 					<UserStatisticsLeftRowDiv>
 						<UserStatisticsLeftTitle>등수</UserStatisticsLeftTitle>
@@ -293,16 +293,16 @@ const User = () => {
 					<UserStatisticsLeftRankGraphDiv ref={lineGraphContainerRef}>
 						<LineGraph getPointValueText={transformLineGraphValue} />
 					</UserStatisticsLeftRankGraphDiv>
-					<UserDiv isMarginTop={true}></UserDiv>
+					<UserDiv $isMarginTop={true}></UserDiv>
 					<UserStatisticsLeftRowDiv>
-						<UserStatisticsLeftTitle isCorrect={true}>
+						<UserStatisticsLeftTitle $isCorrect={true}>
 							맞았습니다
 						</UserStatisticsLeftTitle>
 						<UserStatisticsLeftContent>4579</UserStatisticsLeftContent>
 					</UserStatisticsLeftRowDiv>
 					<UserDiv></UserDiv>
 					<UserStatisticsLeftRowDiv>
-						<UserStatisticsLeftTitle isWrong={true}>
+						<UserStatisticsLeftTitle $isWrong={true}>
 							틀렸습니다
 						</UserStatisticsLeftTitle>
 						<UserStatisticsLeftContent>4579</UserStatisticsLeftContent>
@@ -312,7 +312,7 @@ const User = () => {
 						<PieGraph></PieGraph>
 					</UserStatisticsLeftRatioGraphDiv>
 				</UserStatisticsLeftDiv>
-				<UserStatisticsRightSideDiv isTablet={isTablet}>
+				<UserStatisticsRightSideDiv $isTablet={isTablet}>
 					<UserStatisticsRightSideContainer title={'2023 ~ 2024년'}>
 						<UserStatisticsRightSideDailyDiv>
 							<UserStatisticsGrassLinear maxLevel={14} />
@@ -326,87 +326,87 @@ const User = () => {
 					<UserStatisticsRightSideContainer title={'맞은 문제'}>
 						<UserStatisticsRightSideProblemDiv>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isCorrect={true}>
+								<UserStatisticsRightProblemLink $isCorrect={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
@@ -416,57 +416,57 @@ const User = () => {
 					<UserStatisticsRightSideContainer title={'틀린 문제'}>
 						<UserStatisticsRightSideProblemDiv>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>
 							<NavLink to={'#'}>
-								<UserStatisticsRightProblemLink isWrong={true}>
+								<UserStatisticsRightProblemLink $isWrong={true}>
 									1000
 								</UserStatisticsRightProblemLink>
 							</NavLink>

@@ -49,7 +49,7 @@ const PwFindTitle = styled.p`
 
 const PwFindRoot = styled.div`
 	max-width: 600px;
-	width: ${(props) => (props.isMobile ? '75%' : '600px')};
+	width: ${({ $isMobile }) => ($isMobile ? '75%' : '600px')};
 	margin: auto;
 	margin-top: 84px;
 `;
@@ -59,7 +59,7 @@ const PwFind = () => {
 	return (
 		<main>
 			<PwFindTitle>비밀번호 찾기</PwFindTitle>
-			<PwFindRoot isMobile={isMobile}>
+			<PwFindRoot $isMobile={isMobile}>
 				<PwFindInner></PwFindInner>
 			</PwFindRoot>
 		</main>

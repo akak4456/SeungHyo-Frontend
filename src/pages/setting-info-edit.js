@@ -9,14 +9,14 @@ const SettingInfoEditRootMain = styled.main`
 	margin: auto;
 	display: flex;
 	margin-top: 48px;
-	flex-direction: ${(props) => (props.isMobile ? 'column' : 'row')};
+	flex-direction: ${({ $isMobile }) => ($isMobile ? 'column' : 'row')};
 `;
 const SettingInfoEditContentDiv = styled.div`
 	flex-grow: 1;
-	margin-left: ${(props) => (props.isMobile ? '0px' : '24px')};
+	margin-left: ${({ $isMobile }) => ($isMobile ? '0px' : '24px')};
 
-	${(props) =>
-		props.isMobile &&
+	${({ $isMobile }) =>
+		$isMobile &&
 		css`
 			margin-top: 24px;
 		`}
@@ -49,9 +49,9 @@ const SettingInfoEditButtonGroupDiv = styled.div`
 const SettingInfoEdit = () => {
 	const isMobile = useIsMobile();
 	return (
-		<SettingInfoEditRootMain isMobile={isMobile}>
+		<SettingInfoEditRootMain $isMobile={isMobile}>
 			<SettingTab isInfoEditActive={true}></SettingTab>
-			<SettingInfoEditContentDiv isMobile={isMobile}>
+			<SettingInfoEditContentDiv $isMobile={isMobile}>
 				<SettingInfoEditMainTitle>정보 수정</SettingInfoEditMainTitle>
 				<SettingInfoEditDivider></SettingInfoEditDivider>
 				<SettingInfoInputTitle>아이디</SettingInfoInputTitle>

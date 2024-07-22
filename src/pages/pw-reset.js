@@ -49,7 +49,7 @@ const PwResetTitle = styled.p`
 
 const PwResetRoot = styled.div`
 	max-width: 600px;
-	width: ${(props) => (props.isMobile ? '75%' : '600px')};
+	width: ${({ $isMobile }) => ($isMobile ? '75%' : '600px')};
 	margin: auto;
 	margin-top: 84px;
 `;
@@ -59,7 +59,7 @@ const PwReset = () => {
 	return (
 		<main>
 			<PwResetTitle>비밀번호 초기화</PwResetTitle>
-			<PwResetRoot isMobile={isMobile}>
+			<PwResetRoot $isMobile={isMobile}>
 				<PwResetInner></PwResetInner>
 			</PwResetRoot>
 		</main>

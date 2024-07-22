@@ -12,8 +12,8 @@ const StyledIntroStatisticsDiv = styled.div`
 	padding-left: 12.5%;
 	padding-right: 12.5%;
 	display: flex;
-	${(props) =>
-		props.isPaddingBottomZero &&
+	${({ $isPaddingBottomZero }) =>
+		$isPaddingBottomZero &&
 		css`
 			padding-bottom: 0;
 		`}
@@ -124,7 +124,7 @@ const Statistics = () => {
 		<>
 			{isTablet && (
 				<>
-					<StyledIntroStatisticsDiv isPaddingBottomZero={true}>
+					<StyledIntroStatisticsDiv $isPaddingBottomZero={true}>
 						<StatisticsBlock mainNumber={30000} subTitle={'전체 문제'} />
 						<StatisticsBlock mainNumber={20000} subTitle={'채점 가능한 문제'} />
 					</StyledIntroStatisticsDiv>

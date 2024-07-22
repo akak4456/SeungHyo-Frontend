@@ -18,7 +18,7 @@ const StyledLoginTitle = styled.p`
 const StyledLoginFormRoot = styled.div`
 	border: 1px solid var(--color-white-gray);
 	max-width: 488px;
-	width: ${(props) => (props.isMobile == false ? '488px' : '75%')};
+	width: ${({ $isMobile }) => ($isMobile == false ? '488px' : '75%')};
 	margin: auto;
 	margin-top: 72px;
 `;
@@ -106,7 +106,7 @@ const Login = () => {
 	return (
 		<main>
 			<StyledLoginTitle>로그인</StyledLoginTitle>
-			<StyledLoginFormRoot isMobile={isMobile}>
+			<StyledLoginFormRoot $isMobile={isMobile}>
 				<LoginFormInner></LoginFormInner>
 			</StyledLoginFormRoot>
 		</main>
