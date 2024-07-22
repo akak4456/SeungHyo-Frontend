@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './reset.css';
 import './theme.css';
 import './index.css';
-import Intro from './pages/intro/intro.js';
+import Intro from './pages/intro.js';
 import ProblemList from './pages/problem-list/problem-list.js';
 import ReflectionNoteList from './pages/reflection-note-list/reflection-note-list.js';
 import Board from './pages/board/board.js';
