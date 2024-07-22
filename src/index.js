@@ -11,7 +11,7 @@ import Board from './pages/board/board.js';
 import SearchPage from './pages/search/search.js';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
-import Join from './pages/join/join.js';
+import Join from './pages/join.js';
 import Login from './pages/login.js';
 import PwFind from './pages/pw-find.js';
 import PwReset from './pages/pw-reset.js';
