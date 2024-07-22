@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import IntroTitleImg from '../assets/introtitle.png';
-import { useIsMobile } from '../hooks/media-query';
+import { useIsTablet } from '../hooks/media-query';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -119,10 +119,10 @@ const StatisticsBlock = ({ mainNumber, subTitle }) => {
 	);
 };
 const Statistics = () => {
-	const isMobile = useIsMobile();
+	const isTablet = useIsTablet();
 	return (
 		<>
-			{isMobile && (
+			{isTablet && (
 				<>
 					<StyledIntroStatisticsDiv isPaddingBottomZero={true}>
 						<StatisticsBlock mainNumber={30000} subTitle={'전체 문제'} />
@@ -134,7 +134,7 @@ const Statistics = () => {
 					</StyledIntroStatisticsDiv>
 				</>
 			)}
-			{!isMobile && (
+			{!isTablet && (
 				<StyledIntroStatisticsDiv>
 					<StatisticsBlock mainNumber={30000} subTitle={'전체 문제'} />
 					<StatisticsBlock mainNumber={20000} subTitle={'채점 가능한 문제'} />
