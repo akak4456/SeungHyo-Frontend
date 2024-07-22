@@ -14,7 +14,7 @@ import store from './store/store.js';
 import Join from './pages/join/join.js';
 import Login from './pages/login.js';
 import PwFind from './pages/pw-find.js';
-import PwReset from './pages/pw-reset/pw-reset.js';
+import PwReset from './pages/pw-reset.js';
 import SettingInfoEdit from './pages/setting/info-edit/setting-info-edit.js';
 import SettingPwChange from './pages/setting/pw-change/setting-pw-change.js';
 import SettingWithdraw from './pages/setting/withdraw/setting-withdraw.js';
