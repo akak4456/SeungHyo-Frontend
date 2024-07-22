@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../components/logo.js';
 import HamburgerButton from '../components/button-hamburger.js';
