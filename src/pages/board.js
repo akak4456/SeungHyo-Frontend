@@ -5,6 +5,7 @@ import Pagination from '../components/pagination';
 import { HandThumbsUp } from 'react-bootstrap-icons';
 import InputBox from '../components/inputbox';
 import NormalButton from '../components/button-normal';
+import { useIsMobile } from '../hooks/media-query';
 const BoardTapButton = (props) => {
 	return (
 		<div
@@ -14,7 +15,7 @@ const BoardTapButton = (props) => {
 					? 'var(--color-primary)'
 					: 'transparent',
 				color: props.isActive ? 'white' : 'var(--color-normal-text-color)',
-				fontSize: '14px',
+				fontSize: 'min(3vw, 14px)',
 				cursor: 'pointer',
 			}}
 			onClick={props.onClick}
@@ -178,6 +179,7 @@ const BoardSearchFormDiv = styled.div`
 	align-items: center;
 	& div {
 		margin-left: auto;
+		width: ${({ $isMobile }) => ($isMobile ? 'auto' : '240px')};
 	}
 	& button {
 		height: 32px;
@@ -194,6 +196,7 @@ const BoardPaginationRootDiv = styled.div`
 	}
 `;
 const Board = (props) => {
+	const isMobile = useIsMobile();
 	const navigate = useNavigate();
 	const goToLink = (num) => {
 		return num + '';
@@ -209,8 +212,8 @@ const Board = (props) => {
 				<BoardTapButton text={'글쓰기'} onClick={() => navigate('/write')} />
 			</BoardTapButtonsDiv>
 			<BoardTable />
-			<BoardSearchFormDiv>
-				<div style={{ width: '240px' }}>
+			<BoardSearchFormDiv $isMobile={isMobile}>
+				<div>
 					<InputBox placeholder={'검색'} />
 				</div>
 				<NormalButton type="primary" text="검색" />
