@@ -22,7 +22,8 @@ const StyledReflectionNoteListTable = styled.table`
 	& th,
 	& td {
 		text-align: left;
-		padding: 8px;
+		padding: min(1vw, 8px);
+		font-size: min(1.5vw, 12px);
 	}
 
 	& td a {
@@ -40,8 +41,8 @@ const ReflectionNoteListTable = (props) => {
 	return (
 		<StyledReflectionNoteListTable>
 			<colgroup>
-				<col width="10%" />
-				<col width="45%" />
+				<col width="15%" />
+				<col width="40%" />
 				<col width="15%" />
 				<col width="15%" />
 				<col width="15%" />
