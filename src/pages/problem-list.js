@@ -20,8 +20,8 @@ const StyledProblemListTable = styled.table`
 	& th,
 	& td {
 		text-align: left;
-		padding: 8px;
-		font-size: 12px;
+		padding: min(1vw, 8px);
+		font-size: min(1.5vw, 12px);
 	}
 	& td a {
 		text-decoration: none;
