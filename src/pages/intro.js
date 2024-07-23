@@ -23,16 +23,17 @@ const StyledIntroStatisticsBlockDiv = styled.div`
 	flex: 1 1 0;
 	padding-top: 24px;
 	padding-bottom: 24px;
-	margin-right: 16px;
+	margin-right: ${({ $isMarginRightZero }) =>
+		$isMarginRightZero ? '0' : '16px'};
 	text-align: center;
 	& p:first-child {
 		color: white;
 		font-weight: bold;
-		font-size: 35px;
+		font-size: max(24px, 2vw);
 	}
 	& p:last-child {
 		color: var(--color-silver);
-		font-size: 16px;
+		font-size: max(12px, 1vw);
 		margin-top: 16px;
 	}
 `;
@@ -58,7 +59,7 @@ const StyledAdDiv = styled.div`
 		font-size: 3vw;
 	}
 `;
-const StatisticsBlock = ({ mainNumber, subTitle }) => {
+const StatisticsBlock = ({ mainNumber, subTitle, isMarginRightZero }) => {
 	const [count, setCount] = useState(0);
 	const endValue = mainNumber;
 	const duration = 1000; // 애니메이션 시간 (밀리초)
@@ -112,7 +113,10 @@ const StatisticsBlock = ({ mainNumber, subTitle }) => {
 	}, [incrementValue, incrementTime, endValue]);
 
 	return (
-		<StyledIntroStatisticsBlockDiv ref={elementRef}>
+		<StyledIntroStatisticsBlockDiv
+			ref={elementRef}
+			$isMarginRightZero={isMarginRightZero}
+		>
 			<p>{Math.floor(count)}</p>
 			<p>{subTitle}</p>
 		</StyledIntroStatisticsBlockDiv>
@@ -126,11 +130,19 @@ const Statistics = () => {
 				<>
 					<StyledIntroStatisticsDiv $isPaddingBottomZero={true}>
 						<StatisticsBlock mainNumber={30000} subTitle={'전체 문제'} />
-						<StatisticsBlock mainNumber={20000} subTitle={'채점 가능한 문제'} />
+						<StatisticsBlock
+							mainNumber={20000}
+							subTitle={'채점 가능한 문제'}
+							isMarginRightZero={true}
+						/>
 					</StyledIntroStatisticsDiv>
 					<StyledIntroStatisticsDiv>
 						<StatisticsBlock mainNumber={1000} subTitle={'풀린 문제'} />
-						<StatisticsBlock mainNumber={2000} subTitle={'채점 가능 언어'} />
+						<StatisticsBlock
+							mainNumber={2000}
+							subTitle={'채점 가능 언어'}
+							isMarginRightZero={true}
+						/>
 					</StyledIntroStatisticsDiv>
 				</>
 			)}
