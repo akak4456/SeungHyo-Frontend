@@ -4,7 +4,6 @@ import InputBox from '../components/inputbox';
 import { Search } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
 import Pagination from '../components/pagination';
-import { useIsTablet } from '../hooks/media-query';
 const StyledProblemListTable = styled.table`
 	width: 75%;
 	margin-left: 12.5%;
@@ -29,9 +28,8 @@ const StyledProblemListTable = styled.table`
 	}
 `;
 const ProblemListTable = (props) => {
-	const isTablet = useIsTablet();
 	return (
-		<StyledProblemListTable $isTablet={isTablet}>
+		<StyledProblemListTable>
 			<colgroup>
 				<col width="10%" />
 				<col width="45%" />
