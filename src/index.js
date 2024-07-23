@@ -20,7 +20,7 @@ import SettingPwChange from './pages/setting-pw-change.js';
 import SettingWithdraw from './pages/setting-withdraw.js';
 import User from './pages/user.js';
 import Problem from './pages/problem/problem.js';
-import ReflectionNote from './pages/reflection-note/reflection-note.js';
+import ReflectionNote from './pages/reflection-note.js';
 import Write from './pages/write/write.js';
 import Article from './pages/article/article.js';
 import Layout from './components/layout.js';
