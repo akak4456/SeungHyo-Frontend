@@ -1,10 +1,45 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import IntroTitleImg from '../assets/introtitle.png';
-import { useIsTablet } from '../hooks/media-query';
+import { NavLink } from 'react-router-dom';
+import { useIsMobile, useIsTablet } from '../hooks/media-query';
 import Slider from 'react-slick';
+import { HandThumbsUp } from 'react-bootstrap-icons';
+import { ChatLeftFill } from 'react-bootstrap-icons';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+const IntroStickerRootDiv = styled.div`
+	padding-left: 16px;
+	box-sizing: border-box;
+`;
+const IntroStickerTitleDiv = styled.div`
+	margin-top: 16px;
+	box-sizing: border-box;
+	& span {
+		display: inline-block;
+		padding-bottom: 8px;
+		border-bottom: 2px solid var(--color-primary);
+		font-size: 22px;
+		color: var(--color-normal-text-color);
+	}
+`;
+const IntroStickerDivider = styled.div`
+	width: 100%;
+	height: 1px;
+	background-color: var(--color-white-gray);
+	margin-bottom: 16px;
+`;
+const IntroSticker = ({ title, children }) => {
+	return (
+		<IntroStickerRootDiv>
+			<IntroStickerTitleDiv>
+				<span>{title}</span>
+			</IntroStickerTitleDiv>
+			<IntroStickerDivider></IntroStickerDivider>
+			{children}
+		</IntroStickerRootDiv>
+	);
+};
 const StyledIntroStatisticsDiv = styled.div`
 	background-color: black;
 	padding-top: 16px;
@@ -199,11 +234,421 @@ const Ad = () => {
 	);
 };
 
+const IntroStickerWrapperDiv = styled.div`
+	margin-top: 96px;
+	width: 75%;
+	margin-left: 12.5%;
+	margin-right: 12.5%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	& > div {
+		flex-basic: ${({ $responsiveType }) =>
+			$responsiveType == 'M' ? '100%' : $responsiveType == 'T' ? '50%' : '25%'};
+		width: ${({ $responsiveType }) =>
+			$responsiveType == 'M' ? '100%' : $responsiveType == 'T' ? '50%' : '25%'};
+	}
+`;
+const IntroStickerItemWrapperRootDiv = styled.div`
+	background: linear-gradient(-45deg, transparent 10px, var(--color-example) 0);
+	position: relative;
+	cursor: pointer;
+	margin-top: 8px;
+`;
+const IntroStickerItemEdgeDiv = styled.div`
+	width: 14px;
+	height: 14px;
+	display: inline-block;
+	position: absolute;
+	background: linear-gradient(
+		-45deg,
+		transparent 10px,
+		${({ $isHovering }) =>
+				$isHovering
+					? 'var(--color-primary)'
+					: 'var(--color-intro-sticker-edge)'}
+			0
+	);
+	top: 100%;
+	left: 100%;
+	transform: translate(-100%, -100%);
+	transition: 0.5s;
+`;
+const IntroStickerItemWrapper = ({ children }) => {
+	const [isHovering, setIsHovering] = useState(false);
+
+	const handleMouseOver = () => {
+		setIsHovering(true);
+	};
+
+	const handleMouseOut = () => {
+		setIsHovering(false);
+	};
+	return (
+		<IntroStickerItemWrapperRootDiv
+			onMouseOver={handleMouseOver}
+			onMouseOut={handleMouseOut}
+		>
+			<div style={{ padding: '16px 8px' }}>{children}</div>
+			<IntroStickerItemEdgeDiv
+				$isHovering={isHovering}
+			></IntroStickerItemEdgeDiv>
+		</IntroStickerItemWrapperRootDiv>
+	);
+};
+
+const IntroStickerBoardTitle = styled.p`
+	font-size: 13px;
+	& a {
+		text-decoration: none;
+	}
+	& a:hover {
+		text-decoration: underline;
+	}
+	& a:first-child {
+		color: var(--color-primary);
+	}
+	& a:last-child {
+		color: var(--color-normal-text-color);
+	}
+`;
+const IntroStickerProblemTitle = styled.p`
+	font-size: 13px;
+	& a {
+		text-decoration: none;
+		color: var(--color-normal-text-color);
+	}
+	& a:hover {
+		text-decoration: underline;
+	}
+`;
+const IntroStickerBoardBottm = styled.div`
+	& span {
+		margin-left: 4px;
+	}
+	& span:first-child {
+		margin-left: 0;
+	}
+`;
+const IntroStickerBoardBottomSpan = styled.span`
+	font-size: 11px;
+	color: var(--color-gray);
+`;
+
 export default function Intro() {
+	const isMobile = useIsMobile();
+	const isTablet = useIsTablet();
+	const responsiveType = isMobile ? 'M' : isTablet ? 'T' : 'P';
 	return (
 		<main>
 			<Ad />
 			<Statistics />
+			<IntroStickerWrapperDiv $responsiveType={responsiveType}>
+				<IntroSticker title={'새로운 글'}>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+				</IntroSticker>
+				<IntroSticker title={'인기 글'}>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">이건 왜 인기가 있나요?</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">이건 왜 인기가 있나요?</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">이건 왜 인기가 있나요?</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">
+								이건 왜 인기가 있나요?이건 왜 인기가 있나요?이건 왜 인기가
+								있나요?이건 왜 인기가 있나요?이건 왜 인기가 있나요?이건 왜
+								인기가 있나요?이건 왜 인기가 있나요?
+							</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+				</IntroSticker>
+				<IntroSticker title={'공지사항'}>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">공지사항입니다.</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">공지사항입니다.</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">공지사항입니다.</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">공지사항입니다.</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">공지사항입니다.</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">공지사항입니다.</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerBoardTitle>
+							<NavLink to="#">@akak4456</NavLink>{' '}
+							<NavLink to="#">공지사항입니다.</NavLink>
+						</IntroStickerBoardTitle>
+						<IntroStickerBoardBottm>
+							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
+							<span>
+								<HandThumbsUp size={'11px'}></HandThumbsUp>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+							<span>
+								<ChatLeftFill size={'11px'}></ChatLeftFill>
+							</span>
+							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
+						</IntroStickerBoardBottm>
+					</IntroStickerItemWrapper>
+				</IntroSticker>
+				<IntroSticker title={'문제 순위'}>
+					<IntroStickerItemWrapper>
+						<IntroStickerProblemTitle>
+							<NavLink to="#">1000번. A + B</NavLink>
+						</IntroStickerProblemTitle>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerProblemTitle>
+							<NavLink to="#">1000번. A + B</NavLink>
+						</IntroStickerProblemTitle>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerProblemTitle>
+							<NavLink to="#">1000번. A + B</NavLink>
+						</IntroStickerProblemTitle>
+					</IntroStickerItemWrapper>
+					<IntroStickerItemWrapper>
+						<IntroStickerProblemTitle>
+							<NavLink to="#">1000번. A + B</NavLink>
+						</IntroStickerProblemTitle>
+					</IntroStickerItemWrapper>
+				</IntroSticker>
+			</IntroStickerWrapperDiv>
 		</main>
 	);
 }
