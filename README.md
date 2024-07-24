@@ -2,69 +2,37 @@
 
 이 앱은 승효 프로젝트의 프론트엔드를 담당한 것
 
-## Available Scripts
+## 앱 실행 방법
 
-In the project directory, you can run:
+이 앱은 리액트로 제작이 되어 있습니다. 따라서 우선 node.js(version 20.15.1) 을 설치해야 합니다.
+그런 다음 다음의 스크립트를 승효 프로젝트의 루트 폴더에 실행합니다.(README.md 파일이 있는 곳)
 
-### `npm start`
+```
+npm install
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+이렇게 한 뒤에 브라우저에 http://localhost:3000 으로 접근하면 됩니다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 페이지 접근 방법
 
-### `npm test`
+이 앱은 SPA 로 설계가 되어있습니다. 대부분의 경우 특정 버튼 혹은 링크를 누르면 다른 페이지로 이동하게 구현하였지만, 특정 페이지 같은 경우 일반적인 방법으로 접근이 힘들 수도 있습니다. 따라서 이 페이지에서 구현된 경로 전체를 밝히겠습니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+/ : intro 페이지
+/problem-list : 문제들을 보여주는 페이지
+/reflection-note-list : 오답노트들을 버여주는 페이지
+/board : 게시글들을 보여주는 페이지
+/search : 검색 페이지
+/join : 회원가입 페이지
+/login : 로그인 페이지
+/agree : 회원가입 동의 페이지(현재 구현 안되어있음)
+/pw-find : 비밀번호 찾기 페이지
+/pw-reset : 비밀번호 초기화 페이지
+/setting/info-edit : 회원정보 변경 페이지
+/setting/pw-change : 비밀번호 변경 페이지
+/setting/withdraw : 회원탈퇴 페이지
+/user : 유저 페이지(상태 메시지, 유저 관련 통계 정보를 보여줌)
+/problem : 문제 페이지
+/reflection-note : 오답노트 페이지
+/write : 글쓰기 페이지
+/article : 게시글 페이지
