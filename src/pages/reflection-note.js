@@ -80,6 +80,7 @@ const ReflectionNoteCaseBlockFill = styled(CaretDownFill)`
 	transition: 0.5s;
 	margin-top: auto;
 	margin-bottom: auto;
+	flex-shrink: 0;
 	${({ $isOpen }) =>
 		$isOpen &&
 		css`
