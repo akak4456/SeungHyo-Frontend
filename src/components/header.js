@@ -5,7 +5,7 @@ import Logo from '../components/logo.js';
 import HamburgerButton from '../components/button-hamburger.js';
 import { useIsMobile } from '../hooks/media-query.js';
 import { useSelector } from 'react-redux';
-import { logoutUser } from '../api/Users.js';
+import { logoutUser } from '../api/Auth.js';
 import { getCookieToken, removeCookieToken } from '../store/Cookie.js';
 import { DELETE_TOKEN } from '../store/Auth.js';
 import { useDispatch } from 'react-redux';

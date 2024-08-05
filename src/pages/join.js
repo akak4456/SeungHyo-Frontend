@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import InputBox from '../components/inputbox';
 import NormalButton from '../components/button-normal';
 import { useIsMobile } from '../hooks/media-query';
+import { sendEmailCheckCode, validEmailCheckCode } from '../api/Auth';
 const JoinFormInnerDiv = styled.div`
 	margin-left: 24px;
 	margin-right: 24px;
@@ -60,6 +61,11 @@ const JoinBtnDiv = styled.div`
 	}
 `;
 const JoinFormInner = () => {
+	const [isEmailSent, setIsEmailSent] = useState(false);
+	const [formValue, setFormValue] = useState({
+		email: '',
+		emailCode: '',
+	});
 	return (
 		<JoinFormInnerDiv>
 			<JoinMainTitle>회원가입</JoinMainTitle>
@@ -88,14 +94,57 @@ const JoinFormInner = () => {
 			<InputBox type="password"></InputBox>
 			<JoinInputTitle>이메일</JoinInputTitle>
 			<JoinEmailDiv>
-				<InputBox type="text"></InputBox>
-				<NormalButton type="primary" text="인증번호 전송"></NormalButton>
+				<InputBox
+					type="text"
+					onChange={(value) => {
+						setFormValue((state) => ({
+							...state,
+							email: value,
+						}));
+					}}
+				></InputBox>
+				<NormalButton
+					type="primary"
+					text="인증번호 전송"
+					onClick={() => {
+						// 이메일 전송 시 오래걸려서 UI가 다소 불편한 감이 있다.
+						// TODO 이 부분 개선하기
+						sendEmailCheckCode(formValue.email, () => {
+							setIsEmailSent(true);
+						});
+					}}
+				></NormalButton>
 			</JoinEmailDiv>
-			<JoinInputTitle>이메일 확인</JoinInputTitle>
-			<JoinEmailDiv>
-				<InputBox type="text"></InputBox>
-				<NormalButton type="primary" text="인증번호 확인"></NormalButton>
-			</JoinEmailDiv>
+			{isEmailSent && (
+				<>
+					<JoinInputTitle>이메일 확인</JoinInputTitle>
+					<JoinEmailDiv>
+						<InputBox
+							type="text"
+							onChange={(value) => {
+								setFormValue((state) => ({
+									...state,
+									emailCode: value,
+								}));
+							}}
+						></InputBox>
+						<NormalButton
+							type="primary"
+							text="인증번호 확인"
+							onClick={() => {
+								validEmailCheckCode(
+									formValue.email,
+									formValue.emailCode,
+									(data) => {
+										alert(data);
+									}
+								);
+							}}
+						></NormalButton>
+					</JoinEmailDiv>
+				</>
+			)}
+
 			<JoinBtnDiv>
 				<NormalButton type="primary" text="회원가입"></NormalButton>
 			</JoinBtnDiv>

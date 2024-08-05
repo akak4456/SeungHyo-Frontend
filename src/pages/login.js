@@ -6,7 +6,7 @@ import { useIsMobile } from '../hooks/media-query';
 import { PersonFill, LockFill } from 'react-bootstrap-icons';
 import CheckBox from '../components/checkbox';
 import NormalButton from '../components/button-normal';
-import { loginUser } from '../api/Users';
+import { loginUser } from '../api/Auth';
 import { setRefreshToken } from '../store/Cookie';
 import { SET_TOKEN } from '../store/Auth';
 import { useDispatch } from 'react-redux';
