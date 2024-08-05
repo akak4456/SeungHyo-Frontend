@@ -13,7 +13,14 @@ const StyledInput = styled.input`
 	}
 `;
 const InputBox = (props) => {
-	return <StyledInput {...props}></StyledInput>;
+	return (
+		<StyledInput
+			{...props}
+			onChange={(e) => {
+				props.onChange(e.target.value);
+			}}
+		></StyledInput>
+	);
 };
 
 export default InputBox;

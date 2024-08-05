@@ -24,6 +24,7 @@ import ReflectionNote from './pages/reflection-note.js';
 import Write from './pages/write.js';
 import Article from './pages/article.js';
 import Layout from './components/layout.js';
+
 function Root() {
 	return (
 		<Provider store={store}>

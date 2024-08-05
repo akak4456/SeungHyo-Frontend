@@ -1,9 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../components/logo.js';
 import HamburgerButton from '../components/button-hamburger.js';
 import { useIsMobile } from '../hooks/media-query.js';
+import { useSelector } from 'react-redux';
+import { logoutUser } from '../api/Users.js';
+import { getCookieToken, removeCookieToken } from '../store/Cookie.js';
+import { DELETE_TOKEN } from '../store/Auth.js';
+import { useDispatch } from 'react-redux';
 
 const StyledHeader = styled.header`
 	padding-left: 12.5%;
@@ -190,7 +195,10 @@ const Header = (props) => {
 	const onHide = () => {
 		setDropdownShown(false);
 	};
-	const [isLogined, setIsLogined] = useState(true); // 임시값 TODO 나중에 변경할 것
+	const isLogined = useSelector((state) => state.authToken.authenticated);
+	const accessToken = useSelector((state) => state.authToken.accessToken);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	return (
 		<StyledHeader>
 			<NavLink to="/">
@@ -247,7 +255,16 @@ const Header = (props) => {
 					</NavLink>
 					<StyledMyBottomDiv>
 						<NavLink to="/setting/info-edit">설정</NavLink>
-						<NavLink to="#" onClick={() => setIsLogined(false)}>
+						<NavLink
+							to="#"
+							onClick={() => {
+								logoutUser(accessToken, getCookieToken(), () => {
+									removeCookieToken();
+									dispatch(DELETE_TOKEN());
+									navigate('/');
+								});
+							}}
+						>
 							로그아웃
 						</NavLink>
 					</StyledMyBottomDiv>
