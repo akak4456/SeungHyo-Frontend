@@ -46,7 +46,7 @@ const StyledLoginDivider = styled.div`
 const StyledLoginFormDiv = styled.div`
 	display: flex;
 	margin-top: 24px;
-	& div {
+	& div:first-child {
 		width: 32px;
 		height: 32px;
 		box-sizing: border-box;

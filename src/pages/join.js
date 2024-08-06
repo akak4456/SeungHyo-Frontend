@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import InputBox from '../components/inputbox';
 import NormalButton from '../components/button-normal';
 import { useIsMobile } from '../hooks/media-query';
-import { sendEmailCheckCode, validEmailCheckCode } from '../api/Auth';
+import { sendEmailCheckCode, validEmailCheckCode, join } from '../api/Auth';
 const JoinFormInnerDiv = styled.div`
 	margin-left: 24px;
 	margin-right: 24px;
@@ -45,11 +45,13 @@ const JoinInputTitle = styled.p`
 `;
 const JoinEmailDiv = styled.div`
 	display: flex;
-	& input {
-		flex: 1;
+	flex-wrap: wrap;
+	& div {
+		flex: 1 1 0;
 	}
 	& button {
 		flex: 0 0 auto;
+		height: 32px;
 	}
 `;
 const JoinBtnDiv = styled.div`
@@ -61,11 +63,80 @@ const JoinBtnDiv = styled.div`
 	}
 `;
 const JoinFormInner = () => {
-	const [isEmailSent, setIsEmailSent] = useState(false);
 	const [formValue, setFormValue] = useState({
+		id: '',
+		statusMsg: '',
+		pw: '',
+		pwcheck: '',
 		email: '',
 		emailCode: '',
 	});
+	const [warning, setWarning] = useState({
+		idWarning: '',
+		statusMsgWarning: '',
+		passwordWarning: '',
+		passwordCheckWarning: '',
+		emailWarning: '',
+		emailCheckWarning: '',
+	});
+	const navigate = useNavigate();
+	const onJoinClick = () => {
+		join(formValue, (data) => {
+			let joinSuccess = true;
+			let idWarning = '';
+			let statusMsgWarning = '';
+			let passwordWarning = '';
+			let passwordCheckWarning = '';
+			let emailWarning = '';
+			let emailCheckWarning = '';
+			if (data.emailDuplicate) {
+				joinSuccess = false;
+				emailWarning = '이메일이 중복됩니다.';
+			}
+			if (data.emailNotValidForm) {
+				joinSuccess = false;
+				emailWarning = '이메일이 올바른 형태가 아닙니다.';
+			}
+			if (data.emailNotValidate) {
+				joinSuccess = false;
+				emailCheckWarning = '이메일이 인증되지 않았습니다.';
+			}
+			if (data.idDuplicate) {
+				joinSuccess = false;
+				idWarning = '아이디가 중복됩니다.';
+			}
+			if (data.idNotValidForm) {
+				joinSuccess = false;
+				idWarning = '아이디가 올바른 형태가 아닙니다.';
+			}
+			if (data.pwAndPwCheckDifferent) {
+				joinSuccess = false;
+				passwordCheckWarning = '비밀번호와 비밀번호 확인이 다릅니다.';
+			}
+			if (data.pwNotValidForm) {
+				joinSuccess = false;
+				passwordWarning = '비밀번호가 올바른 형태가 아닙니다.';
+			}
+			if (data.statusNotValidForm) {
+				joinSuccess = false;
+				statusMsgWarning = '상태메시지가 올바른 형태가 아닙니다.';
+			}
+			setWarning((state) => ({
+				idWarning: idWarning,
+				statusMsgWarning: statusMsgWarning,
+				passwordWarning: passwordWarning,
+				passwordCheckWarning: passwordCheckWarning,
+				emailWarning: emailWarning,
+				emailCheckWarning: emailCheckWarning,
+			}));
+			if (joinSuccess) {
+				alert('회원가입이 완료되었습니다.');
+				navigate('/login');
+			} else {
+				alert('회원가입에 문제가 생겼습니다.');
+			}
+		});
+	};
 	return (
 		<JoinFormInnerDiv>
 			<JoinMainTitle>회원가입</JoinMainTitle>
@@ -83,15 +154,51 @@ const JoinFormInner = () => {
 			<JoinSubTitle>가입 후 아이디는 변경할 수 없습니다.</JoinSubTitle>
 			<JoinDivider></JoinDivider>
 			<JoinInputTitle>아이디</JoinInputTitle>
-			<InputBox type="text"></InputBox>
+			<InputBox
+				type="text"
+				onChange={(value) => {
+					setFormValue((state) => ({
+						...state,
+						id: value,
+					}));
+				}}
+				warning={warning.idWarning}
+			></InputBox>
 			<JoinInputTitle>
 				상태 메시지 (다른 사람에게 보이고 싶은 한마디)
 			</JoinInputTitle>
-			<InputBox type="text"></InputBox>
+			<InputBox
+				type="text"
+				onChange={(value) => {
+					setFormValue((state) => ({
+						...state,
+						statusMsg: value,
+					}));
+				}}
+				warning={warning.statusMsgWarning}
+			></InputBox>
 			<JoinInputTitle>비밀번호</JoinInputTitle>
-			<InputBox type="password"></InputBox>
+			<InputBox
+				type="password"
+				onChange={(value) => {
+					setFormValue((state) => ({
+						...state,
+						pw: value,
+					}));
+				}}
+				warning={warning.passwordWarning}
+			></InputBox>
 			<JoinInputTitle>비밀번호 확인</JoinInputTitle>
-			<InputBox type="password"></InputBox>
+			<InputBox
+				type="password"
+				onChange={(value) => {
+					setFormValue((state) => ({
+						...state,
+						pwcheck: value,
+					}));
+				}}
+				warning={warning.passwordCheckWarning}
+			></InputBox>
 			<JoinInputTitle>이메일</JoinInputTitle>
 			<JoinEmailDiv>
 				<InputBox
@@ -102,51 +209,55 @@ const JoinFormInner = () => {
 							email: value,
 						}));
 					}}
+					warning={warning.emailWarning}
 				></InputBox>
 				<NormalButton
 					type="primary"
 					text="인증번호 전송"
 					onClick={() => {
-						// 이메일 전송 시 오래걸려서 UI가 다소 불편한 감이 있다.
-						// TODO 이 부분 개선하기
-						sendEmailCheckCode(formValue.email, () => {
-							setIsEmailSent(true);
+						sendEmailCheckCode(formValue.email, (data) => {
+							if (data) {
+								alert('인증코드를 보냈습니다.');
+							} else {
+								alert('이메일을 확인해주세요');
+							}
 						});
 					}}
 				></NormalButton>
 			</JoinEmailDiv>
-			{isEmailSent && (
-				<>
-					<JoinInputTitle>이메일 확인</JoinInputTitle>
-					<JoinEmailDiv>
-						<InputBox
-							type="text"
-							onChange={(value) => {
-								setFormValue((state) => ({
-									...state,
-									emailCode: value,
-								}));
-							}}
-						></InputBox>
-						<NormalButton
-							type="primary"
-							text="인증번호 확인"
-							onClick={() => {
-								validEmailCheckCode(
-									formValue.email,
-									formValue.emailCode,
-									(data) => {
-										alert(data);
-									}
-								);
-							}}
-						></NormalButton>
-					</JoinEmailDiv>
-				</>
-			)}
+			<JoinInputTitle>이메일 확인</JoinInputTitle>
+			<JoinEmailDiv>
+				<InputBox
+					type="text"
+					onChange={(value) => {
+						setFormValue((state) => ({
+							...state,
+							emailCode: value,
+						}));
+					}}
+					warning={warning.emailCheckWarning}
+				></InputBox>
+				<NormalButton
+					type="primary"
+					text="인증번호 확인"
+					onClick={() => {
+						validEmailCheckCode(
+							formValue.email,
+							formValue.emailCode,
+							(data) => {
+								alert(data);
+							}
+						);
+					}}
+				></NormalButton>
+			</JoinEmailDiv>
 
 			<JoinBtnDiv>
-				<NormalButton type="primary" text="회원가입"></NormalButton>
+				<NormalButton
+					type="primary"
+					text="회원가입"
+					onClick={(e) => onJoinClick()}
+				></NormalButton>
 			</JoinBtnDiv>
 		</JoinFormInnerDiv>
 	);

@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { commonAPI } from './Common';
 
 export const loginUser = (id, pw, onSuccess) => {
@@ -9,6 +7,34 @@ export const loginUser = (id, pw, onSuccess) => {
 			{
 				memberId: id,
 				memberPw: pw,
+			},
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+		.then((response) => {
+			if (response.data.code === '0') {
+				onSuccess(response.data.data);
+			}
+		})
+		.catch((exception) => {
+			console.log(exception);
+		});
+};
+
+export const join = (formValue, onSuccess) => {
+	commonAPI
+		.post(
+			'/api/v1/auth/join',
+			{
+				memberId: formValue.id,
+				memberPw: formValue.pw,
+				memberPwCheck: formValue.pwcheck,
+				statusMessage: formValue.statusMsg,
+				email: formValue.email,
 			},
 			{
 				withCredentials: true,
