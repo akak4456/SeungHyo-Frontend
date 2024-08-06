@@ -245,7 +245,11 @@ const JoinFormInner = () => {
 							formValue.email,
 							formValue.emailCode,
 							(data) => {
-								alert(data);
+								if (data) {
+									alert('이메일 인증이 완료되었습니다.');
+								} else {
+									alert('이메일 인증이 완료되지 않았습니다.');
+								}
 							}
 						);
 					}}

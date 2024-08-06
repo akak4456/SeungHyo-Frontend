@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import SettingTab from '../components/button-setting-tab';
 import { useIsMobile } from '../hooks/media-query';
 import InputBox from '../components/inputbox';
 import NormalButton from '../components/button-normal';
+import { getInfoEdit, patchInfoEdit } from '../api/My';
 const SettingInfoEditRootMain = styled.main`
 	width: 75%;
 	margin: auto;
@@ -48,6 +49,51 @@ const SettingInfoEditButtonGroupDiv = styled.div`
 `;
 const SettingInfoEdit = () => {
 	const isMobile = useIsMobile();
+	const [infoValue, setInfoValue] = useState({
+		id: '',
+		pw: '',
+		statusMessage: '',
+		email: '',
+	});
+	const [warning, setWarning] = useState({
+		statusMsgWarning: '',
+		passwordWarning: '',
+	});
+	const onInfoEditClick = () => {
+		patchInfoEdit(infoValue, (data) => {
+			let passwordWarning = '';
+			let statusMsgWarning = '';
+			let available = true;
+			if (data.pwNotMatch || data.pwNotValidForm) {
+				available = false;
+				passwordWarning = '비밀번호를 확인해주세요';
+			}
+			if (data.statusMessageNotValidForm) {
+				available = false;
+				statusMsgWarning = '상태 메시지는 빈칸이면 안됩니다.';
+			}
+			setWarning((state) => ({
+				statusMsgWarning: statusMsgWarning,
+				passwordWarning: passwordWarning,
+			}));
+			if (available) {
+				alert('수정하였습니다!');
+				setInfoValue((state) => ({
+					...state,
+					pw: '',
+				}));
+			}
+		});
+	};
+	useEffect(() => {
+		getInfoEdit((data) => {
+			setInfoValue((state) => ({
+				id: data.memberId,
+				email: data.email,
+				statusMessage: data.statusMessage,
+			}));
+		});
+	}, []);
 	return (
 		<SettingInfoEditRootMain $isMobile={isMobile}>
 			<SettingTab isInfoEditActive={true}></SettingTab>
@@ -55,15 +101,42 @@ const SettingInfoEdit = () => {
 				<SettingInfoEditMainTitle>정보 수정</SettingInfoEditMainTitle>
 				<SettingInfoEditDivider></SettingInfoEditDivider>
 				<SettingInfoInputTitle>아이디</SettingInfoInputTitle>
-				<InputBox type="text" disabled value="akak4456"></InputBox>
+				<InputBox type="text" disabled value={infoValue.id}></InputBox>
 				<SettingInfoInputTitle>상태 메시지</SettingInfoInputTitle>
-				<InputBox type="text" value="컴공 17 조승효"></InputBox>
+				<InputBox
+					type="text"
+					onChange={(value) => {
+						setInfoValue((state) => ({
+							...state,
+							statusMessage: value,
+						}));
+					}}
+					value={infoValue.statusMessage}
+					warning={warning.statusMsgWarning}
+				></InputBox>
 				<SettingInfoInputTitle>비밀번호</SettingInfoInputTitle>
-				<InputBox type="password" placeholder="비밀번호"></InputBox>
+				<InputBox
+					type="password"
+					value={infoValue.pw}
+					onChange={(value) => {
+						setInfoValue((state) => ({
+							...state,
+							pw: value,
+						}));
+					}}
+					placeholder="비밀번호"
+					warning={warning.passwordWarning}
+				></InputBox>
 				<SettingInfoInputTitle>이메일</SettingInfoInputTitle>
-				<InputBox type="text" disabled value="akak4456@naver.com"></InputBox>
+				<InputBox type="text" disabled value={infoValue.email}></InputBox>
 				<SettingInfoEditButtonGroupDiv>
-					<NormalButton type="primary" text="수정"></NormalButton>
+					<NormalButton
+						type="primary"
+						text="수정"
+						onClick={() => {
+							onInfoEditClick();
+						}}
+					></NormalButton>
 				</SettingInfoEditButtonGroupDiv>
 			</SettingInfoEditContentDiv>
 		</SettingInfoEditRootMain>
