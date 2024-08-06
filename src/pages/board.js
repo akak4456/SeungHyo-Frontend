@@ -213,9 +213,7 @@ const Board = (props) => {
 			</BoardTapButtonsDiv>
 			<BoardTable />
 			<BoardSearchFormDiv $isMobile={isMobile}>
-				<div>
-					<InputBox placeholder={'검색'} />
-				</div>
+				<InputBox placeholder={'검색'} />
 				<NormalButton type="primary" text="검색" />
 			</BoardSearchFormDiv>
 			<BoardPaginationRootDiv>

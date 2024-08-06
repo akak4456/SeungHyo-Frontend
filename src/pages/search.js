@@ -53,7 +53,7 @@ const SearchFormInputDiv = styled.div`
 	display: flex;
 	margin-top: 48px;
 	box-sizing: border-box;
-	& div {
+	& div:last-child {
 		width: 32px;
 		height: 32px;
 		box-sizing: border-box;

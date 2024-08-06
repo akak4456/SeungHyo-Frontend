@@ -35,7 +35,7 @@ const InputBox = (props) => {
 					props.onChange(e.target.value);
 				}}
 			></StyledInput>
-			<StyledWarning>{props.warning}</StyledWarning>
+			{props.warning && <StyledWarning>{props.warning}</StyledWarning>}
 		</StyledInputDiv>
 	);
 };
