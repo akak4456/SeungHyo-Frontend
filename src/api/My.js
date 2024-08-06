@@ -74,3 +74,25 @@ export const changePw = (formValue, onSuccess) => {
 			console.log(exception);
 		});
 };
+
+export const withdraw = (onSuccess) => {
+	commonAPI
+		.delete(
+			'/api/v1/my/withdraw',
+			{},
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+		.then((response) => {
+			if (response.data.code === '0') {
+				onSuccess(response.data.data);
+			}
+		})
+		.catch((exception) => {
+			console.log(exception);
+		});
+};

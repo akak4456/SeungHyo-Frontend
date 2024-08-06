@@ -3,6 +3,12 @@ import styled, { css } from 'styled-components';
 import SettingTab from '../components/button-setting-tab';
 import { useIsMobile } from '../hooks/media-query';
 import NormalButton from '../components/button-normal';
+import { logoutUser } from '../api/Auth';
+import { withdraw } from '../api/My';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getCookieToken, removeCookieToken } from '../store/Cookie';
+import { DELETE_TOKEN } from '../store/Auth';
 const SettingWithdrawRootMain = styled.main`
 	width: 75%;
 	margin: auto;
@@ -50,6 +56,21 @@ const SettingWithdrawButtonGroupDiv = styled.div`
 `;
 const SettingWithdraw = () => {
 	const isMobile = useIsMobile();
+	const navigate = useNavigate();
+	const accessToken = useSelector((state) => state.authToken.accessToken);
+	const dispatch = useDispatch();
+	const onWithdrawClick = () => {
+		withdraw((data) => {
+			if (data) {
+				logoutUser(accessToken, getCookieToken(), () => {
+					alert('회원탈퇴 하였습니다');
+					removeCookieToken();
+					dispatch(DELETE_TOKEN());
+					navigate('/');
+				});
+			}
+		});
+	};
 	return (
 		<SettingWithdrawRootMain $isMobile={isMobile}>
 			<SettingTab isWithdrawActive={true}></SettingTab>
@@ -60,13 +81,18 @@ const SettingWithdraw = () => {
 					회원 탈퇴를 진행할 경우 되돌릴 수 없습니다.
 				</SettingWithdrawSubTitle>
 				<SettingWithdrawSubTitle>
-					모든 정보가 삭제될 것인데 그래도 회원 탈퇴를 진행하시겠습니까?
+					회원 탈퇴를 하면 더 이상 서비스를 이용할 수 없습니다. 그래도 회원
+					탈퇴를 진행하시겠습니까?
 				</SettingWithdrawSubTitle>
 				<SettingWithdrawSubTitle>
 					탈퇴 후 같은 아이디로의 재가입은 불가능합니다.
 				</SettingWithdrawSubTitle>
 				<SettingWithdrawButtonGroupDiv>
-					<NormalButton type="danger" text="탈퇴"></NormalButton>
+					<NormalButton
+						type="danger"
+						text="탈퇴"
+						onClick={() => onWithdrawClick()}
+					></NormalButton>
 					<NormalButton type="primary" text="취소"></NormalButton>
 				</SettingWithdrawButtonGroupDiv>
 			</SettingWithdrawContentDiv>
