@@ -48,3 +48,29 @@ export const patchInfoEdit = (formValue, onSuccess) => {
 			console.log(exception);
 		});
 };
+
+export const changePw = (formValue, onSuccess) => {
+	commonAPI
+		.patch(
+			'/api/v1/my/change-pw',
+			{
+				currentPw: formValue.currentPw,
+				newPw: formValue.newPw,
+				newPwCheck: formValue.newPwCheck,
+			},
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+		.then((response) => {
+			if (response.data.code === '0') {
+				onSuccess(response.data.data);
+			}
+		})
+		.catch((exception) => {
+			console.log(exception);
+		});
+};
