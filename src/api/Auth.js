@@ -3,7 +3,7 @@ import { commonAPI } from './Common';
 export const loginUser = (id, pw, onSuccess) => {
 	commonAPI
 		.post(
-			'/api/v1/auth/login',
+			'/api/v1/member/auth/login',
 			{
 				memberId: id,
 				memberPw: pw,
@@ -28,7 +28,7 @@ export const loginUser = (id, pw, onSuccess) => {
 export const join = (formValue, onSuccess) => {
 	commonAPI
 		.post(
-			'/api/v1/auth/join',
+			'/api/v1/member/auth/join',
 			{
 				memberId: formValue.id,
 				memberPw: formValue.pw,
@@ -56,7 +56,7 @@ export const join = (formValue, onSuccess) => {
 export const logoutUser = (accessToken, refreshToken, onSuccess) => {
 	commonAPI
 		.patch(
-			'/api/v1/auth/logout',
+			'/api/v1/member/auth/logout',
 			{
 				accessToken: accessToken,
 				refreshToken: refreshToken,

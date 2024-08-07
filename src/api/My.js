@@ -3,7 +3,7 @@ import { commonAPI } from './Common';
 export const getInfoEdit = (onSuccess) => {
 	commonAPI
 		.get(
-			'/api/v1/my/info-edit',
+			'/api/v1/member/my/info-edit',
 			{},
 			{
 				withCredentials: true,
@@ -25,7 +25,7 @@ export const getInfoEdit = (onSuccess) => {
 export const patchInfoEdit = (formValue, onSuccess) => {
 	commonAPI
 		.patch(
-			'/api/v1/my/info-edit',
+			'/api/v1/member/my/info-edit',
 			{
 				memberId: formValue.id,
 				memberPw: formValue.pw,
@@ -52,7 +52,7 @@ export const patchInfoEdit = (formValue, onSuccess) => {
 export const changePw = (formValue, onSuccess) => {
 	commonAPI
 		.patch(
-			'/api/v1/my/change-pw',
+			'/api/v1/member/my/change-pw',
 			{
 				currentPw: formValue.currentPw,
 				newPw: formValue.newPw,
@@ -78,7 +78,7 @@ export const changePw = (formValue, onSuccess) => {
 export const withdraw = (onSuccess) => {
 	commonAPI
 		.delete(
-			'/api/v1/my/withdraw',
+			'/api/v1/member/my/withdraw',
 			{},
 			{
 				withCredentials: true,
