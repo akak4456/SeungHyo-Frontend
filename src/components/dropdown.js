@@ -52,7 +52,7 @@ const StyledSearchFormDiv = styled.div`
 	width: 100%;
 	display: flex;
 	margin-top: -1px;
-	& div {
+	& div:last-child {
 		width: 32px;
 		height: 32px;
 		box-sizing: border-box;
@@ -115,7 +115,7 @@ const StyledCaretDownFill = styled(CaretDownFill)`
 const Dropdown = ({ dropDownText, onDropDownTextChange, isSearchIncluded }) => {
 	const [curText, setCurText] = useState(dropDownText[0]);
 	const [isOpen, setIsOpen] = useState(false);
-
+	onDropDownTextChange(dropDownText[0]);
 	const changeText = (text) => {
 		setCurText(text);
 		setIsOpen(false);

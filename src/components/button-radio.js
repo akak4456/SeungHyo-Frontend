@@ -37,10 +37,10 @@ const StyledLabel = styled.label`
 		transform: translate(-50%, -50%);
 	}
 `;
-const RadioButton = ({ text }) => {
+const RadioButton = ({ text, value, onChange }) => {
 	return (
 		<StyledLabel>
-			<input type="radio" name="name" value="value" />
+			<input type="radio" name="name" value={value} onChange={onChange} />
 			<span>{text}</span>
 		</StyledLabel>
 	);
