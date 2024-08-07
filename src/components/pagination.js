@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // 콘솔 오류를 예외로 던지도록 설정
 if (process.env.NODE_ENV !== 'production') {
@@ -17,12 +17,22 @@ if (process.env.NODE_ENV !== 'production') {
 const StyledDiv = styled.div`
 	& a {
 		text-decoration: none;
-		color: var(--color-primary);
 		padding-left: 8px;
 	}
 	& a:first-child {
 		padding-left: 0;
 	}
+`;
+const StyledNavLink = styled(NavLink)`
+	${({ $isCurrent }) =>
+		$isCurrent
+			? css`
+					color: var(--color-normal-text-color);
+					font-weight: bold;
+				`
+			: css`
+					color: var(--color-primary);
+				`};
 `;
 
 /**
@@ -44,6 +54,7 @@ const Pagination = ({
 	goToLink,
 	prevLink,
 	nextLink,
+	currentNum,
 }) => {
 	const numbers = Array.from(
 		{ length: maxVal - minVal + 1 },
@@ -51,13 +62,21 @@ const Pagination = ({
 	);
 	return (
 		<StyledDiv>
-			{isPrevInclude && <NavLink to={prevLink}>이전 페이지</NavLink>}
+			{isPrevInclude && (
+				<StyledNavLink onClick={() => prevLink()}>이전 페이지</StyledNavLink>
+			)}
 			{numbers.map((num) => (
-				<NavLink key={num} to={goToLink(num)}>
+				<StyledNavLink
+					key={num + 'pagination-link'}
+					onClick={() => goToLink(num)}
+					$isCurrent={currentNum == num}
+				>
 					{num}
-				</NavLink>
+				</StyledNavLink>
 			))}
-			{isNextInclude && <NavLink to={nextLink}>다음 페이지</NavLink>}
+			{isNextInclude && (
+				<StyledNavLink onClick={() => nextLink()}>다음 페이지</StyledNavLink>
+			)}
 		</StyledDiv>
 	);
 };

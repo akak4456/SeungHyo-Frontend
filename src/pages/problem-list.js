@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import InputBox from '../components/inputbox';
 import { Search } from 'react-bootstrap-icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import Pagination from '../components/pagination';
+import { getProblemList } from '../api/Problem';
 const StyledProblemListTable = styled.table`
 	width: 75%;
 	margin-left: 12.5%;
@@ -27,7 +28,7 @@ const StyledProblemListTable = styled.table`
 		color: var(--color-primary);
 	}
 `;
-const ProblemListTable = (props) => {
+const ProblemListTable = ({ pageData }) => {
 	return (
 		<StyledProblemListTable>
 			<colgroup>
@@ -47,33 +48,21 @@ const ProblemListTable = (props) => {
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1000</td>
-					<td>
-						<NavLink to={'/problem/1000'}>A + B</NavLink>
-					</td>
-					<td>269294</td>
-					<td>1091136</td>
-					<td>39.050%</td>
-				</tr>
-				<tr>
-					<td>1000</td>
-					<td>
-						<NavLink to={'/problem/1000'}>A + B</NavLink>
-					</td>
-					<td>269294</td>
-					<td>1091136</td>
-					<td>39.050%</td>
-				</tr>
-				<tr>
-					<td>1000</td>
-					<td>
-						<NavLink to={'/problem/1000'}>A + B</NavLink>
-					</td>
-					<td>269294</td>
-					<td>1091136</td>
-					<td>39.050%</td>
-				</tr>
+				{pageData &&
+					pageData.content &&
+					pageData.content.map((problem) => (
+						<tr key={problem.problemNo + problem.problemTitle}>
+							<td>{problem.problemNo}</td>
+							<td>
+								<NavLink to={'/problem/' + problem.problemNo}>
+									{problem.problemTitle}
+								</NavLink>
+							</td>
+							<td>{problem.correctPeopleCount}</td>
+							<td>{problem.submitCount}</td>
+							<td>{problem.correctRatio}</td>
+						</tr>
+					))}
 			</tbody>
 		</StyledProblemListTable>
 	);
@@ -103,9 +92,35 @@ const ProblemListPaginationRootDiv = styled.div`
 	}
 `;
 const ProblemList = (props) => {
-	const goToLink = (num) => {
-		return num + '';
+	const prevLink = () => {
+		searchParams.set('page', startPage - 1 - 1);
+		searchParams.set('size', 10);
+		setSearchParams(searchParams);
 	};
+	const nextLink = () => {
+		searchParams.set('page', endPage + 1 - 1);
+		searchParams.set('size', 10);
+		setSearchParams(searchParams);
+	};
+	const goToLink = (num) => {
+		searchParams.set('page', num - 1);
+		searchParams.set('size', 10);
+		setSearchParams(searchParams);
+	};
+	const [searchParams, setSearchParams] = useSearchParams();
+	const page = parseInt(searchParams.get('page')) || 0;
+	const size = parseInt(searchParams.get('size')) || 10;
+	const [pageData, setPageData] = useState();
+	useEffect(() => {
+		getProblemList(page, size, (data) => {
+			setPageData(data);
+		});
+	}, [page, size]);
+	const startPage = Math.floor(page / size) * size + 1;
+	let endPage = startPage + size - 1;
+	if (pageData && endPage > pageData.totalPages) {
+		endPage = pageData.totalPages;
+	}
 	return (
 		<main>
 			<ProblemListSearchFormDiv>
@@ -114,9 +129,18 @@ const ProblemList = (props) => {
 					<Search size={16} color="white" />
 				</div>
 			</ProblemListSearchFormDiv>
-			<ProblemListTable />
+			<ProblemListTable pageData={pageData} />
 			<ProblemListPaginationRootDiv>
-				<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
+				<Pagination
+					prevLink={prevLink}
+					nextLink={nextLink}
+					minVal={startPage}
+					maxVal={endPage}
+					goToLink={goToLink}
+					isPrevInclude={startPage != 1}
+					isNextInclude={pageData && endPage != pageData.totalPages}
+					currentNum={page + 1}
+				/>
 			</ProblemListPaginationRootDiv>
 		</main>
 	);
