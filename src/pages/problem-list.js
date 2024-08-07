@@ -60,7 +60,7 @@ const ProblemListTable = ({ pageData }) => {
 							</td>
 							<td>{problem.correctPeopleCount}</td>
 							<td>{problem.submitCount}</td>
-							<td>{problem.correctRatio}</td>
+							<td>{problem.correctRatio * 100}%</td>
 						</tr>
 					))}
 			</tbody>
