@@ -21,3 +21,25 @@ export const getProblemList = (page, size, onSuccess) => {
 			console.log(exception);
 		});
 };
+
+export const getProblem = (problemNo, onSuccess) => {
+	commonAPI
+		.get(
+			'/api/v1/problem/' + problemNo,
+			{},
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+		.then((response) => {
+			if (response.data.code === '0') {
+				onSuccess(response.data.data);
+			}
+		})
+		.catch((exception) => {
+			console.log(exception);
+		});
+};

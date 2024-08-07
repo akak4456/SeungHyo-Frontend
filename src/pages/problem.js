@@ -1,11 +1,9 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import { useIsTablet } from '../hooks/media-query';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import Tag from '../components/tag';
-import Dropdown from '../components/dropdown';
-import RadioButton from '../components/button-radio';
-import SourceEditor from '../components/editor-source';
 import NormalButton from '../components/button-normal';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { getProblem } from '../api/Problem';
 const ProblemTabDiv = styled.div`
 	margin-top: 16px;
 	box-sizing: border-box;
@@ -50,16 +48,10 @@ const ProblemTab = (props) => {
 	);
 };
 const ProblemLeftSideRootDiv = styled.div`
-	width: 50%;
+	width: 100%;
 	margin-right: 24px;
 	box-sizing: border-box;
 	margin-top: 48px;
-	${({ $isTablet }) =>
-		$isTablet &&
-		css`
-			width: 100%;
-			margin-right: 0;
-		`}
 `;
 const ProblemLeftSideMainTitle = styled.p`
 	color: var(--color-normal-text-color);
@@ -121,157 +113,140 @@ const ProblemKindList = styled.ul`
 		line-height: 23px;
 	}
 `;
-const ProblemLeftSide = (props) => {
-	// 이런 특수문자는 어떡하지? 입력 탭 같은 경우 말이야
+const ProblemLeftSide = ({ problem, problemNo }) => {
 	const example1Text = '1 2';
 	const example2Text = '3';
+	console.log(problem);
+	let timeCondition = '';
+	if (problem) {
+		if (problem.problemCondition.length == 1) {
+			timeCondition = problem.problemCondition[0].conditionTime + '초';
+		} else {
+			timeCondition =
+				problem.problemCondition[0].conditionTime + '초(언어별 상이)';
+		}
+	}
+	let memoryCondition = '';
+	if (problem) {
+		if (problem.problemCondition.length == 1) {
+			memoryCondition = problem.problemCondition[0].conditionMemory + 'MB';
+		} else {
+			memoryCondition =
+				problem.problemCondition[0].conditionMemory + 'MB(언어별 상이)';
+		}
+	}
 	return (
-		<ProblemLeftSideRootDiv $isTablet={props.isTablet}>
-			<ProblemLeftSideMainTitle>1000번. A + B</ProblemLeftSideMainTitle>
-			<Tag text={'성공'} backgroundColor={'#5CB85C'} marginLeft={'16px'} />
-			<Tag text={'다국어'} backgroundColor={'#777777'} marginLeft={'16px'} />
-			<ProblemTable>
-				<tr>
-					<th>시간 제한</th>
-					<th>메모리 제한</th>
-					<th>정답 비율</th>
-				</tr>
-				<tr>
-					<td>2초</td>
-					<td>128MB</td>
-					<td>39.049%</td>
-				</tr>
-			</ProblemTable>
-			<ProblemTab text={'문제'} />
-			<ProblemLeftSideDivider></ProblemLeftSideDivider>
-			<ProblemContent>
-				두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
-			</ProblemContent>
-			<ProblemTab text={'입력'} />
-			<ProblemLeftSideDivider></ProblemLeftSideDivider>
-			<ProblemContent>
-				첫째 줄에 A와 B가 주어진다. (0 &lt; A, B &lt; 10)
-			</ProblemContent>
-			<ProblemTab text={'출력'} />
-			<ProblemLeftSideDivider></ProblemLeftSideDivider>
-			<ProblemContent>첫째 줄에 A+B를 출력한다.</ProblemContent>
-
-			<ProblemTab text={'예제 입력 1'} copyText={example1Text} />
-			<ProblemLeftSideDivider></ProblemLeftSideDivider>
-			<ProblemExample>{example1Text}</ProblemExample>
-			<ProblemTab text={'예제 출력 1'} copyText={example2Text} />
-			<ProblemLeftSideDivider></ProblemLeftSideDivider>
-			<ProblemExample>{example2Text}</ProblemExample>
-			<ProblemTab text={'알고리즘 분류'} />
-			<ProblemLeftSideDivider></ProblemLeftSideDivider>
-			<ProblemKindList>
-				<li>구현</li>
-				<li>수학</li>
-				<li>사칙연산</li>
-			</ProblemKindList>
+		<ProblemLeftSideRootDiv>
+			{problem && (
+				<>
+					<ProblemLeftSideMainTitle>
+						{problemNo}번. {problem.problemTitle}
+					</ProblemLeftSideMainTitle>
+					{problem.problemTags.map((tag) => (
+						<Tag
+							key={tag.tagName}
+							text={tag.tagName}
+							backgroundColor={tag.backgroundColor}
+							marginLeft={'16px'}
+						/>
+					))}
+					<ProblemTable>
+						<tr>
+							<th>시간 제한</th>
+							<th>메모리 제한</th>
+							<th>정답 비율</th>
+						</tr>
+						<tr>
+							<td>{timeCondition}</td>
+							<td>{memoryCondition}</td>
+							<td>{problem.correctRatio * 100}%</td>
+						</tr>
+					</ProblemTable>
+					<ProblemTab text={'문제'} />
+					<ProblemLeftSideDivider></ProblemLeftSideDivider>
+					<ProblemContent>{problem.problemExplain}</ProblemContent>
+					<ProblemTab text={'입력'} />
+					<ProblemLeftSideDivider></ProblemLeftSideDivider>
+					<ProblemContent>{problem.problemInputExplain}</ProblemContent>
+					<ProblemTab text={'출력'} />
+					<ProblemLeftSideDivider></ProblemLeftSideDivider>
+					<ProblemContent>{problem.problemOutputExplain}</ProblemContent>
+					{[...Array(problem.problemInput.length).keys()].map((idx) => {
+						return (
+							<>
+								<ProblemTab
+									key={idx + 'exampleintab'}
+									text={'예제 입력 ' + (idx + 1)}
+									copyText={problem.problemInput[idx]}
+								/>
+								<ProblemLeftSideDivider
+									key={idx + 'div1'}
+								></ProblemLeftSideDivider>
+								<ProblemExample>{example1Text}</ProblemExample>
+								<ProblemTab
+									key={idx + 'exampleouttab'}
+									text={'예제 출력 ' + (idx + 1)}
+									copyText={problem.problemOutput[idx]}
+								/>
+								<ProblemLeftSideDivider
+									key={idx + 'div2'}
+								></ProblemLeftSideDivider>
+								<ProblemExample>{example2Text}</ProblemExample>
+							</>
+						);
+					})}
+					<ProblemTab text={'알고리즘 분류'} />
+					<ProblemLeftSideDivider></ProblemLeftSideDivider>
+					<ProblemKindList>
+						{problem.algorithmCategory.map((algorithm) => (
+							<li key={algorithm.algorithmName}>{algorithm.algorithmName}</li>
+						))}
+					</ProblemKindList>
+				</>
+			)}
 		</ProblemLeftSideRootDiv>
 	);
 };
-const ProblemRightSideRootDiv = styled.div`
-	width: 50%;
-	margin-right: 24px;
-	box-sizing: border-box;
-	margin-top: 48px;
-	${($isTablet) =>
-		$isTablet &&
-		css`
-			width: 100%;
-			margin-right: 0;
-			margin-top: 24px;
-		`};
-`;
-const ProblemRightSideTable = styled.table`
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 0 16px;
-`;
-const ProblemRightSideLeftTd = styled.td`
-	white-space: nowrap;
-	text-align: right;
-	vertical-align: top;
-	padding-top: 8px;
-	color: var(--color-normal-text-color);
-	font-size: 13px;
-	font-weight: bold;
-`;
-const ProblemRightSideRightTd = styled.td`
-	width: 100%;
-	padding-left: 24px;
-	& label {
-		width: 100%;
-		display: inline-block;
-		margin-top: 16px;
-	}
-	& label:first-child {
-		margin-top: 0px;
-	}
-	& label:last-child {
-		padding-top: 8px;
-	}
-`;
-const ProblemRightSide = (props) => {
-	const dropDownText = ['JAVA', 'C', 'C++', '아희'];
-	const onDropDownTextChange = (text) => {
-		console.log(text);
-	};
-	return (
-		<ProblemRightSideRootDiv $isTablet={props.isTablet}>
-			<ProblemRightSideTable>
-				<tr>
-					<ProblemRightSideLeftTd>언어</ProblemRightSideLeftTd>
-					<ProblemRightSideRightTd>
-						<Dropdown
-							isSearchIncluded={true}
-							dropDownText={dropDownText}
-							onDropDownTextChange={onDropDownTextChange}
-						></Dropdown>
-					</ProblemRightSideRightTd>
-				</tr>
-				<tr>
-					<ProblemRightSideLeftTd>소스 코드 공개</ProblemRightSideLeftTd>
-					<ProblemRightSideRightTd>
-						<fieldset>
-							<RadioButton text="공개" />
-							<RadioButton text="비공개" />
-							<RadioButton text="맞았을 때만 공개" />
-						</fieldset>
-					</ProblemRightSideRightTd>
-				</tr>
-				<tr>
-					<ProblemRightSideLeftTd>소스 코드</ProblemRightSideLeftTd>
-					<ProblemRightSideRightTd>
-						<SourceEditor />
-					</ProblemRightSideRightTd>
-				</tr>
-				<tr>
-					<ProblemRightSideLeftTd></ProblemRightSideLeftTd>
-					<ProblemRightSideRightTd>
-						<NormalButton type="primary" text="제출하기"></NormalButton>
-					</ProblemRightSideRightTd>
-				</tr>
-			</ProblemRightSideTable>
-		</ProblemRightSideRootDiv>
-	);
-};
+
 const ProblemRootMain = styled.main`
 	display: flex;
 	width: 75%;
 	margin-left: 12.5%;
 	margin-right: 12.5%;
 	display: flex;
-	flex-direction: ${({ $isTablet }) => ($isTablet ? 'column' : 'row')};
+	flex-direction: column;
+`;
+const SubmitButtonDiv = styled.div`
+	margin: auto;
+	margin-top: 24px;
 `;
 const Problem = (props) => {
-	const isTablet = useIsTablet();
+	const navigate = useNavigate();
+	const location = useLocation();
+	// 경로를 '/'로 분할
+	const parts = location.pathname.split('/');
+
+	// 숫자 ID는 세 번째 부분에 위치
+	const id = parts[2];
+
+	const [problem, setProblem] = useState();
+
+	useEffect(() => {
+		getProblem(id, (data) => {
+			setProblem(data);
+		});
+	}, []);
+
 	return (
-		<ProblemRootMain $isTablet={isTablet}>
-			<ProblemLeftSide isTablet={isTablet} />
-			<ProblemRightSide isTablet={isTablet} />
+		<ProblemRootMain>
+			<ProblemLeftSide problem={problem} problemNo={id} />
+			<SubmitButtonDiv>
+				<NormalButton
+					type="primary"
+					text="제출하기"
+					onClick={() => navigate('/submit/add/' + id)}
+				/>
+			</SubmitButtonDiv>
 		</ProblemRootMain>
 	);
 };

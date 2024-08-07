@@ -26,6 +26,7 @@ import Article from './pages/article.js';
 import Layout from './components/layout.js';
 import PrivateRoute from './PrivateRoute.js';
 import persistStore from 'redux-persist/es/persistStore';
+import Submit from './pages/submit.js';
 import { PersistGate } from 'redux-persist/integration/react';
 
 const persistor = persistStore(store);
@@ -173,6 +174,16 @@ function Root() {
 								<Layout>
 									<Article />
 								</Layout>
+							}
+						></Route>
+						<Route
+							path="/submit/add/*"
+							element={
+								<PrivateRoute>
+									<Layout>
+										<Submit isNew={true} />
+									</Layout>
+								</PrivateRoute>
 							}
 						></Route>
 					</Routes>
