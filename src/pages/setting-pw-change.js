@@ -96,12 +96,21 @@ const SettingPwChange = () => {
 				warningNewPwCheck: warningNewPwCheck,
 			}));
 			if (available) {
-				logoutUser(accessToken, getCookieToken(), (data) => {
-					alert('비밀번호를 변경했습니다. 다시 로그인해주세요');
-					removeCookieToken();
-					dispatch(DELETE_TOKEN());
-					navigate('/login');
-				});
+				logoutUser(
+					accessToken,
+					getCookieToken(),
+					(data) => {
+						alert('비밀번호를 변경했습니다. 다시 로그인해주세요');
+						removeCookieToken();
+						dispatch(DELETE_TOKEN());
+						navigate('/login');
+					},
+					() => {
+						removeCookieToken();
+						dispatch(DELETE_TOKEN());
+						navigate('/');
+					}
+				);
 			}
 		});
 	};

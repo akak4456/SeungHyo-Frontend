@@ -53,7 +53,7 @@ export const join = (formValue, onSuccess) => {
 		});
 };
 
-export const logoutUser = (accessToken, refreshToken, onSuccess) => {
+export const logoutUser = (accessToken, refreshToken, onSuccess, onError) => {
 	commonAPI
 		.patch(
 			'/api/v1/member/auth/logout',
@@ -75,13 +75,14 @@ export const logoutUser = (accessToken, refreshToken, onSuccess) => {
 		})
 		.catch((exception) => {
 			console.log(exception);
+			onError();
 		});
 };
 
 export const sendEmailCheckCode = (email, onSuccess) => {
 	commonAPI
 		.post(
-			'/api/v1/auth/send-email-check-code',
+			'/api/v1/member/auth/send-email-check-code',
 			{
 				toEmail: email,
 			},
@@ -105,7 +106,7 @@ export const sendEmailCheckCode = (email, onSuccess) => {
 export const validEmailCheckCode = (email, code, onSuccess) => {
 	commonAPI
 		.post(
-			'/api/v1/auth/valid-email',
+			'/api/v1/member/auth/valid-email',
 			{
 				email: email,
 				code: code,

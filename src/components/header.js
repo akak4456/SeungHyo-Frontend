@@ -258,11 +258,20 @@ const Header = (props) => {
 						<NavLink
 							to="#"
 							onClick={() => {
-								logoutUser(accessToken, getCookieToken(), () => {
-									removeCookieToken();
-									dispatch(DELETE_TOKEN());
-									navigate('/');
-								});
+								logoutUser(
+									accessToken,
+									getCookieToken(),
+									() => {
+										removeCookieToken();
+										dispatch(DELETE_TOKEN());
+										navigate('/');
+									},
+									() => {
+										removeCookieToken();
+										dispatch(DELETE_TOKEN());
+										navigate('/');
+									}
+								);
 							}}
 						>
 							로그아웃

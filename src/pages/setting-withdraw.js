@@ -62,12 +62,21 @@ const SettingWithdraw = () => {
 	const onWithdrawClick = () => {
 		withdraw((data) => {
 			if (data) {
-				logoutUser(accessToken, getCookieToken(), () => {
-					alert('회원탈퇴 하였습니다');
-					removeCookieToken();
-					dispatch(DELETE_TOKEN());
-					navigate('/');
-				});
+				logoutUser(
+					accessToken,
+					getCookieToken(),
+					() => {
+						alert('회원탈퇴 하였습니다');
+						removeCookieToken();
+						dispatch(DELETE_TOKEN());
+						navigate('/');
+					},
+					() => {
+						removeCookieToken();
+						dispatch(DELETE_TOKEN());
+						navigate('/');
+					}
+				);
 			}
 		});
 	};
