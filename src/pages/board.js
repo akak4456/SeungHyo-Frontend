@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Pagination from '../components/pagination';
@@ -6,6 +6,9 @@ import { HandThumbsUp } from 'react-bootstrap-icons';
 import InputBox from '../components/inputbox';
 import NormalButton from '../components/button-normal';
 import { useIsMobile } from '../hooks/media-query';
+import { useSearchParams } from 'react-router-dom';
+import { getBoardList } from '../api/Board';
+import { timeAgo } from '../util';
 const BoardTapButton = (props) => {
 	return (
 		<div
@@ -54,7 +57,7 @@ const StyledBoardTable = styled.table`
 	}
 `;
 
-const BoardTable = (props) => {
+const BoardTable = ({ pageData, noticeData }) => {
 	return (
 		<StyledBoardTable>
 			<colgroup>
@@ -80,84 +83,44 @@ const BoardTable = (props) => {
 				</tr>
 			</thead>
 			<tbody>
-				<tr className="noticeRow">
-					<td>
-						<NavLink to={'/article/1000'}>2024-05-06 서버 장애 안내</NavLink>
-					</td>
-					<td>
-						<NavLink to={'#'}>공지</NavLink>
-					</td>
-					<td>node.js</td>
-					<td style={{ fontWeight: 'bold' }}>starlink</td>
-					<td>1</td>
-					<td>30</td>
-					<td>8일전</td>
-				</tr>
-				<tr className="noticeRow">
-					<td>
-						<NavLink to={'/article/1000'}>2024-05-06 서버 장애 안내</NavLink>
-					</td>
-					<td>
-						<NavLink to={'#'}>공지</NavLink>
-					</td>
-					<td>node.js</td>
-					<td style={{ fontWeight: 'bold' }}>starlink</td>
-					<td>1</td>
-					<td>30</td>
-					<td>8일전</td>
-				</tr>
-				<tr>
-					<td>
-						<NavLink to={'/article/1000'}>글제목</NavLink>
-					</td>
-					<td>
-						<NavLink to={'#'}>카테고리</NavLink>
-					</td>
-					<td>C++</td>
-					<td style={{ fontWeight: 'bold' }}>akak4456</td>
-					<td>1</td>
-					<td>30</td>
-					<td>8일전</td>
-				</tr>
-				<tr>
-					<td>
-						<NavLink to={'/article/1000'}>글제목</NavLink>
-					</td>
-					<td>
-						<NavLink to={'#'}>카테고리</NavLink>
-					</td>
-					<td>C++</td>
-					<td style={{ fontWeight: 'bold' }}>akak4456</td>
-					<td>1</td>
-					<td>30</td>
-					<td>8일전</td>
-				</tr>
-				<tr>
-					<td>
-						<NavLink to={'/article/1000'}>글제목</NavLink>
-					</td>
-					<td>
-						<NavLink to={'#'}>카테고리</NavLink>
-					</td>
-					<td>C++</td>
-					<td style={{ fontWeight: 'bold' }}>akak4456</td>
-					<td>1</td>
-					<td>30</td>
-					<td>8일전</td>
-				</tr>
-				<tr>
-					<td>
-						<NavLink to={'/article/1000'}>글제목</NavLink>
-					</td>
-					<td>
-						<NavLink to={'#'}>카테고리</NavLink>
-					</td>
-					<td>C++</td>
-					<td style={{ fontWeight: 'bold' }}>akak4456</td>
-					<td>1</td>
-					<td>30</td>
-					<td>8일전</td>
-				</tr>
+				{noticeData &&
+					noticeData.content &&
+					noticeData.content.map((board) => (
+						<tr key={board.boardNo + 'board'} className="noticeRow">
+							<td>
+								<NavLink to={'/article/' + board.boardNo}>
+									{board.boardTitle}
+								</NavLink>
+							</td>
+							<td>
+								<NavLink to={'#'}>{board.categoryName}</NavLink>
+							</td>
+							<td>{board.langName}</td>
+							<td style={{ fontWeight: 'bold' }}>{board.memberId}</td>
+							<td>{board.replyCount}</td>
+							<td>{board.likeCount}</td>
+							<td>{timeAgo(board.regDate)}</td>
+						</tr>
+					))}
+				{pageData &&
+					pageData.content &&
+					pageData.content.map((board) => (
+						<tr key={board.boardNo + 'board'}>
+							<td>
+								<NavLink to={'/article/' + board.boardNo}>
+									{board.boardTitle}
+								</NavLink>
+							</td>
+							<td>
+								<NavLink to={'#'}>{board.categoryName}</NavLink>
+							</td>
+							<td>{board.langName}</td>
+							<td style={{ fontWeight: 'bold' }}>{board.memberId}</td>
+							<td>{board.replyCount}</td>
+							<td>{board.likeCount}</td>
+							<td>{timeAgo(board.regDate)}</td>
+						</tr>
+					))}
 			</tbody>
 		</StyledBoardTable>
 	);
@@ -198,26 +161,99 @@ const BoardPaginationRootDiv = styled.div`
 const Board = (props) => {
 	const isMobile = useIsMobile();
 	const navigate = useNavigate();
-	const goToLink = (num) => {
-		return num + '';
+	const prevLink = () => {
+		searchParams.set('page', startPage - 1 - 1);
+		searchParams.set('size', 10);
+		searchParams.set('categoryCode', searchParams.categoryCode || 'ALL');
+		setSearchParams(searchParams);
 	};
+	const nextLink = () => {
+		searchParams.set('page', endPage + 1 - 1);
+		searchParams.set('size', 10);
+		searchParams.set('categoryCode', searchParams.categoryCode || 'ALL');
+		setSearchParams(searchParams);
+	};
+	const goToLink = (num) => {
+		searchParams.set('page', num - 1);
+		searchParams.set('size', 10);
+		searchParams.set('categoryCode', searchParams.categoryCode || 'ALL');
+		setSearchParams(searchParams);
+	};
+	const [searchParams, setSearchParams] = useSearchParams();
+	const page = parseInt(searchParams.get('page')) || 0;
+	const size = parseInt(searchParams.get('size')) || 10;
+	const categoryCode = searchParams.get('categoryCode') || 'ALL';
+	const [pageData, setPageData] = useState();
+	const [noticeData, setNoticeData] = useState();
+	const moveCategory = (categoryCode) => {
+		searchParams.set('page', 0);
+		searchParams.set('size', parseInt(searchParams.get('size')) || 10);
+		searchParams.set('categoryCode', categoryCode);
+		setSearchParams(searchParams);
+	};
+	useEffect(() => {
+		getBoardList(page, size, categoryCode, (data) => {
+			setPageData(data);
+		});
+		if (categoryCode === 'ALL') {
+			getBoardList(0, 3, 'NOTICE', (data) => {
+				setNoticeData(data);
+			});
+		} else {
+			setNoticeData(null);
+		}
+	}, [page, size, categoryCode]);
+	const startPage = Math.floor(page / size) * size + 1;
+	let endPage = startPage + size - 1;
+	if (pageData && endPage > pageData.totalPages) {
+		endPage = pageData.totalPages;
+	}
 	return (
 		<BoardRootMain>
 			<BoardTapButtonsDiv>
-				<BoardTapButton text={'전체'} isActive={true} />
-				<BoardTapButton text={'공지'} />
-				<BoardTapButton text={'자유'} />
-				<BoardTapButton text={'질문'} />
-				<BoardTapButton text={'홍보'} />
+				<BoardTapButton
+					text={'전체'}
+					isActive={categoryCode === 'ALL'}
+					onClick={() => moveCategory('ALL')}
+				/>
+				<BoardTapButton
+					text={'공지'}
+					isActive={categoryCode === 'NOTICE'}
+					onClick={() => moveCategory('NOTICE')}
+				/>
+				<BoardTapButton
+					text={'자유'}
+					isActive={categoryCode === 'FREE'}
+					onClick={() => moveCategory('FREE')}
+				/>
+				<BoardTapButton
+					text={'질문'}
+					isActive={categoryCode === 'QNA'}
+					onClick={() => moveCategory('QNA')}
+				/>
+				<BoardTapButton
+					text={'홍보'}
+					isActive={categoryCode === 'AD'}
+					onClick={() => moveCategory('AD')}
+				/>
 				<BoardTapButton text={'글쓰기'} onClick={() => navigate('/write')} />
 			</BoardTapButtonsDiv>
-			<BoardTable />
+			<BoardTable pageData={pageData} noticeData={noticeData} />
 			<BoardSearchFormDiv $isMobile={isMobile}>
 				<InputBox placeholder={'검색'} />
 				<NormalButton type="primary" text="검색" />
 			</BoardSearchFormDiv>
 			<BoardPaginationRootDiv>
-				<Pagination minVal={1} maxVal={10} goToLink={goToLink} />
+				<Pagination
+					prevLink={prevLink}
+					nextLink={nextLink}
+					minVal={startPage}
+					maxVal={endPage}
+					goToLink={goToLink}
+					isPrevInclude={startPage != 1}
+					isNextInclude={pageData && endPage != pageData.totalPages}
+					currentNum={page + 1}
+				/>
 			</BoardPaginationRootDiv>
 		</BoardRootMain>
 	);
