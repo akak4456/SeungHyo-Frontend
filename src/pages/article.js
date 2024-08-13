@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { HandThumbsUp } from 'react-bootstrap-icons';
 import NormalEditor from '../components/editor-normal';
 import SourceEditor from '../components/editor-source';
 import Dropdown from '../components/dropdown';
 import NormalButton from '../components/button-normal';
+import { getBoardOne } from '../api/Board';
+import { timeAgo } from '../util';
 const ReplyAddRootDiv = styled.div`
 	display: flex;
 	width: 100%;
@@ -116,25 +118,45 @@ const ArticleLinkRootDiv = styled.div`
 	}
 `;
 const Article = (props) => {
+	const location = useLocation();
+	// 경로를 '/'로 분할
+	const parts = location.pathname.split('/');
+
+	// 숫자 ID는 세 번째 부분에 위치
+	const boardNo = parts[2];
+	const [boardData, setBoardData] = useState();
+	useEffect(() => {
+		getBoardOne(boardNo, (data) => {
+			console.log(data);
+			setBoardData(data);
+		});
+	}, []);
 	return (
 		<ArticleRootMain>
-			<ArticleTitleDiv>
-				<p>런타임 에러가 왜 뜨는 걸까요?</p>
-			</ArticleTitleDiv>
-			<ArticleLinkRootDiv>
-				<NavLink to={'#'}>2525번 - 오븐 시계</NavLink>
-			</ArticleLinkRootDiv>
-			<Reply
-				author={'akak4456'}
-				date={'10분전'}
-				recommendCount={'10'}
-				content={'왜 안될까요?'}
-			/>
+			{boardData && (
+				<>
+					<ArticleTitleDiv>
+						<p>{boardData.boardTitle}</p>
+					</ArticleTitleDiv>
+					<ArticleLinkRootDiv>
+						<NavLink to={`/problem/${boardData.problemNo}`}>
+							{boardData.problemNo}번 - {boardData.problemTitle}
+						</NavLink>
+					</ArticleLinkRootDiv>
+					<Reply
+						author={boardData.boardMemberId}
+						date={timeAgo(boardData.boardRegDate)}
+						recommendCount={boardData.boardLikeCount}
+						content={boardData.boardContent}
+					/>
+				</>
+			)}
+
 			<Reply
 				author={'akak4478'}
 				date={'10분전'}
 				recommendCount={'10'}
-				content={'한번 이렇게 해보세요!'}
+				content={'이건 댓글이에요 그리고 댓글은 페이징 처리가 되지요'}
 			/>
 			<ReplyAdd />
 		</ArticleRootMain>

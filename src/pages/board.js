@@ -198,6 +198,7 @@ const Board = (props) => {
 	};
 	useEffect(() => {
 		getBoardList(page, size, categoryCode, (data) => {
+			console.log(data);
 			setPageData(data);
 		});
 		if (categoryCode === 'ALL') {
