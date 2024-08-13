@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Tag from '../components/tag';
 import NormalButton from '../components/button-normal';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getProblem } from '../api/Problem';
+import { useIsTablet } from '../hooks/media-query';
 const ProblemTabDiv = styled.div`
+	width: 100%;
 	margin-top: 16px;
 	box-sizing: border-box;
 	& span {
@@ -113,8 +115,19 @@ const ProblemKindList = styled.ul`
 		line-height: 23px;
 	}
 `;
+const ProblemTabGroupRoot = styled.div`
+	${({ $isTablet }) =>
+		$isTablet == false &&
+		css`
+			display: flex;
+			flex-grow: 0 50%;
+			gap: 16px;
+		`}
+`;
+const ProblemTabRoot = styled.div`
+	width: 100%;
+`;
 const ProblemLeftSide = ({ problem, problemNo }) => {
-	console.log(problem);
 	let timeCondition = '';
 	if (problem) {
 		if (problem.problemCondition.length == 1) {
@@ -133,6 +146,7 @@ const ProblemLeftSide = ({ problem, problemNo }) => {
 				problem.problemCondition[0].conditionMemory + 'MB(언어별 상이)';
 		}
 	}
+	const isTablet = useIsTablet();
 	return (
 		<ProblemLeftSideRootDiv>
 			{problem && (
@@ -171,26 +185,30 @@ const ProblemLeftSide = ({ problem, problemNo }) => {
 					<ProblemContent>{problem.problemOutputExplain}</ProblemContent>
 					{[...Array(problem.problemInput.length).keys()].map((idx) => {
 						return (
-							<>
-								<ProblemTab
-									key={idx + 'exampleintab'}
-									text={'예제 입력 ' + (idx + 1)}
-									copyText={problem.problemInput[idx]}
-								/>
-								<ProblemLeftSideDivider
-									key={idx + 'div1'}
-								></ProblemLeftSideDivider>
-								<ProblemExample>{problem.problemInput[idx]}</ProblemExample>
-								<ProblemTab
-									key={idx + 'exampleouttab'}
-									text={'예제 출력 ' + (idx + 1)}
-									copyText={problem.problemOutput[idx]}
-								/>
-								<ProblemLeftSideDivider
-									key={idx + 'div2'}
-								></ProblemLeftSideDivider>
-								<ProblemExample>{problem.problemOutput[idx]}</ProblemExample>
-							</>
+							<ProblemTabGroupRoot $isTablet={isTablet}>
+								<ProblemTabRoot>
+									<ProblemTab
+										key={idx + 'exampleintab'}
+										text={'예제 입력 ' + (idx + 1)}
+										copyText={problem.problemInput[idx]}
+									/>
+									<ProblemLeftSideDivider
+										key={idx + 'div1'}
+									></ProblemLeftSideDivider>
+									<ProblemExample>{problem.problemInput[idx]}</ProblemExample>
+								</ProblemTabRoot>
+								<ProblemTabRoot>
+									<ProblemTab
+										key={idx + 'exampleouttab'}
+										text={'예제 출력 ' + (idx + 1)}
+										copyText={problem.problemOutput[idx]}
+									/>
+									<ProblemLeftSideDivider
+										key={idx + 'div2'}
+									></ProblemLeftSideDivider>
+									<ProblemExample>{problem.problemOutput[idx]}</ProblemExample>
+								</ProblemTabRoot>
+							</ProblemTabGroupRoot>
 						);
 					})}
 					<ProblemTab text={'알고리즘 분류'} />
