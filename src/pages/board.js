@@ -57,7 +57,7 @@ const StyledBoardTable = styled.table`
 	}
 `;
 
-const BoardTable = ({ pageData, noticeData }) => {
+const BoardTable = ({ pageData, noticeData, moveCategory }) => {
 	return (
 		<StyledBoardTable>
 			<colgroup>
@@ -93,7 +93,9 @@ const BoardTable = ({ pageData, noticeData }) => {
 								</NavLink>
 							</td>
 							<td>
-								<NavLink to={'#'}>{board.categoryName}</NavLink>
+								<NavLink onClick={() => moveCategory(board.categoryCode)}>
+									{board.categoryName}
+								</NavLink>
 							</td>
 							<td>{board.langName}</td>
 							<td style={{ fontWeight: 'bold' }}>{board.memberId}</td>
@@ -112,7 +114,9 @@ const BoardTable = ({ pageData, noticeData }) => {
 								</NavLink>
 							</td>
 							<td>
-								<NavLink to={'#'}>{board.categoryName}</NavLink>
+								<NavLink onClick={() => moveCategory(board.categoryCode)}>
+									{board.categoryName}
+								</NavLink>
 							</td>
 							<td>{board.langName}</td>
 							<td style={{ fontWeight: 'bold' }}>{board.memberId}</td>
@@ -186,6 +190,7 @@ const Board = (props) => {
 	const [pageData, setPageData] = useState();
 	const [noticeData, setNoticeData] = useState();
 	const moveCategory = (categoryCode) => {
+		console.log(categoryCode);
 		searchParams.set('page', 0);
 		searchParams.set('size', parseInt(searchParams.get('size')) || 10);
 		searchParams.set('categoryCode', categoryCode);
@@ -238,7 +243,11 @@ const Board = (props) => {
 				/>
 				<BoardTapButton text={'글쓰기'} onClick={() => navigate('/write')} />
 			</BoardTapButtonsDiv>
-			<BoardTable pageData={pageData} noticeData={noticeData} />
+			<BoardTable
+				pageData={pageData}
+				noticeData={noticeData}
+				moveCategory={moveCategory}
+			/>
 			<BoardSearchFormDiv $isMobile={isMobile}>
 				<InputBox placeholder={'검색'} />
 				<NormalButton type="primary" text="검색" />
