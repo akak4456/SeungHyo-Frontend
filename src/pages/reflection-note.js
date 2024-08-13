@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { CaretDownFill } from 'react-bootstrap-icons';
+import { getProblemGrade } from '../api/Submit';
+import { useLocation } from 'react-router-dom';
 const ReflectionExampleTabDiv = styled.div`
 	margin-top: 16px;
 	box-sizing: border-box;
@@ -121,19 +123,23 @@ const ReflectionNoteCaseBlockExamplePre = styled.pre`
 	font: inherit;
 	background-color: var(--color-example);
 `;
-const ReflectionNoteCaseBlock = (props) => {
+const ReflectionNoteCaseBlock = ({
+	caseNum,
+	isCorrect,
+	caseTitle,
+	inputSource,
+	outputSource,
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const example1Text = '1 2';
-	const example2Text = '3';
 	return (
 		<ReflectionNoteCaseBlockRootDiv>
 			<ReflectionNoteCaseBlockTitleDiv onClick={() => setIsOpen(!isOpen)}>
 				<p>
 					<ReflectionNoteCaseBlockNum>
-						CASE {props.caseNum}.
+						CASE {caseNum}.
 					</ReflectionNoteCaseBlockNum>
-					<ReflectionNotCaseBlock $isCorrect={props.isCorrect}>
-						{props.caseTitle}
+					<ReflectionNotCaseBlock $isCorrect={isCorrect}>
+						{caseTitle}
 					</ReflectionNotCaseBlock>
 				</p>
 				<ReflectionNoteCaseBlockFill
@@ -141,15 +147,15 @@ const ReflectionNoteCaseBlock = (props) => {
 				></ReflectionNoteCaseBlockFill>
 			</ReflectionNoteCaseBlockTitleDiv>
 			<ReflectionNoteCaseBlockExampleDiv $isOpen={isOpen}>
-				<ReflectionExampleTab text={'입력'} copyText={example1Text} />
+				<ReflectionExampleTab text={'입력'} copyText={inputSource} />
 				<ReflectionNoteCaseBlockExampleDivider></ReflectionNoteCaseBlockExampleDivider>
 				<ReflectionNoteCaseBlockExamplePre>
-					{example1Text}
+					{inputSource}
 				</ReflectionNoteCaseBlockExamplePre>
-				<ReflectionExampleTab text={'출력 '} copyText={example2Text} />
+				<ReflectionExampleTab text={'출력 '} copyText={outputSource} />
 				<ReflectionNoteCaseBlockExampleDivider></ReflectionNoteCaseBlockExampleDivider>
 				<ReflectionNoteCaseBlockExamplePre>
-					{example2Text}
+					{outputSource}
 				</ReflectionNoteCaseBlockExamplePre>
 			</ReflectionNoteCaseBlockExampleDiv>
 		</ReflectionNoteCaseBlockRootDiv>
@@ -169,26 +175,67 @@ const ReflectionNoteTitle = styled.p`
 	}
 `;
 const ReflectionNote = (props) => {
+	const location = useLocation();
+	// 경로를 '/'로 분할
+	const parts = location.pathname.split('/');
+
+	// 숫자 ID는 세 번째 부분에 위치
+	const no = parts[2];
+	const [compileData, setCompileData] = useState();
+	useEffect(() => {
+		getProblemGrade(no, (data) => {
+			console.log(data);
+			setCompileData(data);
+		});
+	}, []);
+	const getCaseTitle = (compile) => {
+		if (compile.compileStatus == 'CORRECT') {
+			return '맞았습니다!!';
+		} else if (compile.compileStatus == 'COMPILE_ERROR') {
+			return '틀렸습니다(이유: 컴파일 에러)';
+		} else if (compile.compileStatus == 'WRONG') {
+			return '틀렸습니다';
+		} else if (compile.compileStatus == 'RUNTIME_ERROR') {
+			if (compile.runtimeErrorReason == 'TIMEOUT') {
+				return '틀렸습니다(이유: 런타임 에러, 시간초과)';
+			} else if (compile.runtimeErrorReason == 'MEMORY_EXCEED') {
+				return '틀렸습니다(이유: 런타임 에러, 메모리초과)';
+			} else {
+				return '틀렸습니다(이유: 런타임 에러)';
+			}
+		}
+		return '';
+	};
 	return (
 		<ReflectionNoteRootMain>
 			<ReflectionNoteTitle>
-				1000번. A + B<sub>(제출번호:1000)</sub>
+				{compileData && compileData.problemNo}번.{' '}
+				{compileData && compileData.problemTitle}
+				<sub>(제출번호:{no})</sub>
 			</ReflectionNoteTitle>
-			<ReflectionNoteCaseBlock
-				caseNum={1}
-				caseTitle={'맞았습니다'}
-				isCorrect={true}
-			/>
-			<ReflectionNoteCaseBlock
-				caseNum={2}
-				caseTitle={'맞았습니다'}
-				isCorrect={true}
-			/>
-			<ReflectionNoteCaseBlock
-				caseNum={3}
-				caseTitle={'틀렸습니다(이유:런타임 에러)'}
-				isCorrect={false}
-			/>
+			{compileData &&
+				compileData.kafkaCompiles &&
+				compileData.kafkaCompiles.map((compile) => {
+					console.log(compile);
+					return (
+						<ReflectionNoteCaseBlock
+							key={compile.caseNum + 'compile'}
+							caseNum={compile.caseNo}
+							isCorrect={compile.compileStatus == 'CORRECT'}
+							caseTitle={getCaseTitle(compile)}
+							inputSource={
+								compile.compileStatus == 'COMPILE_ERROR'
+									? '컴파일 에러'
+									: compile.inputSource
+							}
+							outputSource={
+								compile.compileStatus == 'COMPILE_ERROR'
+									? '컴파일 에러'
+									: compile.outputSource
+							}
+						/>
+					);
+				})}
 		</ReflectionNoteRootMain>
 	);
 };

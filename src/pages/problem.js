@@ -114,8 +114,6 @@ const ProblemKindList = styled.ul`
 	}
 `;
 const ProblemLeftSide = ({ problem, problemNo }) => {
-	const example1Text = '1 2';
-	const example2Text = '3';
 	console.log(problem);
 	let timeCondition = '';
 	if (problem) {
@@ -182,7 +180,7 @@ const ProblemLeftSide = ({ problem, problemNo }) => {
 								<ProblemLeftSideDivider
 									key={idx + 'div1'}
 								></ProblemLeftSideDivider>
-								<ProblemExample>{example1Text}</ProblemExample>
+								<ProblemExample>{problem.problemInput[idx]}</ProblemExample>
 								<ProblemTab
 									key={idx + 'exampleouttab'}
 									text={'예제 출력 ' + (idx + 1)}
@@ -191,7 +189,7 @@ const ProblemLeftSide = ({ problem, problemNo }) => {
 								<ProblemLeftSideDivider
 									key={idx + 'div2'}
 								></ProblemLeftSideDivider>
-								<ProblemExample>{example2Text}</ProblemExample>
+								<ProblemExample>{problem.problemOutput[idx]}</ProblemExample>
 							</>
 						);
 					})}

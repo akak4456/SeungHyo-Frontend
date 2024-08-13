@@ -5,7 +5,7 @@ import NormalButton from '../components/button-normal';
 import RadioButton from '../components/button-radio';
 import Dropdown from '../components/dropdown';
 import { getProgramLanguageByProblem } from '../api/Submit';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { newSubmit } from '../api/Submit';
 const ProblemRightSideRootDiv = styled.div`
 	width: 50%;
@@ -86,6 +86,7 @@ const ProblemRightSide = ({ programLanguage, problemNo }) => {
 			sourceCode: text,
 		}));
 	};
+	const navigate = useNavigate();
 	const onSubmitClick = (e) => {
 		e.preventDefault();
 		if (formData.sourceCodeDisclosureScope === '') {
@@ -97,8 +98,7 @@ const ProblemRightSide = ({ programLanguage, problemNo }) => {
 			return;
 		}
 		newSubmit(formData, (data) => {
-			console.log(data);
-			// TODO 이 부분 구현하기
+			navigate('/reflection-note/' + data.submitNo);
 		});
 	};
 	return (
