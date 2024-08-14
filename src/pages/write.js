@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import InputBox from '../components/inputbox';
 import Dropdown from '../components/dropdown';
 import NormalEditor from '../components/editor-normal';
 import SourceEditor from '../components/editor-source';
 import NormalButton from '../components/button-normal';
+import { getBoardCategory } from '../api/Board';
 const WriteRootMain = styled.main`
 	width: 75%;
 	margin-left: 12.5%;
@@ -31,6 +32,16 @@ const WriteTableRightTd = styled.td`
 const Write = () => {
 	const categories = ['질문', '자유', '기타'];
 	const languages = ['JAVA', 'C', 'C++'];
+	const [data, setData] = useState();
+	useEffect(() => {
+		getBoardCategory((data) => {
+			console.log(data);
+			setData((state) => ({
+				...state,
+				categories: data,
+			}));
+		});
+	}, []);
 	return (
 		<WriteRootMain>
 			<WriteTable>
@@ -43,7 +54,13 @@ const Write = () => {
 				<tr>
 					<WriteTableLeftTd>카테고리</WriteTableLeftTd>
 					<WriteTableRightTd>
-						<Dropdown dropDownText={categories} />
+						{data && data.categories && (
+							<Dropdown
+								dropDownText={data.categories.boardCategory.map(
+									(category) => category.categoryName
+								)}
+							/>
+						)}
 					</WriteTableRightTd>
 				</tr>
 				<tr>

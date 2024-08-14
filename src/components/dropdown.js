@@ -113,6 +113,7 @@ const StyledCaretDownFill = styled(CaretDownFill)`
  * @returns {JSX.Element} 사용자 이름을 출력하는 JSX 요소
  */
 const Dropdown = ({ dropDownText, onDropDownTextChange, isSearchIncluded }) => {
+	console.log(dropDownText);
 	if (!onDropDownTextChange) {
 		onDropDownTextChange = (text) => {};
 	}
