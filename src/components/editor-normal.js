@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { convertToRaw, EditorState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import styled from 'styled-components';
@@ -11,14 +12,14 @@ const EditorWrapper = styled.div`
 		border-radius: 2px !important;
 	}
 `;
-const NormalEditor = (props) => {
+const NormalEditor = ({ onHTMLChange }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
-	const [text, setText] = useState();
 	const onEditorStateChange = function (editorState) {
 		setEditorState(editorState);
-		const { blocks } = convertToRaw(editorState.getCurrentContent());
-		let text = editorState.getCurrentContent().getPlainText('\u0001');
-		setText(text);
+		const editorToHtml = draftToHtml(
+			convertToRaw(editorState.getCurrentContent())
+		);
+		onHTMLChange(editorToHtml);
 	};
 	return (
 		<EditorWrapper>

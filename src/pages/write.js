@@ -38,6 +38,9 @@ const Write = () => {
 		categoryCode: '',
 		langCode: '',
 		langName: '',
+		problemNo: '',
+		normalHTMLContent: '',
+		sourceCode: '',
 	});
 	useEffect(() => {
 		getBoardCategory((data) => {
@@ -65,6 +68,18 @@ const Write = () => {
 			}));
 		});
 	}, []);
+	const normalEditorHTMLChange = (htmlContent) => {
+		setForm((state) => ({
+			...state,
+			normalHTMLContent: htmlContent,
+		}));
+	};
+	const sourceCodeEditorChange = (text) => {
+		setForm((state) => ({
+			...state,
+			sourceCode: text,
+		}));
+	};
 	return (
 		<WriteRootMain>
 			<WriteTable>
@@ -134,19 +149,26 @@ const Write = () => {
 				<tr>
 					<WriteTableLeftTd>문제번호</WriteTableLeftTd>
 					<WriteTableRightTd>
-						<InputBox />
+						<InputBox
+							onChange={(input) => {
+								setForm((state) => ({
+									...state,
+									problemNo: input,
+								}));
+							}}
+						/>
 					</WriteTableRightTd>
 				</tr>
 				<tr>
 					<WriteTableLeftTd>내용</WriteTableLeftTd>
 					<WriteTableRightTd>
-						<NormalEditor />
+						<NormalEditor onHTMLChange={normalEditorHTMLChange} />
 					</WriteTableRightTd>
 				</tr>
 				<tr>
 					<WriteTableLeftTd>소스코드</WriteTableLeftTd>
 					<WriteTableRightTd>
-						<SourceEditor />
+						<SourceEditor onChange={sourceCodeEditorChange} />
 					</WriteTableRightTd>
 				</tr>
 				<tr>
