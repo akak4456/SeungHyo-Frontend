@@ -3,16 +3,28 @@ import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 const EditorWrapper = styled.div`
 	.NormalEditorMain {
 		height: 500px !important;
-		border: 1px solid #f1f1f1 !important;
+		${({ $isWarning }) =>
+			$isWarning
+				? css`
+						border: 1px solid var(--color-danger) !important;
+					`
+				: css`
+						border: 1px solid #f1f1f1 !important;
+					`}
 		padding: 5px !important;
 		border-radius: 2px !important;
 	}
 `;
-const NormalEditor = ({ onHTMLChange }) => {
+const StyledWarning = styled.span`
+	color: var(--color-danger);
+	font-size: 11px;
+	margin-top: 8px;
+`;
+const NormalEditor = ({ onHTMLChange, warningMessage }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const onEditorStateChange = function (editorState) {
 		setEditorState(editorState);
@@ -22,7 +34,7 @@ const NormalEditor = ({ onHTMLChange }) => {
 		onHTMLChange(editorToHtml);
 	};
 	return (
-		<EditorWrapper>
+		<EditorWrapper $isWarning={warningMessage}>
 			<Editor
 				editorState={editorState}
 				toolbarClassName="NormalEditorToolbar"
@@ -30,6 +42,7 @@ const NormalEditor = ({ onHTMLChange }) => {
 				editorClassName="NormalEditorMain"
 				onEditorStateChange={onEditorStateChange}
 			/>
+			{warningMessage && <StyledWarning>{warningMessage}</StyledWarning>}
 		</EditorWrapper>
 	);
 };

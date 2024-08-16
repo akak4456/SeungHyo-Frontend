@@ -87,3 +87,21 @@ export const getBoardCategory = (onSuccess) => {
 			console.log(exception);
 		});
 };
+
+export const addBoard = (form, onSuccess) => {
+	commonAPI
+		.post(`/api/v1/board`, form, {
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+		.then((response) => {
+			if (response.data.code === '0') {
+				onSuccess(response.data.data);
+			}
+		})
+		.catch((exception) => {
+			console.log(exception);
+		});
+};

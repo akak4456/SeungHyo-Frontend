@@ -96,7 +96,7 @@ const Reply = ({ replyNo, author, date, recommendCount, content }) => {
 				<ReplyLike>좋아요</ReplyLike>
 			</ReplyTitleDiv>
 			<ReplyContentRootDiv>
-				<p>{content}</p>
+				<p dangerouslySetInnerHTML={{ __html: content }}></p>
 			</ReplyContentRootDiv>
 		</ReplyRootDiv>
 	);

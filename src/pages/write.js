@@ -5,8 +5,9 @@ import Dropdown from '../components/dropdown';
 import NormalEditor from '../components/editor-normal';
 import SourceEditor from '../components/editor-source';
 import NormalButton from '../components/button-normal';
-import { getBoardCategory } from '../api/Board';
+import { getBoardCategory, addBoard } from '../api/Board';
 import { getAllProgramLanguage } from '../api/Submit';
+import { useNavigate } from 'react-router-dom';
 const WriteRootMain = styled.main`
 	width: 75%;
 	margin-left: 12.5%;
@@ -80,6 +81,65 @@ const Write = () => {
 			sourceCode: text,
 		}));
 	};
+	const [warning, setWarning] = useState({
+		title: '',
+		problemNo: '',
+		normal: '',
+		sourceCode: '',
+	});
+	const navigate = useNavigate();
+	const onWriteClick = () => {
+		addBoard(form, (data) => {
+			console.log(data);
+			let titleWarningMessage = '';
+			let isValidForm = true;
+			if (data.boardTitleError === 'NOT_BLANK') {
+				isValidForm = false;
+				titleWarningMessage = '제목을 입력해주세요';
+			}
+			setWarning((state) => ({
+				...state,
+				title: titleWarningMessage,
+			}));
+			let problemNoWarningMessage = '';
+			if (data.problemNoError === 'NOT_BLANK') {
+				isValidForm = false;
+				problemNoWarningMessage = '문제번호를 입력해주세요';
+			} else if (data.problemNoError === 'ONLY_NUMBER') {
+				isValidForm = false;
+				problemNoWarningMessage = '문제번호에는 숫자만 입력 가능합니다.';
+			} else if (!data.isProblemNoValid) {
+				isValidForm = false;
+				problemNoWarningMessage = '존재하는 문제 번호만 입력해주세요';
+			}
+			setWarning((state) => ({
+				...state,
+				problemNo: problemNoWarningMessage,
+			}));
+			let normalHTMLContentErrorWarningMessage = '';
+			if (data.normalHTMLContentError === 'NOT_BLANK') {
+				isValidForm = false;
+				normalHTMLContentErrorWarningMessage = '내용을 입력해주세요';
+			}
+			setWarning((state) => ({
+				...state,
+				normal: normalHTMLContentErrorWarningMessage,
+			}));
+			let sourceCodeWarningMessage = '';
+			if (data.sourceCodeError === 'NOT_BLANK') {
+				isValidForm = false;
+				sourceCodeWarningMessage = '소스코드를 입력해주세요';
+			}
+			setWarning((state) => ({
+				...state,
+				sourceCode: sourceCodeWarningMessage,
+			}));
+			if (isValidForm) {
+				alert('게시글 등록을 하였습니다.');
+				navigate('/board');
+			}
+		});
+	};
 	return (
 		<WriteRootMain>
 			<WriteTable>
@@ -93,6 +153,7 @@ const Write = () => {
 									boardTitle: input,
 								}));
 							}}
+							warning={warning.title}
 						/>
 					</WriteTableRightTd>
 				</tr>
@@ -156,25 +217,36 @@ const Write = () => {
 									problemNo: input,
 								}));
 							}}
+							warning={warning.problemNo}
 						/>
 					</WriteTableRightTd>
 				</tr>
 				<tr>
 					<WriteTableLeftTd>내용</WriteTableLeftTd>
 					<WriteTableRightTd>
-						<NormalEditor onHTMLChange={normalEditorHTMLChange} />
+						<NormalEditor
+							onHTMLChange={normalEditorHTMLChange}
+							warningMessage={warning.normal}
+						/>
 					</WriteTableRightTd>
 				</tr>
 				<tr>
 					<WriteTableLeftTd>소스코드</WriteTableLeftTd>
 					<WriteTableRightTd>
-						<SourceEditor onChange={sourceCodeEditorChange} />
+						<SourceEditor
+							onChange={sourceCodeEditorChange}
+							warningMessage={warning.sourceCode}
+						/>
 					</WriteTableRightTd>
 				</tr>
 				<tr>
 					<WriteTableLeftTd></WriteTableLeftTd>
 					<WriteTableRightTd>
-						<NormalButton type="primary" text="글쓰기"></NormalButton>
+						<NormalButton
+							type="primary"
+							text="글쓰기"
+							onClick={onWriteClick}
+						></NormalButton>
 					</WriteTableRightTd>
 				</tr>
 			</WriteTable>
