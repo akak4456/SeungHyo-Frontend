@@ -6,6 +6,7 @@ import NormalEditor from '../components/editor-normal';
 import SourceEditor from '../components/editor-source';
 import NormalButton from '../components/button-normal';
 import { getBoardCategory } from '../api/Board';
+import { getAllProgramLanguage } from '../api/Submit';
 const WriteRootMain = styled.main`
 	width: 75%;
 	margin-left: 12.5%;
@@ -35,10 +36,16 @@ const Write = () => {
 	const [data, setData] = useState();
 	useEffect(() => {
 		getBoardCategory((data) => {
-			console.log(data);
 			setData((state) => ({
 				...state,
 				categories: data,
+			}));
+		});
+		getAllProgramLanguage((data) => {
+			console.log(data);
+			setData((state) => ({
+				...state,
+				language: data,
 			}));
 		});
 	}, []);
@@ -66,7 +73,13 @@ const Write = () => {
 				<tr>
 					<WriteTableLeftTd>언어</WriteTableLeftTd>
 					<WriteTableRightTd>
-						<Dropdown dropDownText={languages} />
+						{data && data.language && (
+							<Dropdown
+								dropDownText={data.language.languageList.map(
+									(lang) => lang.langName
+								)}
+							/>
+						)}
 					</WriteTableRightTd>
 				</tr>
 				<tr>
