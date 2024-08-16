@@ -31,21 +31,37 @@ const WriteTableRightTd = styled.td`
 	padding-left: 24px;
 `;
 const Write = () => {
-	const categories = ['질문', '자유', '기타'];
-	const languages = ['JAVA', 'C', 'C++'];
 	const [data, setData] = useState();
+	const [form, setForm] = useState({
+		boardTitle: '',
+		categoryName: '',
+		categoryCode: '',
+		langCode: '',
+		langName: '',
+	});
 	useEffect(() => {
 		getBoardCategory((data) => {
 			setData((state) => ({
 				...state,
 				categories: data,
 			}));
+			const category = data.boardCategory[0];
+			setForm((state) => ({
+				...state,
+				categoryCode: category.categoryCode,
+				categoryName: category.categoryName,
+			}));
 		});
 		getAllProgramLanguage((data) => {
-			console.log(data);
 			setData((state) => ({
 				...state,
 				language: data,
+			}));
+			const lang = data.languageList[0];
+			setForm((state) => ({
+				...state,
+				langCode: lang.langCode,
+				langName: lang.langName,
 			}));
 		});
 	}, []);
@@ -55,7 +71,14 @@ const Write = () => {
 				<tr>
 					<WriteTableLeftTd>제목</WriteTableLeftTd>
 					<WriteTableRightTd>
-						<InputBox />
+						<InputBox
+							onChange={(input) => {
+								setForm((state) => ({
+									...state,
+									boardTitle: input,
+								}));
+							}}
+						/>
 					</WriteTableRightTd>
 				</tr>
 				<tr>
@@ -66,6 +89,19 @@ const Write = () => {
 								dropDownText={data.categories.boardCategory.map(
 									(category) => category.categoryName
 								)}
+								curText={form.categoryName}
+								onDropDownTextChange={(text) => {
+									const newCategoryCode = data.categories.boardCategory.find(
+										(category) => category.categoryName == text
+									).categoryCode;
+									if (form.categoryCode != newCategoryCode) {
+										setForm((state) => ({
+											...state,
+											categoryName: text,
+											categoryCode: newCategoryCode,
+										}));
+									}
+								}}
 							/>
 						)}
 					</WriteTableRightTd>
@@ -78,6 +114,19 @@ const Write = () => {
 								dropDownText={data.language.languageList.map(
 									(lang) => lang.langName
 								)}
+								curText={form.langName}
+								onDropDownTextChange={(text) => {
+									const newLangCode = data.language.languageList.find(
+										(lang) => lang.langName == text
+									).langCode;
+									if (form.langCode != newLangCode) {
+										setForm((state) => ({
+											...state,
+											langName: text,
+											langCode: newLangCode,
+										}));
+									}
+								}}
 							/>
 						)}
 					</WriteTableRightTd>

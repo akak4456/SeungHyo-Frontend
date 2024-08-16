@@ -108,20 +108,22 @@ const StyledCaretDownFill = styled(CaretDownFill)`
 /**
  * 드롭다운 컴포넌트를 나타냅니다.
  * @param {List<String>} dropDownText - drop down 에 들어가는 text 들을 배열로 지정함
+ * @param {String} curText - dropDown 에 해당하는 현재 텍스트를 알려줌
  * @param {function(String)} onDropDownTextChange - drop down text 가 변경되었을 때 할 행동 지정함
  * @param {bool} isSearchIncluded - 드롭다운에 검색을 포함할 것인지 여부
  * @returns {JSX.Element} 사용자 이름을 출력하는 JSX 요소
  */
-const Dropdown = ({ dropDownText, onDropDownTextChange, isSearchIncluded }) => {
-	console.log(dropDownText);
+const Dropdown = ({
+	dropDownText,
+	curText,
+	onDropDownTextChange,
+	isSearchIncluded,
+}) => {
 	if (!onDropDownTextChange) {
 		onDropDownTextChange = (text) => {};
 	}
-	const [curText, setCurText] = useState(dropDownText[0]);
 	const [isOpen, setIsOpen] = useState(false);
-	onDropDownTextChange(dropDownText[0]);
 	const changeText = (text) => {
-		setCurText(text);
 		setIsOpen(false);
 		if (onDropDownTextChange != null) {
 			onDropDownTextChange(text);
