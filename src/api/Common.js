@@ -2,16 +2,37 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { getCookieToken } from '../store/Cookie';
+import {
+	getCookieToken,
+	removeCookieToken,
+	setRefreshToken,
+} from '../store/Cookie';
 import { SET_TOKEN } from '../store/Auth';
+import { reissue } from './Auth';
 
 const commonAPI = axios.create({});
-
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const useAxiosInterceptor = () => {
 	const token = useSelector((state) => state.authToken.accessToken);
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
+
+	if (!token && getCookieToken()) {
+		console.log(getCookieToken());
+		reissue(
+			getCookieToken(),
+			(response) => {
+				dispatch(SET_TOKEN(response.data));
+				setRefreshToken(response.headers['new-refresh-token']);
+			},
+			(e) => {
+				alert('로그아웃 되었습니다. 다시 로그인해주세요');
+				removeCookieToken();
+				navigate('/');
+			}
+		);
+	}
 
 	const errorHandler = (error) => {
 		console.log('errInterceptor!', error);

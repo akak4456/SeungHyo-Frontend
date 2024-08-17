@@ -28,6 +28,7 @@ import PrivateRoute from './PrivateRoute.js';
 import persistStore from 'redux-persist/es/persistStore';
 import Submit from './pages/submit.js';
 import { PersistGate } from 'redux-persist/integration/react';
+import { getCookieToken } from './store/Cookie.js';
 
 const persistor = persistStore(store);
 

@@ -10,6 +10,7 @@ export const setRefreshToken = (refreshToken) => {
 		sameSite: 'strict',
 		path: '/',
 		expires: new Date(expireDate),
+		// httpOnly: true, httpOnly를 true 로 설정하면 getCookieToken 이 호출이 안되는 문제가 있음
 	});
 };
 

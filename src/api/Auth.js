@@ -127,3 +127,24 @@ export const validEmailCheckCode = (email, code, onSuccess) => {
 			console.log(exception);
 		});
 };
+
+export const reissue = (refreshToken, onSuccess, onError) => {
+	commonAPI
+		.post(
+			'/api/v1/member/auth/reissue',
+			{},
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+					'Refresh-Token': refreshToken,
+				},
+			}
+		)
+		.then((response) => {
+			onSuccess(response);
+		})
+		.catch((exception) => {
+			onError(exception);
+		});
+};
