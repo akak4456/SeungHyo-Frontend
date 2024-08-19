@@ -78,6 +78,10 @@ const LoginFormInner = () => {
 		id: '',
 		pw: '',
 	});
+	const [warning, setWarning] = useState({
+		idWarning: '',
+		pwWarning: '',
+	});
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	return (
@@ -97,6 +101,7 @@ const LoginFormInner = () => {
 							id: value,
 						}));
 					}}
+					warning={warning.idWarning}
 				></InputBox>
 			</StyledLoginFormDiv>
 			<StyledLoginFormDiv>
@@ -112,6 +117,7 @@ const LoginFormInner = () => {
 							pw: value,
 						}));
 					}}
+					warning={warning.pwWarning}
 				></InputBox>
 			</StyledLoginFormDiv>
 			<StyledLoginAction>
@@ -121,9 +127,27 @@ const LoginFormInner = () => {
 					text="로그인"
 					onClick={() =>
 						loginUser(formValue.id, formValue.pw, (data) => {
-							setRefreshToken(data.refreshToken);
-							dispatch(SET_TOKEN(data.accessToken));
-							navigate('/');
+							let idWarning = '';
+							let available = true;
+							if (!data.memberIdValidForm) {
+								available = false;
+								idWarning = '아이디 폼이 유효하지 않습니다';
+							} else if (!data.accessToken) {
+								available = false;
+								idWarning = '아이디 또는 비밀번호가 일치하지 않습니다';
+							}
+							setWarning((state) => ({ ...state, idWarning: idWarning }));
+							let pwWarning = '';
+							if (!data.memberPwValidForm) {
+								available = false;
+								pwWarning = '비밀번호 폼이 유효하지 않습니다';
+							}
+							if (available) {
+								setWarning((state) => ({ ...state, pwWarning: pwWarning }));
+								setRefreshToken(data.refreshToken);
+								dispatch(SET_TOKEN(data.accessToken));
+								navigate('/');
+							}
 						})
 					}
 				></NormalButton>

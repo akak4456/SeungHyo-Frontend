@@ -73,20 +73,20 @@ const SettingPwChange = () => {
 			let warningCurrentPw = '';
 			let warningNewPw = '';
 			let warningNewPwCheck = '';
-			if (data.currentPwAndNewPwMatch) {
+			if (!data.currentPwAndNewPwNotMatch) {
 				available = false;
 				warningCurrentPw = '비밀번호와 새로운 비밀번호가 일치합니다.';
 			}
-			if (data.currentPwNotMatch) {
+			if (!data.currentPwMatch) {
 				available = false;
 				warningCurrentPw = '기존에 쓰던 비밀번호를 입력해주세요.';
 			}
-			if (data.newPwNotMatch) {
+			if (!data.newPwMatch) {
 				available = false;
 				warningNewPwCheck =
 					'새로운 비밀번호와 새로운 비밀번호 확인이 일치하지 않습니다.';
 			}
-			if (data.newPwNotValidForm) {
+			if (!data.newPwValidForm) {
 				available = false;
 				warningNewPw = '새로운 비밀번호 형식을 확인해주세요.';
 			}

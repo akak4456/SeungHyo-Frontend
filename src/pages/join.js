@@ -89,35 +89,35 @@ const JoinFormInner = () => {
 			let passwordCheckWarning = '';
 			let emailWarning = '';
 			let emailCheckWarning = '';
-			if (data.emailDuplicate) {
+			if (!data.emailNotDuplicate) {
 				joinSuccess = false;
 				emailWarning = '이메일이 중복됩니다.';
 			}
-			if (data.emailNotValidForm) {
+			if (!data.emailValidForm) {
 				joinSuccess = false;
 				emailWarning = '이메일이 올바른 형태가 아닙니다.';
 			}
-			if (data.emailNotValidate) {
+			if (!data.emailValidate) {
 				joinSuccess = false;
 				emailCheckWarning = '이메일이 인증되지 않았습니다.';
 			}
-			if (data.idDuplicate) {
+			if (!data.idNotDuplicate) {
 				joinSuccess = false;
 				idWarning = '아이디가 중복됩니다.';
 			}
-			if (data.idNotValidForm) {
+			if (!data.memberIdValidForm) {
 				joinSuccess = false;
 				idWarning = '아이디가 올바른 형태가 아닙니다.';
 			}
-			if (data.pwAndPwCheckDifferent) {
+			if (!data.pwAndPwCheckSame) {
 				joinSuccess = false;
 				passwordCheckWarning = '비밀번호와 비밀번호 확인이 다릅니다.';
 			}
-			if (data.pwNotValidForm) {
+			if (!data.memberPwValidForm) {
 				joinSuccess = false;
 				passwordWarning = '비밀번호가 올바른 형태가 아닙니다.';
 			}
-			if (data.statusNotValidForm) {
+			if (!data.statusMessageValidForm) {
 				joinSuccess = false;
 				statusMsgWarning = '상태메시지가 올바른 형태가 아닙니다.';
 			}

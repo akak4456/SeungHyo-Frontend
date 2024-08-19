@@ -61,14 +61,15 @@ const SettingInfoEdit = () => {
 	});
 	const onInfoEditClick = () => {
 		patchInfoEdit(infoValue, (data) => {
+			console.log(data);
 			let passwordWarning = '';
 			let statusMsgWarning = '';
 			let available = true;
-			if (data.pwNotMatch || data.pwNotValidForm) {
+			if (!data.pwMatch || !data.memberPwValidForm) {
 				available = false;
 				passwordWarning = '비밀번호를 확인해주세요';
 			}
-			if (data.statusMessageNotValidForm) {
+			if (!data.statusMessageValidForm) {
 				available = false;
 				statusMsgWarning = '상태 메시지는 빈칸이면 안됩니다.';
 			}
