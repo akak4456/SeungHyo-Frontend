@@ -52,12 +52,16 @@ const ProblemRightSideRightTd = styled.td`
 `;
 
 const ProblemRightSide = ({ programLanguage, problemNo }) => {
+	const firstLang =
+		programLanguage.languageList && programLanguage.languageList[0];
+	console.log(firstLang);
 	const dropDownText = programLanguage.languageList
 		? programLanguage.languageList.map((lang) => lang.langName)
 		: [];
 	const [formData, setFormData] = useState({
 		problemNo: problemNo,
-		langCode: '',
+		langCode: firstLang ? firstLang.langCode : '',
+		langName: firstLang ? firstLang.langName : '',
 		sourceCodeDisclosureScope: '',
 		sourceCode: '',
 	});
@@ -70,6 +74,7 @@ const ProblemRightSide = ({ programLanguage, problemNo }) => {
 			setFormData((state) => ({
 				...state,
 				langCode: newLangCode,
+				langName: text,
 			}));
 		}
 	};
@@ -110,6 +115,7 @@ const ProblemRightSide = ({ programLanguage, problemNo }) => {
 						{dropDownText.length > 0 && (
 							<Dropdown
 								isSearchIncluded={true}
+								curText={formData.langName}
 								dropDownText={dropDownText}
 								onDropDownTextChange={onDropDownTextChange}
 							></Dropdown>
@@ -175,10 +181,12 @@ const Submit = ({ isNew }) => {
 	}, []);
 	return (
 		<SubmitRootMain>
-			<ProblemRightSide
-				programLanguage={programLanguage}
-				problemNo={no}
-			></ProblemRightSide>
+			{programLanguage.languageList && (
+				<ProblemRightSide
+					programLanguage={programLanguage}
+					problemNo={no}
+				></ProblemRightSide>
+			)}
 		</SubmitRootMain>
 	);
 };
