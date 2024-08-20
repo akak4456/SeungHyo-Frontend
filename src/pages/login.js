@@ -10,6 +10,7 @@ import { loginUser } from '../api/Auth';
 import { setRefreshToken } from '../store/Cookie';
 import { SET_TOKEN } from '../store/Auth';
 import { useDispatch } from 'react-redux';
+import { setIsKeepLoginCookie } from '../store/Cookie';
 const StyledLoginTitle = styled.p`
 	padding-left: 12.5%;
 	padding-top: 32px;
@@ -77,6 +78,7 @@ const LoginFormInner = () => {
 	const [formValue, setFormValue] = useState({
 		id: '',
 		pw: '',
+		isKeepLogin: false,
 	});
 	const [warning, setWarning] = useState({
 		idWarning: '',
@@ -84,6 +86,12 @@ const LoginFormInner = () => {
 	});
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const onCheckboxChange = (e) => {
+		setFormValue((state) => ({
+			...state,
+			isKeepLogin: !state.isKeepLogin,
+		}));
+	};
 	return (
 		<StyledLoginFormInner>
 			<StyledLoginMainTitle>로그인</StyledLoginMainTitle>
@@ -121,12 +129,17 @@ const LoginFormInner = () => {
 				></InputBox>
 			</StyledLoginFormDiv>
 			<StyledLoginAction>
-				<CheckBox id="checkbox" text="로그인 상태 유지" />
+				<CheckBox
+					id="checkbox"
+					text="로그인 상태 유지"
+					onChange={onCheckboxChange}
+				/>
 				<NormalButton
 					type="primary"
 					text="로그인"
 					onClick={() =>
 						loginUser(formValue.id, formValue.pw, (data) => {
+							console.log(formValue.isKeepLogin);
 							let idWarning = '';
 							let available = true;
 							if (!data.memberIdValidForm) {
@@ -143,6 +156,7 @@ const LoginFormInner = () => {
 								pwWarning = '비밀번호 폼이 유효하지 않습니다';
 							}
 							if (available) {
+								setIsKeepLoginCookie(formValue.isKeepLogin);
 								setWarning((state) => ({ ...state, pwWarning: pwWarning }));
 								setRefreshToken(data.refreshToken);
 								dispatch(SET_TOKEN(data.accessToken));

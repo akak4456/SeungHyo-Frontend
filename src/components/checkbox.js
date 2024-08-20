@@ -22,7 +22,7 @@ const StyledDiv = styled.div`
 const CheckBox = (props) => {
 	return (
 		<StyledDiv>
-			<input type="checkbox" {...props} />
+			<input type="checkbox" {...props} onChange={props.onChange} />
 			<label for={props.id}>{props.text}</label>
 		</StyledDiv>
 	);

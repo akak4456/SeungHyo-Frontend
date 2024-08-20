@@ -7,7 +7,7 @@ import {
 	removeCookieToken,
 	setRefreshToken,
 } from '../store/Cookie';
-import { SET_TOKEN } from '../store/Auth';
+import { SET_TOKEN, DELETE_TOKEN } from '../store/Auth';
 import { reissue } from './Auth';
 
 const commonAPI = axios.create({});
@@ -18,19 +18,16 @@ const useAxiosInterceptor = () => {
 
 	const navigate = useNavigate();
 
+	console.log('access_token', token, 'refresh token', getCookieToken());
+
 	if (!token && getCookieToken()) {
-		console.log(getCookieToken());
 		reissue(
 			getCookieToken(),
 			(response) => {
 				dispatch(SET_TOKEN(response.data));
 				setRefreshToken(response.headers['new-refresh-token']);
 			},
-			(e) => {
-				alert('로그아웃 되었습니다. 다시 로그인해주세요');
-				removeCookieToken();
-				navigate('/');
-			}
+			(e) => {}
 		);
 	}
 
@@ -39,14 +36,22 @@ const useAxiosInterceptor = () => {
 		// if (error.response.status === 401) {
 		// 	navigate('/');
 		// }
+		if (error.response.status == 401) {
+			alert('로그인이 유효하지 않습니다. 다시 로그인해주세요.');
+			removeCookieToken();
+			dispatch(DELETE_TOKEN());
+			navigate('/login');
+		}
 		return Promise.reject(error);
 	};
 
 	const requestHandler = (config) => {
-		config.headers = {
-			Authorization: !!token ? `Bearer ${token}` : '',
-			'Refresh-Token': getCookieToken(),
-		};
+		if (token && getCookieToken()) {
+			config.headers = {
+				Authorization: !!token ? `Bearer ${token}` : '',
+				'Refresh-Token': getCookieToken(),
+			};
+		}
 		return config;
 	};
 
@@ -64,7 +69,7 @@ const useAxiosInterceptor = () => {
 
 	const responseInterceptor = commonAPI.interceptors.response.use(
 		(response) => responseHandler(response),
-		(error) => errorHandler(error.response.data)
+		(error) => errorHandler(error)
 	);
 
 	useEffect(() => {
