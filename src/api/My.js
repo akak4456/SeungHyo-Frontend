@@ -1,6 +1,6 @@
 import { commonAPI } from './Common';
 
-export const getInfoEdit = (onSuccess) => {
+export const getInfoEdit = (onSuccess, onError) => {
 	commonAPI
 		.get(
 			'/api/v1/member/my/info-edit',
@@ -13,16 +13,14 @@ export const getInfoEdit = (onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const patchInfoEdit = (formValue, onSuccess) => {
+export const patchInfoEdit = (formValue, onSuccess, onError) => {
 	commonAPI
 		.patch(
 			'/api/v1/member/my/info-edit',
@@ -40,16 +38,14 @@ export const patchInfoEdit = (formValue, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const changePw = (formValue, onSuccess) => {
+export const changePw = (formValue, onSuccess, onError) => {
 	commonAPI
 		.patch(
 			'/api/v1/member/my/change-pw',
@@ -66,12 +62,10 @@ export const changePw = (formValue, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 

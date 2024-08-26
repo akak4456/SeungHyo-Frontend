@@ -138,31 +138,31 @@ const LoginFormInner = () => {
 					type="primary"
 					text="로그인"
 					onClick={() =>
-						loginUser(formValue.id, formValue.pw, (data) => {
-							console.log(formValue.isKeepLogin);
-							let idWarning = '';
-							let available = true;
-							if (!data.memberIdValidForm) {
-								available = false;
-								idWarning = '아이디 폼이 유효하지 않습니다';
-							} else if (!data.accessToken) {
-								available = false;
-								idWarning = '아이디 또는 비밀번호가 일치하지 않습니다';
-							}
-							setWarning((state) => ({ ...state, idWarning: idWarning }));
-							let pwWarning = '';
-							if (!data.memberPwValidForm) {
-								available = false;
-								pwWarning = '비밀번호 폼이 유효하지 않습니다';
-							}
-							if (available) {
+						loginUser(
+							formValue.id,
+							formValue.pw,
+							(response) => {
 								setIsKeepLoginCookie(formValue.isKeepLogin);
-								setWarning((state) => ({ ...state, pwWarning: pwWarning }));
-								setRefreshToken(data.refreshToken);
-								dispatch(SET_TOKEN(data.accessToken));
+								setRefreshToken(response.data.data.refreshToken);
+								dispatch(SET_TOKEN(response.data.data.accessToken));
 								navigate('/');
+							},
+							(exception) => {
+								const errors = exception?.response?.data?.data?.errors;
+								let idWarning = '';
+								if (errors.find((error) => error.field === 'memberId')) {
+									idWarning = '아이디 폼이 유효하지 않습니다';
+								} else if (exception?.response?.data?.status == 'FORBIDDEN') {
+									idWarning = '아이디 또는 비밀번호가 일치하지 않습니다';
+								}
+								setWarning((state) => ({ ...state, idWarning: idWarning }));
+								let pwWarning = '';
+								if (errors.find((error) => error.field === 'memberPw')) {
+									pwWarning = '비밀번호 폼이 유효하지 않습니다';
+								}
+								setWarning((state) => ({ ...state, pwWarning: pwWarning }));
 							}
-						})
+						)
 					}
 				></NormalButton>
 			</StyledLoginAction>

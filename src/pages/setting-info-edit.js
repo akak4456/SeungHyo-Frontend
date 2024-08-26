@@ -60,40 +60,52 @@ const SettingInfoEdit = () => {
 		passwordWarning: '',
 	});
 	const onInfoEditClick = () => {
-		patchInfoEdit(infoValue, (data) => {
-			console.log(data);
-			let passwordWarning = '';
-			let statusMsgWarning = '';
-			let available = true;
-			if (!data.pwMatch || !data.memberPwValidForm) {
-				available = false;
-				passwordWarning = '비밀번호를 확인해주세요';
-			}
-			if (!data.statusMessageValidForm) {
-				available = false;
-				statusMsgWarning = '상태 메시지는 빈칸이면 안됩니다.';
-			}
-			setWarning((state) => ({
-				statusMsgWarning: statusMsgWarning,
-				passwordWarning: passwordWarning,
-			}));
-			if (available) {
+		patchInfoEdit(
+			infoValue,
+			(response) => {
 				alert('수정하였습니다!');
 				setInfoValue((state) => ({
 					...state,
 					pw: '',
 				}));
+				setWarning((state) => ({
+					statusMsgWarning: '',
+					passwordWarning: '',
+				}));
+			},
+			(exception) => {
+				const errors = exception?.response?.data?.data?.errors;
+				const errorCode = exception?.response?.data?.data?.code;
+				let passwordWarning = '';
+				let statusMsgWarning = '';
+				if (
+					errorCode === 'M001' ||
+					errors.find((error) => error.field === 'memberPw')
+				) {
+					passwordWarning = '비밀번호를 확인해주세요';
+				}
+				if (errors.find((error) => error.field === 'statusMessage')) {
+					statusMsgWarning = '상태 메시지는 빈칸이면 안됩니다.';
+				}
+				setWarning((state) => ({
+					statusMsgWarning: statusMsgWarning,
+					passwordWarning: passwordWarning,
+				}));
 			}
-		});
+		);
 	};
 	useEffect(() => {
-		getInfoEdit((data) => {
-			setInfoValue((state) => ({
-				id: data.memberId,
-				email: data.email,
-				statusMessage: data.statusMessage,
-			}));
-		});
+		getInfoEdit(
+			(response) => {
+				const data = response.data.data;
+				setInfoValue((state) => ({
+					id: data.memberId,
+					email: data.email,
+					statusMessage: data.statusMessage,
+				}));
+			},
+			(exception) => {}
+		);
 	}, []);
 	return (
 		<SettingInfoEditRootMain $isMobile={isMobile}>

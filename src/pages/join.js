@@ -81,61 +81,56 @@ const JoinFormInner = () => {
 	});
 	const navigate = useNavigate();
 	const onJoinClick = () => {
-		join(formValue, (data) => {
-			let joinSuccess = true;
-			let idWarning = '';
-			let statusMsgWarning = '';
-			let passwordWarning = '';
-			let passwordCheckWarning = '';
-			let emailWarning = '';
-			let emailCheckWarning = '';
-			if (!data.emailNotDuplicate) {
-				joinSuccess = false;
-				emailWarning = '이메일이 중복됩니다.';
-			}
-			if (!data.emailValidForm) {
-				joinSuccess = false;
-				emailWarning = '이메일이 올바른 형태가 아닙니다.';
-			}
-			if (!data.emailValidate) {
-				joinSuccess = false;
-				emailCheckWarning = '이메일이 인증되지 않았습니다.';
-			}
-			if (!data.idNotDuplicate) {
-				joinSuccess = false;
-				idWarning = '아이디가 중복됩니다.';
-			}
-			if (!data.memberIdValidForm) {
-				joinSuccess = false;
-				idWarning = '아이디가 올바른 형태가 아닙니다.';
-			}
-			if (!data.pwAndPwCheckSame) {
-				joinSuccess = false;
-				passwordCheckWarning = '비밀번호와 비밀번호 확인이 다릅니다.';
-			}
-			if (!data.memberPwValidForm) {
-				joinSuccess = false;
-				passwordWarning = '비밀번호가 올바른 형태가 아닙니다.';
-			}
-			if (!data.statusMessageValidForm) {
-				joinSuccess = false;
-				statusMsgWarning = '상태메시지가 올바른 형태가 아닙니다.';
-			}
-			setWarning((state) => ({
-				idWarning: idWarning,
-				statusMsgWarning: statusMsgWarning,
-				passwordWarning: passwordWarning,
-				passwordCheckWarning: passwordCheckWarning,
-				emailWarning: emailWarning,
-				emailCheckWarning: emailCheckWarning,
-			}));
-			if (joinSuccess) {
+		join(
+			formValue,
+			(response) => {
 				alert('회원가입이 완료되었습니다.');
 				navigate('/login');
-			} else {
+			},
+			(exception) => {
+				console.log(exception);
+				const errors = exception?.response?.data?.data?.errors;
+				const errorCode = exception?.response?.data?.data?.code;
+				let idWarning = '';
+				let statusMsgWarning = '';
+				let passwordWarning = '';
+				let passwordCheckWarning = '';
+				let emailWarning = '';
+				let emailCheckWarning = '';
+				if (errorCode == 'M005') {
+					emailWarning = '이메일이 중복됩니다.';
+				} else if (errors.find((error) => error.field === 'email')) {
+					emailWarning = '이메일이 올바른 형태가 아닙니다.';
+				} else if (errorCode == 'M006') {
+					emailCheckWarning = '이메일이 인증되지 않았습니다.';
+				}
+				if (errorCode == 'M004') {
+					idWarning = '아이디가 중복됩니다.';
+				} else if (errors.find((error) => error.field === 'memberId')) {
+					idWarning = '아이디가 올바른 형태가 아닙니다.';
+				}
+				if (errorCode == 'M003') {
+					passwordCheckWarning = '비밀번호와 비밀번호 확인이 다릅니다.';
+				} else if (errors.find((error) => error.field === 'memberPw')) {
+					passwordWarning = '비밀번호가 올바른 형태가 아닙니다.';
+				}
+				if (errors.find((error) => error.field === 'memberPwCheck')) {
+					passwordCheckWarning = '비밀번호 확인이 올바른 형태가 아닙니다.';
+				}
+				if (errors.find((error) => error.field === 'statusMessage')) {
+					statusMsgWarning = '상태메시지가 올바른 형태가 아닙니다.';
+				}
+				setWarning((state) => ({
+					idWarning: idWarning,
+					statusMsgWarning: statusMsgWarning,
+					passwordWarning: passwordWarning,
+					passwordCheckWarning: passwordCheckWarning,
+					emailWarning: emailWarning,
+					emailCheckWarning: emailCheckWarning,
+				}));
 				alert('회원가입에 문제가 생겼습니다.');
 			}
-		});
+		);
 	};
 	return (
 		<JoinFormInnerDiv>
@@ -215,13 +210,15 @@ const JoinFormInner = () => {
 					type="primary"
 					text="인증번호 전송"
 					onClick={() => {
-						sendEmailCheckCode(formValue.email, (data) => {
-							if (data) {
+						sendEmailCheckCode(
+							formValue.email,
+							(response) => {
 								alert('인증코드를 보냈습니다.');
-							} else {
+							},
+							(exception) => {
 								alert('이메일을 확인해주세요');
 							}
-						});
+						);
 					}}
 				></NormalButton>
 			</JoinEmailDiv>
@@ -244,12 +241,11 @@ const JoinFormInner = () => {
 						validEmailCheckCode(
 							formValue.email,
 							formValue.emailCode,
-							(data) => {
-								if (data) {
-									alert('이메일 인증이 완료되었습니다.');
-								} else {
-									alert('이메일 인증이 완료되지 않았습니다.');
-								}
+							(response) => {
+								alert('이메일 인증이 완료되었습니다.');
+							},
+							(exception) => {
+								alert('이메일 인증이 완료되지 않았습니다.');
 							}
 						);
 					}}

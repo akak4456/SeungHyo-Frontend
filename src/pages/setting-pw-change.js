@@ -68,59 +68,67 @@ const SettingPwChange = () => {
 	});
 	const dispatch = useDispatch();
 	const onChangePwClick = () => {
-		changePw(formValue, (data) => {
-			let available = true;
-			let warningCurrentPw = '';
-			let warningNewPw = '';
-			let warningNewPwCheck = '';
-			if (!data.currentPwAndNewPwNotMatch) {
-				available = false;
-				warningCurrentPw = '비밀번호와 새로운 비밀번호가 일치합니다.';
-			}
-			if (!data.currentPwMatch) {
-				available = false;
-				warningCurrentPw = '기존에 쓰던 비밀번호를 입력해주세요.';
-			}
-			if (!data.newPwMatch) {
-				available = false;
-				warningNewPwCheck =
-					'새로운 비밀번호와 새로운 비밀번호 확인이 일치하지 않습니다.';
-			}
-			if (!data.newPwValidForm) {
-				available = false;
-				warningNewPw = '새로운 비밀번호 형식을 확인해주세요.';
-			}
-			setWarning((state) => ({
-				warningCurrentPw: warningCurrentPw,
-				warningNewPw: warningNewPw,
-				warningNewPwCheck: warningNewPwCheck,
-			}));
-			if (available) {
+		changePw(
+			formValue,
+			(response) => {
 				logoutUser(
 					accessToken,
 					getCookieToken(),
-					(data) => {
+					(response) => {
 						alert('비밀번호를 변경했습니다. 다시 로그인해주세요');
 						removeCookieToken();
 						dispatch(DELETE_TOKEN());
 						navigate('/login');
 					},
-					() => {
+					(exception) => {
 						removeCookieToken();
 						dispatch(DELETE_TOKEN());
 						navigate('/');
 					}
 				);
+			},
+			(exception) => {
+				const errors = exception?.response?.data?.data?.errors;
+				const errorCode = exception?.response?.data?.data?.code;
+				let warningCurrentPw = '';
+				let warningNewPw = '';
+				let warningNewPwCheck = '';
+				console.log(errorCode);
+				if (errorCode === 'M007') {
+					warningCurrentPw = '비밀번호와 새로운 비밀번호가 일치합니다.';
+				} else if (errorCode === 'M001') {
+					warningCurrentPw = '기존에 쓰던 비밀번호를 입력해주세요.';
+				} else if (errors.find((error) => error.field === 'currentPw')) {
+					warningCurrentPw = '비밀번호 형식을 확인해주세요.';
+				}
+				if (errorCode === 'M008') {
+					warningNewPwCheck =
+						'새로운 비밀번호와 새로운 비밀번호 확인이 일치하지 않습니다.';
+				} else if (errors.find((error) => error.field === 'newPw')) {
+					warningNewPwCheck = '새로운 비밀번호 확인 형식을 확인해주세요.';
+				}
+				if (errors.find((error) => error.field === 'newPw')) {
+					warningNewPw = '새로운 비밀번호 형식을 확인해주세요.';
+				}
+				setWarning((state) => ({
+					warningCurrentPw: warningCurrentPw,
+					warningNewPw: warningNewPw,
+					warningNewPwCheck: warningNewPwCheck,
+				}));
 			}
-		});
+		);
 	};
 	useEffect(() => {
-		getInfoEdit((data) => {
-			setFormValue((state) => ({
-				...state,
-				id: data.memberId,
-			}));
-		});
+		getInfoEdit(
+			(response) => {
+				const data = response.data.data;
+				setFormValue((state) => ({
+					...state,
+					id: data.memberId,
+				}));
+			},
+			(exception) => {}
+		);
 	}, []);
 	return (
 		<SettingPwChangeRootMain $isMobile={isMobile}>

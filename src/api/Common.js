@@ -8,7 +8,6 @@ import {
 	setRefreshToken,
 } from '../store/Cookie';
 import { SET_TOKEN, DELETE_TOKEN } from '../store/Auth';
-import { reissue } from './Auth';
 
 const commonAPI = axios.create({});
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
@@ -18,24 +17,44 @@ const useAxiosInterceptor = () => {
 
 	const navigate = useNavigate();
 
-	console.log('access_token', token, 'refresh token', getCookieToken());
-
-	if (!token && getCookieToken()) {
-		reissue(
-			getCookieToken(),
-			(response) => {
-				dispatch(SET_TOKEN(response.data));
-				setRefreshToken(response.headers['new-refresh-token']);
-			},
-			(e) => {}
-		);
-	}
+	const requestHandler = async (config) => {
+		if (!token && getCookieToken()) {
+			try {
+				const response = await fetch('/api/v1/member/auth/reissue', {
+					method: 'post',
+					headers: {
+						'Content-Type': 'application/json; charset=utf-8',
+						'Refresh-Token': getCookieToken(),
+					},
+				});
+				dispatch(
+					SET_TOKEN(
+						response.headers.get('authorization').substring('Bearer '.length)
+					)
+				);
+				setRefreshToken(response.headers.get('new-refresh-token'));
+				config.headers = {
+					Authorization: `Bearer ${response.headers.get('authorization').substring('Bearer '.length)}`,
+					'Refresh-Token': getCookieToken(),
+				};
+			} catch (error) {
+				console.error('토큰 재발급 실패:', error);
+				removeCookieToken();
+				dispatch(DELETE_TOKEN());
+				navigate('/login');
+				return Promise.reject(error);
+			}
+		} else if (token && getCookieToken()) {
+			config.headers = {
+				Authorization: !!token ? `Bearer ${token}` : '',
+				'Refresh-Token': getCookieToken(),
+			};
+		}
+		return config;
+	};
 
 	const errorHandler = (error) => {
-		console.log('errInterceptor!', error);
-		// if (error.response.status === 401) {
-		// 	navigate('/');
-		// }
+		console.log('errInterceptor!', token, getCookieToken());
 		if (error.response.status == 401) {
 			alert('로그인이 유효하지 않습니다. 다시 로그인해주세요.');
 			removeCookieToken();
@@ -43,16 +62,6 @@ const useAxiosInterceptor = () => {
 			navigate('/login');
 		}
 		return Promise.reject(error);
-	};
-
-	const requestHandler = (config) => {
-		if (token && getCookieToken()) {
-			config.headers = {
-				Authorization: !!token ? `Bearer ${token}` : '',
-				'Refresh-Token': getCookieToken(),
-			};
-		}
-		return config;
 	};
 
 	const responseHandler = (response) => {
