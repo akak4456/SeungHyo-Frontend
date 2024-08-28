@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './reset.css';
@@ -31,8 +31,24 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { getCookieToken } from './store/Cookie.js';
 
 const persistor = persistStore(store);
+function usePreventRefresh() {
+	useEffect(() => {
+		const handleBeforeUnload = (event) => {
+			// 경고 메시지 설정
+			event.preventDefault();
+			event.returnValue = ''; // 대부분의 브라우저에서 빈 문자열이 필요합니다.
+		};
 
+		window.addEventListener('beforeunload', handleBeforeUnload);
+
+		// Cleanup function to remove the event listener
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+		};
+	}, []);
+}
 function Root() {
+	usePreventRefresh(); // 새로 고침 방지 Hook 호출
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>

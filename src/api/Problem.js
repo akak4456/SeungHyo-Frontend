@@ -1,6 +1,6 @@
 import { commonAPI } from './Common';
 
-export const getProblemList = (page, size, onSuccess) => {
+export const getProblemList = (page, size, onSuccess, onError) => {
 	commonAPI
 		.get(
 			'/api/v1/problem?page=' + page + '&size=' + size,
@@ -13,16 +13,14 @@ export const getProblemList = (page, size, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const getProblem = (problemNo, onSuccess) => {
+export const getProblem = (problemNo, onSuccess, onError) => {
 	commonAPI
 		.get(
 			'/api/v1/problem/' + problemNo,
@@ -35,11 +33,9 @@ export const getProblem = (problemNo, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };

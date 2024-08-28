@@ -9,7 +9,6 @@ import { logoutUser } from '../api/Auth.js';
 import { getCookieToken, removeCookieToken } from '../store/Cookie.js';
 import { DELETE_TOKEN } from '../store/Auth.js';
 import { useDispatch } from 'react-redux';
-import { getInfoEdit } from '../api/My.js';
 
 const StyledHeader = styled.header`
 	padding-left: 12.5%;
@@ -172,16 +171,12 @@ const TapButton = ({ linkTo, element }) => {
 };
 
 const Header = (props) => {
+	const myId = useSelector((state) => state.myInfo.id);
 	const isMobile = useIsMobile();
 	const [isDropdownShown, setDropdownShown] = useState(false);
 	const [isMyShown, setMyShown] = useState(false);
 	const location = useLocation();
 	const myRef = useRef();
-	const [infoValue, setInfoValue] = useState({
-		id: '',
-		email: '',
-		statusMessage: '',
-	});
 	useEffect(() => {
 		setMyShown(false);
 	}, [location]);
@@ -195,20 +190,6 @@ const Header = (props) => {
 
 		return () => document.removeEventListener('click', handleOutsideClose);
 	}, [isMyShown]);
-
-	useEffect(() => {
-		getInfoEdit(
-			(response) => {
-				const data = response.data.data;
-				setInfoValue((state) => ({
-					id: data.memberId,
-					email: data.email,
-					statusMessage: data.statusMessage,
-				}));
-			},
-			(exception) => {}
-		);
-	}, []);
 	const onShow = () => {
 		setDropdownShown(true);
 	};
@@ -271,7 +252,7 @@ const Header = (props) => {
 			>
 				<StyledMyContentDiv>
 					<NavLink to="/user">
-						<StyledMyName>{infoValue.id}</StyledMyName>
+						<StyledMyName>{myId}</StyledMyName>
 					</NavLink>
 					<StyledMyBottomDiv>
 						<NavLink to="/setting/info-edit">설정</NavLink>

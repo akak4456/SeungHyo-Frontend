@@ -1,6 +1,6 @@
 import { commonAPI } from './Common';
 
-export const getBoardList = (page, size, categoryCode, onSuccess) => {
+export const getBoardList = (page, size, categoryCode, onSuccess, onError) => {
 	commonAPI
 		.get(
 			`/api/v1/board?page=${page}&size=${size}&categoryCode=${categoryCode}`,
@@ -13,16 +13,14 @@ export const getBoardList = (page, size, categoryCode, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const getBoardOne = (boardNo, onSuccess) => {
+export const getBoardOne = (boardNo, onSuccess, onError) => {
 	commonAPI
 		.get(
 			`/api/v1/board/${boardNo}`,
@@ -35,16 +33,14 @@ export const getBoardOne = (boardNo, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const getReplyList = (boardNo, page, size, onSuccess) => {
+export const getReplyList = (boardNo, page, size, onSuccess, onError) => {
 	commonAPI
 		.get(
 			`/api/v1/reply/${boardNo}?page=${page}&size=${size}`,
@@ -57,16 +53,14 @@ export const getReplyList = (boardNo, page, size, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const getBoardCategory = (onSuccess) => {
+export const getBoardCategory = (onSuccess, onError) => {
 	commonAPI
 		.get(
 			`/api/v1/board/categories`,
@@ -79,16 +73,14 @@ export const getBoardCategory = (onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const addBoard = (form, onSuccess) => {
+export const addBoard = (form, onSuccess, onError) => {
 	commonAPI
 		.post(`/api/v1/board`, form, {
 			withCredentials: true,
@@ -97,11 +89,9 @@ export const addBoard = (form, onSuccess) => {
 			},
 		})
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };

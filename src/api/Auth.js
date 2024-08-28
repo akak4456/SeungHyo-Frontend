@@ -116,26 +116,3 @@ export const validEmailCheckCode = (email, code, onSuccess, onError) => {
 			onError(exception);
 		});
 };
-
-export const reissue = (refreshToken) => {
-	return new Promise((resolve, reject) => {
-		commonAPI
-			.post(
-				'/api/v1/member/auth/reissue',
-				{},
-				{
-					withCredentials: true,
-					headers: {
-						'Content-Type': 'application/json',
-						'Refresh-Token': refreshToken,
-					},
-				}
-			)
-			.then((response) => {
-				resolve(response);
-			})
-			.catch((exception) => {
-				reject(exception);
-			});
-	});
-};

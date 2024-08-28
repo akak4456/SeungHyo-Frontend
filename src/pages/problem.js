@@ -248,9 +248,13 @@ const Problem = (props) => {
 	const [problem, setProblem] = useState();
 
 	useEffect(() => {
-		getProblem(id, (data) => {
-			setProblem(data);
-		});
+		getProblem(
+			id,
+			(response) => {
+				setProblem(response.data.data);
+			},
+			(exception) => {}
+		);
 	}, []);
 
 	return (

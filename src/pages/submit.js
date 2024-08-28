@@ -102,9 +102,13 @@ const ProblemRightSide = ({ programLanguage, problemNo }) => {
 			alert('소스코드를 입력해주세요');
 			return;
 		}
-		newSubmit(formData, (data) => {
-			navigate('/reflection-note/' + data.submitNo);
-		});
+		newSubmit(
+			formData,
+			(response) => {
+				navigate('/reflection-note/' + response.data.data.submitNo);
+			},
+			(exception) => {}
+		);
 	};
 	return (
 		<ProblemRightSideRootDiv>
@@ -175,9 +179,13 @@ const Submit = ({ isNew }) => {
 	// 숫자 ID는 세 번째 부분에 위치
 	const no = parts[parts.length - 1];
 	useEffect(() => {
-		getProgramLanguageByProblem(no, (data) => {
-			setProgramLanguage(data);
-		});
+		getProgramLanguageByProblem(
+			no,
+			(response) => {
+				setProgramLanguage(response.data.data);
+			},
+			(exception) => {}
+		);
 	}, []);
 	return (
 		<SubmitRootMain>

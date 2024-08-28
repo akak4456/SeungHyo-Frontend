@@ -1,11 +1,13 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import tokenReducer from './Auth';
+import myInfoReducer from './MyInfo';
 import logger from 'redux-logger';
 import { persistReducer } from 'redux-persist';
 
 import storage from 'redux-persist/lib/storage';
 const reducers = combineReducers({
 	authToken: tokenReducer,
+	myInfo: myInfoReducer,
 });
 const persistConfig = {
 	key: 'root',

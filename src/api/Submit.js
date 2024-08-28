@@ -1,6 +1,6 @@
 import { commonAPI } from './Common';
 
-export const getProgramLanguageByProblem = (problemNo, onSuccess) => {
+export const getProgramLanguageByProblem = (problemNo, onSuccess, onError) => {
 	commonAPI
 		.get(
 			'/api/v1/programlanguage/' + problemNo,
@@ -13,34 +13,30 @@ export const getProgramLanguageByProblem = (problemNo, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const newSubmit = (formValue, onSuccess) => {
+export const newSubmit = (formValue, onSuccess, onError) => {
 	commonAPI
-		.post('/api/v1/submit', formValue, {
+		.post('/api/v1/compile', formValue, {
 			withCredentials: true,
 			headers: {
 				'Content-Type': 'application/json',
 			},
 		})
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const getProblemGrade = (submitNo, onSuccess) => {
+export const getProblemGrade = (submitNo, onSuccess, onError) => {
 	commonAPI
 		.get('/api/v1/submit/' + submitNo, {
 			withCredentials: true,
@@ -49,16 +45,14 @@ export const getProblemGrade = (submitNo, onSuccess) => {
 			},
 		})
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
 
-export const getReflectionNoteList = (page, size, onSuccess) => {
+export const getReflectionNoteList = (page, size, onSuccess, onError) => {
 	commonAPI
 		.get(
 			'/api/v1/submit?page=' + page + '&size=' + size,
@@ -71,15 +65,13 @@ export const getReflectionNoteList = (page, size, onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };
-export const getAllProgramLanguage = (onSuccess) => {
+export const getAllProgramLanguage = (onSuccess, onError) => {
 	commonAPI
 		.get(
 			'/api/v1/programlanguage',
@@ -92,11 +84,9 @@ export const getAllProgramLanguage = (onSuccess) => {
 			}
 		)
 		.then((response) => {
-			if (response.data.code === '0') {
-				onSuccess(response.data.data);
-			}
+			onSuccess(response);
 		})
 		.catch((exception) => {
-			console.log(exception);
+			onError(exception);
 		});
 };

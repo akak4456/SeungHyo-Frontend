@@ -27,6 +27,7 @@ const useAxiosInterceptor = () => {
 						'Refresh-Token': getCookieToken(),
 					},
 				});
+				console.log(response);
 				dispatch(
 					SET_TOKEN(
 						response.headers.get('authorization').substring('Bearer '.length)

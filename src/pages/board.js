@@ -197,14 +197,26 @@ const Board = (props) => {
 		setSearchParams(searchParams);
 	};
 	useEffect(() => {
-		getBoardList(page, size, categoryCode, (data) => {
-			console.log(data);
-			setPageData(data);
-		});
+		getBoardList(
+			page,
+			size,
+			categoryCode,
+			(response) => {
+				console.log(response);
+				setPageData(response.data.data);
+			},
+			(exception) => {}
+		);
 		if (categoryCode === 'ALL') {
-			getBoardList(0, 3, 'NOTICE', (data) => {
-				setNoticeData(data);
-			});
+			getBoardList(
+				0,
+				3,
+				'NOTICE',
+				(response) => {
+					setNoticeData(response.data.data);
+				},
+				(exception) => {}
+			);
 		} else {
 			setNoticeData(null);
 		}

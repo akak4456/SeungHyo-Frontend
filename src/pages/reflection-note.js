@@ -184,42 +184,57 @@ const ReflectionNote = (props) => {
 	const [compileData, setCompileData] = useState();
 	const webSocket = useRef(null);
 	useEffect(() => {
-		getProblemGrade(no, (data) => {
-			setCompileData(data);
-			if (data && data.kafkaCompiles && data.kafkaCompiles.length == 0) {
-				// websocket 연결 & disconnect 되면 이유 불문 api 재 호출
-				const WEBSOCKET_ENDPOINT = process.env.REACT_APP_WEB_SOCKET;
-				webSocket.current = new WebSocket(WEBSOCKET_ENDPOINT + '/submit/' + no);
-				webSocket.current.onopen = () => {
-					console.log('WebSocket 연결!');
-				};
-				webSocket.current.onclose = (error) => {
-					console.log('close:', error);
-					getProblemGrade(no, (data) => {
-						setCompileData(data);
-					});
-				};
-				webSocket.current.onerror = (error) => {
-					console.log('error:', error);
-					getProblemGrade(no, (data) => {
-						setCompileData(data);
-					});
-				};
-				webSocket.current.onmessage = (event) => {
-					const jsonObject = JSON.parse(event.data);
-					if (
-						jsonObject &&
-						jsonObject.compileStatus &&
-						jsonObject.compileStatus !== 'START_FOR_KAFKA'
-					) {
-						setCompileData((state) => ({
-							...state,
-							kafkaCompiles: [...state.kafkaCompiles, jsonObject],
-						}));
-					}
-				};
-			}
-		});
+		getProblemGrade(
+			no,
+			(response) => {
+				const data = response.data.data;
+				setCompileData(data);
+				if (data && data.kafkaCompiles && data.kafkaCompiles.length == 0) {
+					// websocket 연결 & disconnect 되면 이유 불문 api 재 호출
+					const WEBSOCKET_ENDPOINT = process.env.REACT_APP_WEB_SOCKET;
+					webSocket.current = new WebSocket(
+						WEBSOCKET_ENDPOINT + '/submit/' + no
+					);
+					webSocket.current.onopen = () => {
+						console.log('WebSocket 연결!');
+					};
+					webSocket.current.onclose = (error) => {
+						console.log('close:', error);
+						getProblemGrade(
+							no,
+							(response) => {
+								setCompileData(response.data.data);
+							},
+							(exception) => {}
+						);
+					};
+					webSocket.current.onerror = (error) => {
+						console.log('error:', error);
+						getProblemGrade(
+							no,
+							(response) => {
+								setCompileData(response.data.data);
+							},
+							(exception) => {}
+						);
+					};
+					webSocket.current.onmessage = (event) => {
+						const jsonObject = JSON.parse(event.data);
+						if (
+							jsonObject &&
+							jsonObject.compileStatus &&
+							jsonObject.compileStatus !== 'START_FOR_KAFKA'
+						) {
+							setCompileData((state) => ({
+								...state,
+								kafkaCompiles: [...state.kafkaCompiles, jsonObject],
+							}));
+						}
+					};
+				}
+			},
+			(exception) => {}
+		);
 		return () => {
 			webSocket.current?.close();
 		};

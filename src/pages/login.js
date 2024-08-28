@@ -11,6 +11,7 @@ import { setRefreshToken } from '../store/Cookie';
 import { SET_TOKEN } from '../store/Auth';
 import { useDispatch } from 'react-redux';
 import { setIsKeepLoginCookie } from '../store/Cookie';
+import { SET_MY_ID } from '../store/MyInfo';
 const StyledLoginTitle = styled.p`
 	padding-left: 12.5%;
 	padding-top: 32px;
@@ -142,6 +143,7 @@ const LoginFormInner = () => {
 							formValue.id,
 							formValue.pw,
 							(response) => {
+								dispatch(SET_MY_ID(formValue.id));
 								setIsKeepLoginCookie(formValue.isKeepLogin);
 								setRefreshToken(response.data.data.refreshToken);
 								dispatch(SET_TOKEN(response.data.data.accessToken));

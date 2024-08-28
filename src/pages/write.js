@@ -44,30 +44,38 @@ const Write = () => {
 		sourceCode: '',
 	});
 	useEffect(() => {
-		getBoardCategory((data) => {
-			setData((state) => ({
-				...state,
-				categories: data,
-			}));
-			const category = data.boardCategory[0];
-			setForm((state) => ({
-				...state,
-				categoryCode: category.categoryCode,
-				categoryName: category.categoryName,
-			}));
-		});
-		getAllProgramLanguage((data) => {
-			setData((state) => ({
-				...state,
-				language: data,
-			}));
-			const lang = data.languageList[0];
-			setForm((state) => ({
-				...state,
-				langCode: lang.langCode,
-				langName: lang.langName,
-			}));
-		});
+		getBoardCategory(
+			(response) => {
+				const data = response.data.data;
+				setData((state) => ({
+					...state,
+					categories: data,
+				}));
+				const category = data.boardCategory[0];
+				setForm((state) => ({
+					...state,
+					categoryCode: category.categoryCode,
+					categoryName: category.categoryName,
+				}));
+			},
+			(exception) => {}
+		);
+		getAllProgramLanguage(
+			(response) => {
+				const data = response.data.data;
+				setData((state) => ({
+					...state,
+					language: data,
+				}));
+				const lang = data.languageList[0];
+				setForm((state) => ({
+					...state,
+					langCode: lang.langCode,
+					langName: lang.langName,
+				}));
+			},
+			(exception) => {}
+		);
 	}, []);
 	const normalEditorHTMLChange = (htmlContent) => {
 		setForm((state) => ({
@@ -89,56 +97,49 @@ const Write = () => {
 	});
 	const navigate = useNavigate();
 	const onWriteClick = () => {
-		addBoard(form, (data) => {
-			console.log(data);
-			let titleWarningMessage = '';
-			let isValidForm = true;
-			if (data.boardTitleError === 'NOT_BLANK') {
-				isValidForm = false;
-				titleWarningMessage = '제목을 입력해주세요';
-			}
-			setWarning((state) => ({
-				...state,
-				title: titleWarningMessage,
-			}));
-			let problemNoWarningMessage = '';
-			if (data.problemNoError === 'NOT_BLANK') {
-				isValidForm = false;
-				problemNoWarningMessage = '문제번호를 입력해주세요';
-			} else if (data.problemNoError === 'ONLY_NUMBER') {
-				isValidForm = false;
-				problemNoWarningMessage = '문제번호에는 숫자만 입력 가능합니다.';
-			} else if (!data.isProblemNoValid) {
-				isValidForm = false;
-				problemNoWarningMessage = '존재하는 문제 번호만 입력해주세요';
-			}
-			setWarning((state) => ({
-				...state,
-				problemNo: problemNoWarningMessage,
-			}));
-			let normalHTMLContentErrorWarningMessage = '';
-			if (data.normalHTMLContentError === 'NOT_BLANK') {
-				isValidForm = false;
-				normalHTMLContentErrorWarningMessage = '내용을 입력해주세요';
-			}
-			setWarning((state) => ({
-				...state,
-				normal: normalHTMLContentErrorWarningMessage,
-			}));
-			let sourceCodeWarningMessage = '';
-			if (data.sourceCodeError === 'NOT_BLANK') {
-				isValidForm = false;
-				sourceCodeWarningMessage = '소스코드를 입력해주세요';
-			}
-			setWarning((state) => ({
-				...state,
-				sourceCode: sourceCodeWarningMessage,
-			}));
-			if (isValidForm) {
+		addBoard(
+			form,
+			(response) => {
 				alert('게시글 등록을 하였습니다.');
 				navigate('/board');
+			},
+			(exception) => {
+				console.log(exception);
+				const errors = exception?.response?.data?.data?.errors;
+				const errorCode = exception?.response?.data?.data?.code;
+				let titleWarningMessage = '';
+				if (errors?.find((error) => error.field === 'boardTitle')) {
+					titleWarningMessage = '제목을 입력해주세요';
+				}
+				setWarning((state) => ({
+					...state,
+					title: titleWarningMessage,
+				}));
+				let problemNoWarningMessage = '';
+				if (errors?.find((error) => error.field === 'problemNo')) {
+					problemNoWarningMessage = '유효한 문제번호를 입력해주세요';
+				} else if (errorCode === 'B001') {
+					problemNoWarningMessage = '존재하는 문제 번호만 입력해주세요';
+				}
+				setWarning((state) => ({
+					...state,
+					problemNo: problemNoWarningMessage,
+				}));
+				let normalHTMLContentErrorWarningMessage = '';
+				if (errors?.find((error) => error.field === 'normalHTMLContent')) {
+					normalHTMLContentErrorWarningMessage = '내용을 입력해주세요';
+				}
+				setWarning((state) => ({
+					...state,
+					normal: normalHTMLContentErrorWarningMessage,
+				}));
+				let sourceCodeWarningMessage = '';
+				setWarning((state) => ({
+					...state,
+					sourceCode: sourceCodeWarningMessage,
+				}));
 			}
-		});
+		);
 	};
 	return (
 		<WriteRootMain>

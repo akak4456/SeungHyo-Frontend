@@ -161,10 +161,14 @@ const ReflectionNoteList = (props) => {
 	const size = parseInt(searchParams.get('size')) || 10;
 	const [pageData, setPageData] = useState();
 	useEffect(() => {
-		getReflectionNoteList(page, size, (data) => {
-			console.log(data);
-			setPageData(data);
-		});
+		getReflectionNoteList(
+			page,
+			size,
+			(response) => {
+				setPageData(response.data.data);
+			},
+			(exception) => {}
+		);
 	}, [page, size]);
 	const startPage = Math.floor(page / size) * size + 1;
 	let endPage = startPage + size - 1;

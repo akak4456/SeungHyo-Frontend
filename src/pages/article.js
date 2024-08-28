@@ -167,24 +167,32 @@ const Article = (props) => {
 	}
 
 	useEffect(() => {
-		getBoardOne(boardNo, (data) => {
-			console.log(data);
-			setPageData((state) => ({
-				...state,
-				board: data,
-			}));
-		});
-		getReplyList(boardNo, page, size, (data) => {
-			console.log(data);
-			setPageData((state) => ({
-				...state,
-				reply: data,
-			}));
-			window.scrollTo({
-				top: 0,
-				behavior: 'smooth',
-			});
-		});
+		getBoardOne(
+			boardNo,
+			(response) => {
+				setPageData((state) => ({
+					...state,
+					board: response.data.data,
+				}));
+			},
+			(exception) => {}
+		);
+		getReplyList(
+			boardNo,
+			page,
+			size,
+			(response) => {
+				setPageData((state) => ({
+					...state,
+					reply: response.data.data,
+				}));
+				window.scrollTo({
+					top: 0,
+					behavior: 'smooth',
+				});
+			},
+			(exception) => {}
+		);
 	}, [page, size]);
 
 	return (
