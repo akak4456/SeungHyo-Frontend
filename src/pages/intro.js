@@ -8,6 +8,7 @@ import { HandThumbsUp } from 'react-bootstrap-icons';
 import { ChatLeftFill } from 'react-bootstrap-icons';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { getProblemInMainInfo } from '../api/Problem';
 const IntroStickerRootDiv = styled.div`
 	padding-left: 16px;
 	box-sizing: border-box;
@@ -157,24 +158,35 @@ const StatisticsBlock = ({ mainNumber, subTitle, isMarginRightZero }) => {
 		</StyledIntroStatisticsBlockDiv>
 	);
 };
-const Statistics = () => {
+const Statistics = ({
+	allProblemCount,
+	availableProblemCount,
+	correctProblemCount,
+	availableLanguageCount,
+}) => {
 	const isTablet = useIsTablet();
 	return (
 		<>
 			{isTablet && (
 				<>
 					<StyledIntroStatisticsDiv $isPaddingBottomZero={true}>
-						<StatisticsBlock mainNumber={30000} subTitle={'전체 문제'} />
 						<StatisticsBlock
-							mainNumber={20000}
+							mainNumber={allProblemCount}
+							subTitle={'전체 문제'}
+						/>
+						<StatisticsBlock
+							mainNumber={availableProblemCount}
 							subTitle={'채점 가능한 문제'}
 							isMarginRightZero={true}
 						/>
 					</StyledIntroStatisticsDiv>
 					<StyledIntroStatisticsDiv>
-						<StatisticsBlock mainNumber={1000} subTitle={'풀린 문제'} />
 						<StatisticsBlock
-							mainNumber={2000}
+							mainNumber={correctProblemCount}
+							subTitle={'풀린 문제'}
+						/>
+						<StatisticsBlock
+							mainNumber={availableLanguageCount}
 							subTitle={'채점 가능 언어'}
 							isMarginRightZero={true}
 						/>
@@ -183,10 +195,22 @@ const Statistics = () => {
 			)}
 			{!isTablet && (
 				<StyledIntroStatisticsDiv>
-					<StatisticsBlock mainNumber={30000} subTitle={'전체 문제'} />
-					<StatisticsBlock mainNumber={20000} subTitle={'채점 가능한 문제'} />
-					<StatisticsBlock mainNumber={1000} subTitle={'풀린 문제'} />
-					<StatisticsBlock mainNumber={2000} subTitle={'채점 가능 언어'} />
+					<StatisticsBlock
+						mainNumber={allProblemCount}
+						subTitle={'전체 문제'}
+					/>
+					<StatisticsBlock
+						mainNumber={availableProblemCount}
+						subTitle={'채점 가능한 문제'}
+					/>
+					<StatisticsBlock
+						mainNumber={correctProblemCount}
+						subTitle={'풀린 문제'}
+					/>
+					<StatisticsBlock
+						mainNumber={availableLanguageCount}
+						subTitle={'채점 가능 언어'}
+					/>
 				</StyledIntroStatisticsDiv>
 			)}
 		</>
@@ -339,10 +363,21 @@ export default function Intro() {
 	const isMobile = useIsMobile();
 	const isTablet = useIsTablet();
 	const responsiveType = isMobile ? 'M' : isTablet ? 'T' : 'P';
+	const [introInfo, setIntroInfo] = useState();
+	useEffect(() => {
+		getProblemInMainInfo(
+			(response) => {
+				const data = response.data.data;
+				setIntroInfo({ ...introInfo, ...data });
+			},
+			(exception) => {}
+		);
+	}, []);
+	console.log(introInfo);
 	return (
 		<main>
 			<Ad />
-			<Statistics />
+			{introInfo && introInfo.allProblemCount && <Statistics {...introInfo} />}
 			<IntroStickerWrapperDiv $responsiveType={responsiveType}>
 				<IntroSticker title={'새로운 글'}>
 					<IntroStickerItemWrapper>
@@ -627,26 +662,15 @@ export default function Intro() {
 					</IntroStickerItemWrapper>
 				</IntroSticker>
 				<IntroSticker title={'문제 순위'}>
-					<IntroStickerItemWrapper>
-						<IntroStickerProblemTitle>
-							<NavLink to="#">1000번. A + B</NavLink>
-						</IntroStickerProblemTitle>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerProblemTitle>
-							<NavLink to="#">1000번. A + B</NavLink>
-						</IntroStickerProblemTitle>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerProblemTitle>
-							<NavLink to="#">1000번. A + B</NavLink>
-						</IntroStickerProblemTitle>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerProblemTitle>
-							<NavLink to="#">1000번. A + B</NavLink>
-						</IntroStickerProblemTitle>
-					</IntroStickerItemWrapper>
+					{introInfo?.problemGradeInfoList?.map((grade) => (
+						<IntroStickerItemWrapper key={grade.problemNo + grade.problemTitle}>
+							<IntroStickerProblemTitle>
+								<NavLink to={'/problem/' + grade.problemNo}>
+									{grade.problemNo}번. {grade.problemTitle}
+								</NavLink>
+							</IntroStickerProblemTitle>
+						</IntroStickerItemWrapper>
+					))}
 				</IntroSticker>
 			</IntroStickerWrapperDiv>
 		</main>
