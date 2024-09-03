@@ -9,6 +9,8 @@ import { ChatLeftFill } from 'react-bootstrap-icons';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { getProblemInMainInfo } from '../api/Problem';
+import { getBoardInMainInfo } from '../api/Board';
+import { timeAgo } from '../util';
 const IntroStickerRootDiv = styled.div`
 	padding-left: 16px;
 	box-sizing: border-box;
@@ -364,11 +366,19 @@ export default function Intro() {
 	const isTablet = useIsTablet();
 	const responsiveType = isMobile ? 'M' : isTablet ? 'T' : 'P';
 	const [introInfo, setIntroInfo] = useState();
+	const [boardInfo, setBoardInfo] = useState();
 	useEffect(() => {
 		getProblemInMainInfo(
 			(response) => {
 				const data = response.data.data;
-				setIntroInfo({ ...introInfo, ...data });
+				setIntroInfo({ ...data });
+			},
+			(exception) => {}
+		);
+		getBoardInMainInfo(
+			(response) => {
+				const data = response.data.data;
+				setBoardInfo({ ...data });
 			},
 			(exception) => {}
 		);
@@ -380,286 +390,103 @@ export default function Intro() {
 			{introInfo && introInfo.allProblemCount && <Statistics {...introInfo} />}
 			<IntroStickerWrapperDiv $responsiveType={responsiveType}>
 				<IntroSticker title={'새로운 글'}>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">이건 도대체 어떻게 하는건가요?</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
+					{boardInfo &&
+						boardInfo.newBoard &&
+						boardInfo.newBoard.map((board) => (
+							<IntroStickerItemWrapper>
+								<IntroStickerBoardTitle>
+									<NavLink to={`/user/${board.memberId}`}>
+										@{board.memberId}
+									</NavLink>{' '}
+									<NavLink to={`/article/${board.boardNo}`}>
+										{board.boardTitle}
+									</NavLink>
+								</IntroStickerBoardTitle>
+								<IntroStickerBoardBottm>
+									<IntroStickerBoardBottomSpan>
+										{timeAgo(board.regDate)}
+									</IntroStickerBoardBottomSpan>
+									<span>
+										<HandThumbsUp size={'11px'}></HandThumbsUp>
+									</span>
+									<IntroStickerBoardBottomSpan>
+										{board.likeCount}
+									</IntroStickerBoardBottomSpan>
+									<span>
+										<ChatLeftFill size={'11px'}></ChatLeftFill>
+									</span>
+									<IntroStickerBoardBottomSpan>
+										{board.replyCount}
+									</IntroStickerBoardBottomSpan>
+								</IntroStickerBoardBottm>
+							</IntroStickerItemWrapper>
+						))}
 				</IntroSticker>
 				<IntroSticker title={'인기 글'}>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">이건 왜 인기가 있나요?</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">이건 왜 인기가 있나요?</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">이건 왜 인기가 있나요?</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">
-								이건 왜 인기가 있나요?이건 왜 인기가 있나요?이건 왜 인기가
-								있나요?이건 왜 인기가 있나요?이건 왜 인기가 있나요?이건 왜
-								인기가 있나요?이건 왜 인기가 있나요?
-							</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
+					{boardInfo &&
+						boardInfo.popularBoard &&
+						boardInfo.popularBoard.map((board) => (
+							<IntroStickerItemWrapper>
+								<IntroStickerBoardTitle>
+									<NavLink to={`/user/${board.memberId}`}>
+										@{board.memberId}
+									</NavLink>{' '}
+									<NavLink to={`/article/${board.boardNo}`}>
+										{board.boardTitle}
+									</NavLink>
+								</IntroStickerBoardTitle>
+								<IntroStickerBoardBottm>
+									<IntroStickerBoardBottomSpan>
+										{timeAgo(board.regDate)}
+									</IntroStickerBoardBottomSpan>
+									<span>
+										<HandThumbsUp size={'11px'}></HandThumbsUp>
+									</span>
+									<IntroStickerBoardBottomSpan>
+										{board.likeCount}
+									</IntroStickerBoardBottomSpan>
+									<span>
+										<ChatLeftFill size={'11px'}></ChatLeftFill>
+									</span>
+									<IntroStickerBoardBottomSpan>
+										{board.replyCount}
+									</IntroStickerBoardBottomSpan>
+								</IntroStickerBoardBottm>
+							</IntroStickerItemWrapper>
+						))}
 				</IntroSticker>
 				<IntroSticker title={'공지사항'}>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">공지사항입니다.</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">공지사항입니다.</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">공지사항입니다.</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">공지사항입니다.</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">공지사항입니다.</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">공지사항입니다.</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
-					<IntroStickerItemWrapper>
-						<IntroStickerBoardTitle>
-							<NavLink to="#">@akak4456</NavLink>{' '}
-							<NavLink to="#">공지사항입니다.</NavLink>
-						</IntroStickerBoardTitle>
-						<IntroStickerBoardBottm>
-							<IntroStickerBoardBottomSpan>55분전</IntroStickerBoardBottomSpan>
-							<span>
-								<HandThumbsUp size={'11px'}></HandThumbsUp>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-							<span>
-								<ChatLeftFill size={'11px'}></ChatLeftFill>
-							</span>
-							<IntroStickerBoardBottomSpan>0</IntroStickerBoardBottomSpan>
-						</IntroStickerBoardBottm>
-					</IntroStickerItemWrapper>
+					{boardInfo &&
+						boardInfo.noticeBoard &&
+						boardInfo.noticeBoard.map((board) => (
+							<IntroStickerItemWrapper>
+								<IntroStickerBoardTitle>
+									<NavLink to={`/user/${board.memberId}`}>
+										@{board.memberId}
+									</NavLink>{' '}
+									<NavLink to={`/article/${board.boardNo}`}>
+										{board.boardTitle}
+									</NavLink>
+								</IntroStickerBoardTitle>
+								<IntroStickerBoardBottm>
+									<IntroStickerBoardBottomSpan>
+										{timeAgo(board.regDate)}
+									</IntroStickerBoardBottomSpan>
+									<span>
+										<HandThumbsUp size={'11px'}></HandThumbsUp>
+									</span>
+									<IntroStickerBoardBottomSpan>
+										{board.likeCount}
+									</IntroStickerBoardBottomSpan>
+									<span>
+										<ChatLeftFill size={'11px'}></ChatLeftFill>
+									</span>
+									<IntroStickerBoardBottomSpan>
+										{board.replyCount}
+									</IntroStickerBoardBottomSpan>
+								</IntroStickerBoardBottm>
+							</IntroStickerItemWrapper>
+						))}
 				</IntroSticker>
 				<IntroSticker title={'문제 순위'}>
 					{introInfo?.problemGradeInfoList?.map((grade) => (

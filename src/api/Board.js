@@ -95,3 +95,23 @@ export const addBoard = (form, onSuccess, onError) => {
 			onError(exception);
 		});
 };
+
+export const getBoardInMainInfo = (onSuccess, onError) => {
+	commonAPI
+		.get(
+			'/api/v1/board/main',
+			{},
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+		.then((response) => {
+			onSuccess(response);
+		})
+		.catch((exception) => {
+			onError(exception);
+		});
+};
