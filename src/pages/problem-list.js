@@ -92,6 +92,9 @@ const ProblemListPaginationRootDiv = styled.div`
 	}
 `;
 const ProblemList = (props) => {
+	const [formValue, setFormValue] = useState({
+		searchTitle: null,
+	});
 	const prevLink = () => {
 		searchParams.set('page', startPage - 1 - 1);
 		searchParams.set('size', 10);
@@ -107,20 +110,29 @@ const ProblemList = (props) => {
 		searchParams.set('size', 10);
 		setSearchParams(searchParams);
 	};
+	const searchTitle = (title) => {
+		searchParams.set('page', 0);
+		searchParams.set('size', size);
+		searchParams.set('title', encodeURIComponent(title));
+		setSearchParams(searchParams);
+	};
 	const [searchParams, setSearchParams] = useSearchParams();
 	const page = parseInt(searchParams.get('page')) || 0;
 	const size = parseInt(searchParams.get('size')) || 10;
+	const title = searchParams.get('title');
 	const [pageData, setPageData] = useState();
 	useEffect(() => {
 		getProblemList(
 			page,
 			size,
+			title,
 			(response) => {
+				console.log(response);
 				setPageData(response.data.data);
 			},
 			(exception) => {}
 		);
-	}, [page, size]);
+	}, [page, size, title]);
 	const startPage = Math.floor(page / size) * size + 1;
 	let endPage = startPage + size - 1;
 	if (pageData && endPage > pageData.totalPages) {
@@ -129,8 +141,25 @@ const ProblemList = (props) => {
 	return (
 		<main>
 			<ProblemListSearchFormDiv>
-				<InputBox type="text" placeholder="검색"></InputBox>
-				<div>
+				<InputBox
+					type="text"
+					placeholder="검색"
+					onChange={(value) => {
+						setFormValue((state) => ({
+							...state,
+							searchTitle: value,
+						}));
+					}}
+				></InputBox>
+				<div
+					onClick={() => {
+						if (formValue.searchTitle) {
+							searchTitle(formValue.searchTitle);
+						} else {
+							alert('검색어를 입력해주세요');
+						}
+					}}
+				>
 					<Search size={16} color="white" />
 				</div>
 			</ProblemListSearchFormDiv>

@@ -1,9 +1,13 @@
 import { commonAPI } from './Common';
 
-export const getProblemList = (page, size, onSuccess, onError) => {
+export const getProblemList = (page, size, title, onSuccess, onError) => {
+	let additional = '';
+	if (title) {
+		additional = '&title=' + title;
+	}
 	commonAPI
 		.get(
-			'/api/v1/problem?page=' + page + '&size=' + size,
+			'/api/v1/problem?page=' + page + '&size=' + size + additional,
 			{},
 			{
 				withCredentials: true,
