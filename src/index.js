@@ -87,14 +87,6 @@ function Root() {
 							}
 						></Route>
 						<Route
-							path="/search/*"
-							element={
-								<Layout>
-									<SearchPage />
-								</Layout>
-							}
-						></Route>
-						<Route
 							path="/join/*"
 							element={
 								<Layout>

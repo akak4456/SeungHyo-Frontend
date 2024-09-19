@@ -210,7 +210,6 @@ const Header = (props) => {
 					<TapButton element={'문제'} linkTo={'/problem-list'} />
 					<TapButton element={'오답노트'} linkTo={'/reflection-note-list'} />
 					<TapButton element={'게시판'} linkTo={'/board'} />
-					<TapButton element={'검색'} linkTo={'/search'} />
 				</StyledPCButtonsDiv>
 			)}
 			{isMobile && (
@@ -228,9 +227,6 @@ const Header = (props) => {
 					</NavLink>
 					<NavLink to="/board">
 						<p onClick={onHide}>게시판</p>
-					</NavLink>
-					<NavLink to="/search">
-						<p onClick={onHide}>검색</p>
 					</NavLink>
 				</StyledMobileDropDownDiv>
 			)}
