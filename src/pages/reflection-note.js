@@ -182,8 +182,18 @@ const ReflectionNote = (props) => {
 	// 숫자 ID는 세 번째 부분에 위치
 	const no = parts[2];
 	const [compileData, setCompileData] = useState();
+	const [tempCompileData, setTempCompileData] = useState([]);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const webSocket = useRef(null);
+	const isLoadedRef = useRef(isLoaded); // 최신 isLoaded 상태를 위한 Ref
+	const tempCompileDataRef = useRef(tempCompileData);
+
+	useEffect(() => {
+		isLoadedRef.current = isLoaded; // isLoaded 상태 업데이트 시 Ref도 업데이트
+	}, [isLoaded]);
+	useEffect(() => {
+		tempCompileDataRef.current = tempCompileData;
+	}, [tempCompileData]);
 	useEffect(() => {
 		const WEBSOCKET_ENDPOINT = process.env.REACT_APP_WEB_SOCKET;
 		webSocket.current = new WebSocket(WEBSOCKET_ENDPOINT + '/submit/' + no);
@@ -227,10 +237,21 @@ const ReflectionNote = (props) => {
 				jsonObject.compileStatus &&
 				jsonObject.compileStatus !== 'START_FOR_KAFKA'
 			) {
-				setCompileData((state) => ({
-					...state,
-					kafkaCompiles: [...state.kafkaCompiles, jsonObject],
-				}));
+				console.log('onmessage', isLoadedRef.current);
+				if (!isLoadedRef.current) {
+					setTempCompileData((state) => [...state, jsonObject]);
+				} else {
+					console.log(tempCompileDataRef.current);
+					setCompileData((state) => ({
+						...state,
+						kafkaCompiles: [
+							...state.kafkaCompiles,
+							...tempCompileDataRef.current,
+							jsonObject,
+						],
+					}));
+					setTempCompileData([]);
+				}
 			}
 		};
 		return () => {
