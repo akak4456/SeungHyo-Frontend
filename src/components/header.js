@@ -247,7 +247,7 @@ const Header = (props) => {
 				onClick={() => setMyShown(!isMyShown)}
 			>
 				<StyledMyContentDiv>
-					<NavLink to="/user">
+					<NavLink to={`/user?memberId=${myId}`}>
 						<StyledMyName>{myId}</StyledMyName>
 					</NavLink>
 					<StyledMyBottomDiv>

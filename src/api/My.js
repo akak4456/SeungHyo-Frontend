@@ -90,3 +90,23 @@ export const withdraw = (onSuccess) => {
 			console.log(exception);
 		});
 };
+
+export const getInfo = (memberId, onSuccess, onError) => {
+	commonAPI
+		.get(
+			`/api/v1/member/info?memberId=${memberId}`,
+			{},
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+		.then((response) => {
+			onSuccess(response);
+		})
+		.catch((exception) => {
+			onError(exception);
+		});
+};

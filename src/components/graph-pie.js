@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 
-const PieGraph = () => {
+const PieGraph = ({ rightCount, wrongCount }) => {
 	const canvasRef = useRef(null);
-	const data = [30.12, 69.88]; // [correct, wrong] correct + wrong = 100
-	// TODO 부모 컴포넌트에서 전달하도록 하기
+	const totalCount = rightCount + wrongCount;
+	const data = [
+		(rightCount / totalCount) * 100,
+		(wrongCount / totalCount) * 100,
+	]; // [correct, wrong] correct + wrong = 100
 	const correctColor = '#009874';
 	const wrongColor = '#DD4124';
 

@@ -12,24 +12,9 @@ const X_AXIS_FONT = '12px Arial';
 
 const X_AXIS_COLOR = '#333333';
 // 위의 const 들은 커스텀 할 수 있다.
-const data = [
-	{ xLabel: 'Jan', value: 0.4 },
-	{ xLabel: 'Feb', value: 0.3 },
-	{ xLabel: 'Mar', value: 0.5 },
-	{ xLabel: 'Apr', value: 0.7 },
-	{ xLabel: 'May', value: 0.6 },
-	{ xLabel: 'Jun', value: 0.8 },
-	{ xLabel: 'Jul', value: 0.9 },
-	{ xLabel: 'Aug', value: 0.4 },
-	{ xLabel: 'Sep', value: 0.6 },
-	{ xLabel: 'Oct', value: 0.3 },
-	{ xLabel: 'Nov', value: 0.7 },
-	{ xLabel: 'Dec', value: 0.5 },
-]; // xLabel, value 형태를 유지해야 정상작동하며 value 는 0~1 사이의 값이다.
-// 현재는 line graph 에 데이터를 hard coding 했다
-// TODO 나중에 props 으로 받든지 어떤 형태로 하든지 line-graph.js 에 있는 data 삭제하고 다른데로 옮기기
 
-const LineGraph = (props) => {
+const LineGraph = ({ data }) => {
+	console.log(data);
 	const canvasRef = useRef(null);
 	const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
@@ -96,7 +81,7 @@ const LineGraph = (props) => {
 				ctx.fillStyle = POINT_TEXT_COLOR;
 				ctx.textAlign = 'center';
 				ctx.font = POINT_TEXT_FONT;
-				ctx.fillText(props.getPointValueText(point.value), x, y - 10);
+				ctx.fillText((point.value * 100).toFixed(1) + '%', x, y - 10);
 
 				// Draw dotted line to x-axis
 				ctx.beginPath();
@@ -116,7 +101,7 @@ const LineGraph = (props) => {
 				ctx.fillText(point.xLabel, x, height - padding + 20);
 			});
 		}
-	}, [dimensions, props]);
+	}, [dimensions, data]);
 
 	return (
 		<canvas

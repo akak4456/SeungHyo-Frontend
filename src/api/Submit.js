@@ -90,3 +90,23 @@ export const getAllProgramLanguage = (onSuccess, onError) => {
 			onError(exception);
 		});
 };
+
+export const getSubmitStatistics = (memberId, onSuccess, onError) => {
+	commonAPI
+		.get(
+			`/api/v1/submit/statistics?memberId=${memberId}`,
+			{},
+			{
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+		.then((response) => {
+			onSuccess(response);
+		})
+		.catch((exception) => {
+			onError(exception);
+		});
+};
