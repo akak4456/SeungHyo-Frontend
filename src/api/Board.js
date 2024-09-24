@@ -96,9 +96,41 @@ export const addBoard = (form, onSuccess, onError) => {
 		});
 };
 
+export const addBoardLike = (boardNo, onSuccess, onError) => {
+	commonAPI
+		.post(`/api/v1/board/${boardNo}`, {
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+		.then((response) => {
+			onSuccess(response);
+		})
+		.catch((exception) => {
+			onError(exception);
+		});
+};
+
 export const addReply = (boardNo, form, onSuccess, onError) => {
 	commonAPI
 		.post(`/api/v1/reply/${boardNo}`, form, {
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+		.then((response) => {
+			onSuccess(response);
+		})
+		.catch((exception) => {
+			onError(exception);
+		});
+};
+
+export const addReplyLike = (boardNo, replyNo, onSuccess, onError) => {
+	commonAPI
+		.post(`/api/v1/reply/${boardNo}/${replyNo}`, {
 			withCredentials: true,
 			headers: {
 				'Content-Type': 'application/json',

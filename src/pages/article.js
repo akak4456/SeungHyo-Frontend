@@ -11,6 +11,8 @@ import { timeAgo } from '../util';
 import Pagination from '../components/pagination';
 import { addReply } from '../api/Board';
 import { getAllProgramLanguage } from '../api/Submit';
+import { addBoardLike } from '../api/Board';
+import { addReplyLike } from '../api/Board';
 const ReplyAddRootDiv = styled.div`
 	display: flex;
 	width: 100%;
@@ -171,6 +173,8 @@ const ReplyContentRootDiv = styled.div`
 	}
 `;
 const Reply = ({
+	isBoard,
+	boardNo,
 	replyNo,
 	author,
 	date,
@@ -178,6 +182,7 @@ const Reply = ({
 	content,
 	langCode,
 	sourceCode,
+	reloadPage,
 }) => {
 	return (
 		<ReplyRootDiv>
@@ -189,7 +194,40 @@ const Reply = ({
 					size={'16px'}
 				></HandThumbsUp>
 				<span style={{ marginLeft: '8px' }}>{recommendCount}</span>
-				<ReplyLike>좋아요</ReplyLike>
+				<ReplyLike
+					onClick={() => {
+						if (isBoard) {
+							addBoardLike(
+								boardNo,
+								(response) => {
+									console.log(response);
+									alert('좋아요를 하였습니다.');
+									reloadPage();
+								},
+								(exception) => {
+									console.log(exception);
+									alert('이미 좋아요를 눌렀거나 오류가 발생했습니다.');
+								}
+							);
+						} else {
+							addReplyLike(
+								boardNo,
+								replyNo,
+								(response) => {
+									console.log(response);
+									alert('좋아요를 하였습니다.');
+									reloadPage();
+								},
+								(exception) => {
+									console.log(exception);
+									alert('이미 좋아요를 눌렀거나 오류가 발생했습니다.');
+								}
+							);
+						}
+					}}
+				>
+					좋아요
+				</ReplyLike>
 			</ReplyTitleDiv>
 			<ReplyContentRootDiv>
 				<p dangerouslySetInnerHTML={{ __html: content }}></p>
@@ -331,12 +369,15 @@ const Article = (props) => {
 						</NavLink>
 					</ArticleLinkRootDiv>
 					<Reply
+						isBoard={true}
+						boardNo={boardNo}
 						author={pageData.board.boardMemberId}
 						date={timeAgo(pageData.board.boardRegDate)}
 						recommendCount={pageData.board.boardLikeCount}
 						content={pageData.board.boardContent}
 						langCode={pageData.board.langCode}
 						sourceCode={pageData.board.sourceCode}
+						reloadPage={reloadReply}
 					/>
 				</>
 			)}
@@ -346,6 +387,8 @@ const Article = (props) => {
 				pageData.reply.content &&
 				pageData.reply.content.map((reply) => (
 					<Reply
+						isBoard={false}
+						boardNo={boardNo}
 						key={reply.replyNo + 'reply'}
 						replyNo={reply.replyNo}
 						author={reply.memberId}
@@ -354,6 +397,7 @@ const Article = (props) => {
 						content={reply.replyContent}
 						langCode={reply.langCode}
 						sourceCode={reply.sourceCode}
+						reloadPage={reloadReply}
 					/>
 				))}
 			<PaginationRootDiv>
