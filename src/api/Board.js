@@ -96,6 +96,22 @@ export const addBoard = (form, onSuccess, onError) => {
 		});
 };
 
+export const addReply = (boardNo, form, onSuccess, onError) => {
+	commonAPI
+		.post(`/api/v1/reply/${boardNo}`, form, {
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+		.then((response) => {
+			onSuccess(response);
+		})
+		.catch((exception) => {
+			onError(exception);
+		});
+};
+
 export const getBoardInMainInfo = (onSuccess, onError) => {
 	commonAPI
 		.get(

@@ -9,6 +9,7 @@ import NormalButton from '../components/button-normal';
 import { getBoardOne, getReplyList } from '../api/Board';
 import { timeAgo } from '../util';
 import Pagination from '../components/pagination';
+import { addReply } from '../api/Board';
 const ReplyAddRootDiv = styled.div`
 	display: flex;
 	width: 100%;
@@ -25,7 +26,27 @@ const ReplyAddEditorDiv = styled.div`
 	flex-direction: column;
 	gap: 24px;
 `;
-const ReplyAdd = (props) => {
+const ReplyAdd = ({ boardNo, reloadReply }) => {
+	const [warning, setWarning] = useState({
+		normal: '',
+		sourceCode: '',
+	});
+	const [form, setForm] = useState({
+		content: '',
+		sourceContent: '',
+	});
+	const normalEditorHTMLChange = (htmlContent) => {
+		setForm((state) => ({
+			...state,
+			content: htmlContent,
+		}));
+	};
+	const sourceCodeEditorChange = (text) => {
+		setForm((state) => ({
+			...state,
+			sourceContent: text,
+		}));
+	};
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSourceEditorOpen, setIsSourceEditorOpen] = useState(false);
 	const languages = ['JAVA', 'C', 'C++'];
@@ -39,7 +60,12 @@ const ReplyAdd = (props) => {
 				/>
 			)}
 			<ReplyAddEditorDiv>
-				{isOpen && <NormalEditor />}
+				{isOpen && (
+					<NormalEditor
+						onHTMLChange={normalEditorHTMLChange}
+						warningMessage={warning.normal}
+					/>
+				)}
 				{isOpen && !isSourceEditorOpen && (
 					<NormalButton
 						type="primary"
@@ -48,8 +74,48 @@ const ReplyAdd = (props) => {
 					/>
 				)}
 				{isOpen && isSourceEditorOpen && <Dropdown dropDownText={languages} />}
-				{isOpen && isSourceEditorOpen && <SourceEditor></SourceEditor>}
-				{isOpen && <NormalButton type="primary" text="댓글 저장" />}
+				{isOpen && isSourceEditorOpen && (
+					<SourceEditor
+						onChange={sourceCodeEditorChange}
+						warningMessage={warning.sourceCode}
+					></SourceEditor>
+				)}
+				{isOpen && (
+					<NormalButton
+						type="primary"
+						text="댓글 저장"
+						onClick={() => {
+							addReply(
+								boardNo,
+								form,
+								(response) => {
+									alert('댓글을 등록하였습니다.');
+									reloadReply();
+									setIsOpen(false);
+									setIsSourceEditorOpen(false);
+								},
+								(exception) => {
+									console.log(exception);
+									const errors = exception?.response?.data?.data?.errors;
+									let normalHTMLContentErrorWarningMessage = '';
+									if (errors?.find((error) => error.field === 'content')) {
+										normalHTMLContentErrorWarningMessage =
+											'내용을 입력해주세요';
+									}
+									setWarning((state) => ({
+										...state,
+										normal: normalHTMLContentErrorWarningMessage,
+									}));
+									let sourceCodeWarningMessage = '';
+									setWarning((state) => ({
+										...state,
+										sourceCode: sourceCodeWarningMessage,
+									}));
+								}
+							);
+						}}
+					/>
+				)}
 			</ReplyAddEditorDiv>
 		</ReplyAddRootDiv>
 	);
@@ -141,6 +207,13 @@ const Article = (props) => {
 	// 숫자 ID는 세 번째 부분에 위치
 	const boardNo = parts[2];
 
+	const reloadReply = () => {
+		searchParams.set('page', 0);
+		searchParams.set('size', 10);
+		searchParams.set('version', version + 1);
+		setSearchParams(searchParams);
+	};
+
 	const prevLink = () => {
 		searchParams.set('page', startPage - 1 - 1);
 		searchParams.set('size', 10);
@@ -159,6 +232,7 @@ const Article = (props) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const page = parseInt(searchParams.get('page')) || 0;
 	const size = parseInt(searchParams.get('size')) || 10;
+	const version = parseInt(searchParams.get('version')) || 0;
 	const [pageData, setPageData] = useState();
 	const startPage = Math.floor(page / size) * size + 1;
 	let endPage = startPage + size - 1;
@@ -193,7 +267,7 @@ const Article = (props) => {
 			},
 			(exception) => {}
 		);
-	}, [page, size]);
+	}, [page, size, version]);
 
 	return (
 		<ArticleRootMain>
@@ -241,7 +315,7 @@ const Article = (props) => {
 					currentNum={page + 1}
 				/>
 			</PaginationRootDiv>
-			<ReplyAdd />
+			<ReplyAdd boardNo={boardNo} reloadReply={reloadReply} />
 		</ArticleRootMain>
 	);
 };
