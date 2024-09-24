@@ -10,6 +10,7 @@ import { getBoardOne, getReplyList } from '../api/Board';
 import { timeAgo } from '../util';
 import Pagination from '../components/pagination';
 import { addReply } from '../api/Board';
+import { getAllProgramLanguage } from '../api/Submit';
 const ReplyAddRootDiv = styled.div`
 	display: flex;
 	width: 100%;
@@ -26,14 +27,17 @@ const ReplyAddEditorDiv = styled.div`
 	flex-direction: column;
 	gap: 24px;
 `;
-const ReplyAdd = ({ boardNo, reloadReply }) => {
+const ReplyAdd = ({ boardNo, reloadReply, data }) => {
 	const [warning, setWarning] = useState({
 		normal: '',
 		sourceCode: '',
 	});
+	console.log(data.language.languageList[0]);
 	const [form, setForm] = useState({
 		content: '',
 		sourceContent: '',
+		langCode: data.language.languageList[0].langCode,
+		langName: data.language.languageList[0].langName,
 	});
 	const normalEditorHTMLChange = (htmlContent) => {
 		setForm((state) => ({
@@ -49,7 +53,6 @@ const ReplyAdd = ({ boardNo, reloadReply }) => {
 	};
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSourceEditorOpen, setIsSourceEditorOpen] = useState(false);
-	const languages = ['JAVA', 'C', 'C++'];
 	return (
 		<ReplyAddRootDiv>
 			{!isOpen && (
@@ -73,7 +76,26 @@ const ReplyAdd = ({ boardNo, reloadReply }) => {
 						onClick={() => setIsSourceEditorOpen(true)}
 					/>
 				)}
-				{isOpen && isSourceEditorOpen && <Dropdown dropDownText={languages} />}
+				{isOpen && isSourceEditorOpen && data && data.language && (
+					<Dropdown
+						dropDownText={data.language.languageList.map(
+							(lang) => lang.langName
+						)}
+						curText={form.langName}
+						onDropDownTextChange={(text) => {
+							const newLangCode = data.language.languageList.find(
+								(lang) => lang.langName == text
+							).langCode;
+							if (form.langCode != newLangCode) {
+								setForm((state) => ({
+									...state,
+									langName: text,
+									langCode: newLangCode,
+								}));
+							}
+						}}
+					/>
+				)}
 				{isOpen && isSourceEditorOpen && (
 					<SourceEditor
 						onChange={sourceCodeEditorChange}
@@ -148,7 +170,15 @@ const ReplyContentRootDiv = styled.div`
 		color: var(--color-normal-text-color);
 	}
 `;
-const Reply = ({ replyNo, author, date, recommendCount, content }) => {
+const Reply = ({
+	replyNo,
+	author,
+	date,
+	recommendCount,
+	content,
+	langCode,
+	sourceCode,
+}) => {
 	return (
 		<ReplyRootDiv>
 			<ReplyTitleDiv>
@@ -164,6 +194,9 @@ const Reply = ({ replyNo, author, date, recommendCount, content }) => {
 			<ReplyContentRootDiv>
 				<p dangerouslySetInnerHTML={{ __html: content }}></p>
 			</ReplyContentRootDiv>
+			{sourceCode && (
+				<SourceEditor readOnly={true} defaultValue={sourceCode}></SourceEditor>
+			)}
 		</ReplyRootDiv>
 	);
 };
@@ -236,14 +269,30 @@ const Article = (props) => {
 	const [pageData, setPageData] = useState();
 	const startPage = Math.floor(page / size) * size + 1;
 	let endPage = startPage + size - 1;
-	if (pageData && endPage > pageData.totalPages) {
-		endPage = pageData.totalPages;
+	if (pageData && pageData.reply && endPage > pageData.reply.totalPages) {
+		endPage = pageData.reply.totalPages;
 	}
+
+	const [data, setData] = useState();
+	useEffect(() => {
+		getAllProgramLanguage(
+			(response) => {
+				console.log(response);
+				const data = response.data.data;
+				setData((state) => ({
+					...state,
+					language: data,
+				}));
+			},
+			(exception) => {}
+		);
+	}, []);
 
 	useEffect(() => {
 		getBoardOne(
 			boardNo,
 			(response) => {
+				console.log('board', response.data.data);
 				setPageData((state) => ({
 					...state,
 					board: response.data.data,
@@ -256,6 +305,7 @@ const Article = (props) => {
 			page,
 			size,
 			(response) => {
+				console.log('reply', response.data.data);
 				setPageData((state) => ({
 					...state,
 					reply: response.data.data,
@@ -268,7 +318,6 @@ const Article = (props) => {
 			(exception) => {}
 		);
 	}, [page, size, version]);
-
 	return (
 		<ArticleRootMain>
 			{pageData && pageData.board && (
@@ -286,6 +335,8 @@ const Article = (props) => {
 						date={timeAgo(pageData.board.boardRegDate)}
 						recommendCount={pageData.board.boardLikeCount}
 						content={pageData.board.boardContent}
+						langCode={pageData.board.langCode}
+						sourceCode={pageData.board.sourceCode}
 					/>
 				</>
 			)}
@@ -301,6 +352,8 @@ const Article = (props) => {
 						date={timeAgo(reply.regDate)}
 						recommendCount={reply.likeCount}
 						content={reply.replyContent}
+						langCode={reply.langCode}
+						sourceCode={reply.sourceCode}
 					/>
 				))}
 			<PaginationRootDiv>
@@ -310,12 +363,16 @@ const Article = (props) => {
 					minVal={startPage}
 					maxVal={endPage}
 					goToLink={goToLink}
-					isPrevInclude={startPage != 1}
-					isNextInclude={pageData && endPage != pageData.totalPages}
+					isPrevInclude={startPage !== 1}
+					isNextInclude={
+						pageData && pageData.reply && endPage !== pageData.reply.totalPages
+					}
 					currentNum={page + 1}
 				/>
 			</PaginationRootDiv>
-			<ReplyAdd boardNo={boardNo} reloadReply={reloadReply} />
+			{data && data.language && (
+				<ReplyAdd boardNo={boardNo} reloadReply={reloadReply} data={data} />
+			)}
 		</ArticleRootMain>
 	);
 };

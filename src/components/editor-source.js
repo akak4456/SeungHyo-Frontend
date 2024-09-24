@@ -22,7 +22,14 @@ const StyledWarning = styled.span`
 	font-size: 11px;
 	margin-top: 8px;
 `;
-const SourceEditor = ({ onChange, width, warningMessage }) => {
+const SourceEditor = ({
+	onChange,
+	width,
+	warningMessage,
+	readOnly,
+	defaultValue,
+}) => {
+	console.log('defaultValue', defaultValue);
 	return (
 		<AceEditorWrapper $isWarning={warningMessage}>
 			<AceEditor
@@ -30,7 +37,11 @@ const SourceEditor = ({ onChange, width, warningMessage }) => {
 				theme="github"
 				onChange={onChange}
 				name="sourceEditor"
-				editorProps={{ $blockScrolling: true }}
+				editorProps={{
+					$blockScrolling: true,
+				}}
+				readOnly={readOnly}
+				defaultValue={defaultValue}
 				width={width ? width : '100%'}
 			/>
 			{warningMessage && <StyledWarning>{warningMessage}</StyledWarning>}
