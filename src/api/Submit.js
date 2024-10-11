@@ -52,10 +52,28 @@ export const getProblemGrade = (submitNo, onSuccess, onError) => {
 		});
 };
 
-export const getReflectionNoteList = (page, size, onSuccess, onError) => {
+export const getReflectionNoteList = (
+	page,
+	size,
+	title,
+	langCode,
+	resultCode,
+	onSuccess,
+	onError
+) => {
+	let additional = '';
+	if (title) {
+		additional += '&title=' + title;
+	}
+	if (langCode) {
+		additional += '&langCode=' + langCode;
+	}
+	if (resultCode) {
+		additional += '&resultCode=' + resultCode;
+	}
 	commonAPI
 		.get(
-			'/api/v1/submit?page=' + page + '&size=' + size,
+			'/api/v1/submit?page=' + page + '&size=' + size + additional,
 			{},
 			{
 				withCredentials: true,

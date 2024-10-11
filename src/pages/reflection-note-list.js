@@ -9,6 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useSearchParams } from 'react-router-dom';
 import { getReflectionNoteList } from '../api/Submit';
 import { timeAgo } from '../util';
+import { getAllProgramLanguage } from '../api/Submit';
 const StyledReflectionNoteListTable = styled.table`
 	margin-top: 24px;
 	&,
@@ -135,7 +136,6 @@ const ReflectionNoteListPaginationRoot = styled.div`
 	}
 `;
 const ReflectionNoteList = (props) => {
-	const langDropDown = ['모든 언어', 'JAVA', 'C', 'C++', '아희'];
 	const resultDropDown = ['모든 결과', '맞았습니다', '틀렸습니다'];
 	const isTablet = useMediaQuery({
 		query: '(max-width:1050px)',
@@ -156,20 +156,54 @@ const ReflectionNoteList = (props) => {
 		searchParams.set('size', 10);
 		setSearchParams(searchParams);
 	};
+	const search = (title, langCode, langName, curResult, resultCode) => {
+		searchParams.set('page', 0);
+		searchParams.set('size', size);
+		searchParams.set('title', encodeURIComponent(title));
+		searchParams.set('langCode', langCode);
+		searchParams.set('langName', langName);
+		searchParams.set('curResult', curResult);
+		searchParams.set('resultCode', resultCode);
+		setSearchParams(searchParams);
+	};
 	const [searchParams, setSearchParams] = useSearchParams();
 	const page = parseInt(searchParams.get('page')) || 0;
 	const size = parseInt(searchParams.get('size')) || 10;
+	const title = searchParams.get('title');
+	const langCode = searchParams.get('langCode') || 'ALL';
+	const langName = searchParams.get('langName') || '모든 언어';
+	const curResult = searchParams.get('curResult') || resultDropDown[0];
+	const resultCode = searchParams.get('resultCode') || 'ALL';
 	const [pageData, setPageData] = useState();
+	const [langData, setLangData] = useState();
+	const [form, setForm] = useState();
 	useEffect(() => {
 		getReflectionNoteList(
 			page,
 			size,
+			title,
+			langCode,
+			resultCode,
 			(response) => {
 				setPageData(response.data.data);
 			},
 			(exception) => {}
 		);
-	}, [page, size]);
+		getAllProgramLanguage(
+			(response) => {
+				const data = response.data.data;
+				setLangData(data);
+				setForm((state) => ({
+					...state,
+					langCode: langCode,
+					langName: langName,
+					curResult: curResult,
+					resultCode: resultCode,
+				}));
+			},
+			(exception) => {}
+		);
+	}, [page, size, title, langCode, resultCode]);
 	const startPage = Math.floor(page / size) * size + 1;
 	let endPage = startPage + size - 1;
 	if (pageData && endPage > pageData.totalPages) {
@@ -179,11 +213,78 @@ const ReflectionNoteList = (props) => {
 		<ReflectionNoteListRootMain>
 			<ReflectionNoteListSearchContainerDiv $isTablet={isTablet}>
 				<ReflectionNoteListSearchInputBoxDiv>
-					<InputBox placeholder="문제" />
+					<InputBox
+						placeholder="문제"
+						onChange={(value) => {
+							setForm((state) => ({
+								...state,
+								searchTitle: value,
+							}));
+						}}
+					/>
 				</ReflectionNoteListSearchInputBoxDiv>
-				<Dropdown dropDownText={langDropDown} />
-				<Dropdown dropDownText={resultDropDown} />
-				<NormalButton type="primary" text="검색" />
+				{langData && (
+					<Dropdown
+						dropDownText={[
+							'모든 언어',
+							...langData.languageList.map((lang) => lang.langName),
+						]}
+						curText={form.langName}
+						onDropDownTextChange={(text) => {
+							let newLangCode = 'ALL';
+							if (text !== '모든 언어') {
+								newLangCode = langData.languageList.find(
+									(lang) => lang.langName == text
+								).langCode;
+							}
+							if (form.langCode != newLangCode) {
+								setForm((state) => ({
+									...state,
+									langName: text,
+									langCode: newLangCode,
+								}));
+							}
+						}}
+					/>
+				)}
+				{form && form.curResult && (
+					<Dropdown
+						dropDownText={resultDropDown}
+						curText={form.curResult}
+						onDropDownTextChange={(text) => {
+							if (text != form.curResult) {
+								let resultCode = 'ALL';
+								if (text === resultDropDown[1]) {
+									resultCode = 'CORRECT';
+								} else if (text === resultDropDown[2]) {
+									resultCode = 'WRONG';
+								}
+								setForm((state) => ({
+									...state,
+									curResult: text,
+									resultCode: resultCode,
+								}));
+							}
+						}}
+					/>
+				)}
+				<NormalButton
+					type="primary"
+					text="검색"
+					onClick={() => {
+						if (form.searchTitle) {
+							search(
+								form.searchTitle,
+								form.langCode,
+								form.langName,
+								form.curResult,
+								form.resultCode
+							);
+						} else {
+							alert('문제 제목을 입력해주세요');
+						}
+					}}
+				/>
 			</ReflectionNoteListSearchContainerDiv>
 			<ReflectionNoteListTable pageData={pageData} />
 			<ReflectionNoteListPaginationRoot>
