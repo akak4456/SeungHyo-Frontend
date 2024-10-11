@@ -1,9 +1,21 @@
 import { commonAPI } from './Common';
 
-export const getBoardList = (page, size, categoryCode, onSuccess, onError) => {
+export const getBoardList = (
+	page,
+	size,
+	categoryCode,
+	title,
+	onSuccess,
+	onError
+) => {
+	let additional = '';
+	if (title) {
+		additional += '&title=' + title;
+	}
 	commonAPI
 		.get(
-			`/api/v1/board?page=${page}&size=${size}&categoryCode=${categoryCode}`,
+			`/api/v1/board?page=${page}&size=${size}&categoryCode=${categoryCode}` +
+				additional,
 			{},
 			{
 				withCredentials: true,

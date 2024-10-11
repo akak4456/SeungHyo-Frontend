@@ -183,12 +183,21 @@ const Board = (props) => {
 		searchParams.set('categoryCode', searchParams.categoryCode || 'ALL');
 		setSearchParams(searchParams);
 	};
+	const search = (title) => {
+		searchParams.set('page', 0);
+		searchParams.set('size', size);
+		searchParams.set('categoryCode', 'ALL');
+		searchParams.set('title', encodeURIComponent(title));
+		setSearchParams(searchParams);
+	};
 	const [searchParams, setSearchParams] = useSearchParams();
 	const page = parseInt(searchParams.get('page')) || 0;
 	const size = parseInt(searchParams.get('size')) || 10;
+	const title = searchParams.get('title');
 	const categoryCode = searchParams.get('categoryCode') || 'ALL';
 	const [pageData, setPageData] = useState();
 	const [noticeData, setNoticeData] = useState();
+	const [form, setForm] = useState();
 	const moveCategory = (categoryCode) => {
 		console.log(categoryCode);
 		searchParams.set('page', 0);
@@ -201,6 +210,7 @@ const Board = (props) => {
 			page,
 			size,
 			categoryCode,
+			title,
 			(response) => {
 				console.log(response);
 				setPageData(response.data.data);
@@ -212,6 +222,7 @@ const Board = (props) => {
 				0,
 				3,
 				'NOTICE',
+				null,
 				(response) => {
 					setNoticeData(response.data.data);
 				},
@@ -220,7 +231,7 @@ const Board = (props) => {
 		} else {
 			setNoticeData(null);
 		}
-	}, [page, size, categoryCode]);
+	}, [page, size, categoryCode, title]);
 	const startPage = Math.floor(page / size) * size + 1;
 	let endPage = startPage + size - 1;
 	if (pageData && endPage > pageData.totalPages) {
@@ -262,8 +273,26 @@ const Board = (props) => {
 				moveCategory={moveCategory}
 			/>
 			<BoardSearchFormDiv $isMobile={isMobile}>
-				<InputBox placeholder={'검색'} />
-				<NormalButton type="primary" text="검색" />
+				<InputBox
+					placeholder={'검색'}
+					onChange={(value) => {
+						setForm((state) => ({
+							...state,
+							searchTitle: value,
+						}));
+					}}
+				/>
+				<NormalButton
+					type="primary"
+					text="검색"
+					onClick={() => {
+						if (form.searchTitle) {
+							search(form.searchTitle);
+						} else {
+							alert('게시글 제목을 입력해주세요');
+						}
+					}}
+				/>
 			</BoardSearchFormDiv>
 			<BoardPaginationRootDiv>
 				<Pagination
