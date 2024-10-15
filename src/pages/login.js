@@ -152,14 +152,20 @@ const LoginFormInner = () => {
 							(exception) => {
 								const errors = exception?.response?.data?.data?.errors;
 								let idWarning = '';
-								if (errors.find((error) => error.field === 'memberId')) {
+								if (exception?.response?.data?.data?.code === 'M001') {
+									idWarning = '아이디 또는 비밀번호가 일치하지 않습니다';
+								} else if (exception?.response?.data?.data?.code === 'M009') {
+									idWarning = '이미 회원탈퇴한 아이디입니다';
+								} else if (
+									errors?.find((error) => error.field === 'memberId')
+								) {
 									idWarning = '아이디 폼이 유효하지 않습니다';
 								} else if (exception?.response?.data?.status == 'FORBIDDEN') {
 									idWarning = '아이디 또는 비밀번호가 일치하지 않습니다';
 								}
 								setWarning((state) => ({ ...state, idWarning: idWarning }));
 								let pwWarning = '';
-								if (errors.find((error) => error.field === 'memberPw')) {
+								if (errors?.find((error) => error.field === 'memberPw')) {
 									pwWarning = '비밀번호 폼이 유효하지 않습니다';
 								}
 								setWarning((state) => ({ ...state, pwWarning: pwWarning }));
