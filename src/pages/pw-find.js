@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import InputBox from '../components/inputbox';
 import NormalButton from '../components/button-normal';
 import { useIsMobile } from '../hooks/media-query';
+import { resetPassword } from '../api/Auth';
+import { useNavigate } from 'react-router-dom';
 const PwFindInputTitle = styled.p`
 	font-weight: bold;
 	color: var(--color-gray);
@@ -19,13 +21,43 @@ const PwFindButton = styled.div`
 	}
 `;
 function PwFindInner() {
+	const [form, setForm] = useState();
+	const navigate = useNavigate();
 	const onPwFindClick = () => {
-		// TODO 이메일을 보내도록 해라
+		resetPassword(
+			form,
+			(response) => {
+				alert('비밀번호를 초기화하였습니다.');
+				navigate('/login');
+			},
+			(error) => {
+				console.log(error);
+				alert('비밀번호 초기화 과정 중에 오류가 발생했습니다.');
+			}
+		);
 	};
 	return (
 		<>
 			<PwFindInputTitle>아이디</PwFindInputTitle>
-			<InputBox type="text"></InputBox>
+			<InputBox
+				type="text"
+				onChange={(value) => {
+					setForm((state) => ({
+						...state,
+						id: value,
+					}));
+				}}
+			></InputBox>
+			<PwFindInputTitle>이메일</PwFindInputTitle>
+			<InputBox
+				type="text"
+				onChange={(value) => {
+					setForm((state) => ({
+						...state,
+						email: value,
+					}));
+				}}
+			></InputBox>
 			<PwFindButton>
 				<NormalButton
 					type="primary"

@@ -49,6 +49,22 @@ export const join = (formValue, onSuccess, onError) => {
 		});
 };
 
+export const resetPassword = (formValue, onSuccess, onError) => {
+	commonAPI
+		.put('/api/v1/member/auth/reset-password', formValue, {
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+		.then((response) => {
+			onSuccess(response);
+		})
+		.catch((exception) => {
+			onError(exception);
+		});
+};
+
 export const logoutUser = (accessToken, refreshToken, onSuccess, onError) => {
 	commonAPI
 		.patch(
