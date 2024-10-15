@@ -107,12 +107,14 @@ const JoinFormInner = () => {
 				if (errorCode == 'M004') {
 					idWarning = '아이디가 중복됩니다.';
 				} else if (errors.find((error) => error.field === 'memberId')) {
-					idWarning = '아이디가 올바른 형태가 아닙니다.';
+					idWarning =
+						'아이디가 올바른 형태가 아닙니다. 영어 대소문자와 숫자만 허용하며, 8~16자여야 합니다.';
 				}
 				if (errorCode == 'M003') {
 					passwordCheckWarning = '비밀번호와 비밀번호 확인이 다릅니다.';
 				} else if (errors.find((error) => error.field === 'memberPw')) {
-					passwordWarning = '비밀번호가 올바른 형태가 아닙니다.';
+					passwordWarning =
+						'비밀번호가 올바른 형태가 아닙니다. 영어 대소문자, 숫자, 특수문자(!@#$%^&*)가 반드시 한 개 이상 포함된 8~16자여야 합니다.';
 				}
 				if (errors.find((error) => error.field === 'memberPwCheck')) {
 					passwordCheckWarning = '비밀번호 확인이 올바른 형태가 아닙니다.';
